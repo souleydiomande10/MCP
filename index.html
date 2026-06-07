@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Market Center Place — La marketplace numéro 1 de Côte d'Ivoire. 12 000+ produits, paiement Mobile Money, livraison express Abidjan."/>
+  <meta name="keywords" content="marketplace Côte d'Ivoire, acheter en ligne Abidjan, Orange Money, MTN Money, Wave"/>
+  <meta property="og:title"       content="Market Center Place — Marketplace CI"/>
+  <meta property="og:description" content="Achetez et vendez en ligne en Côte d'Ivoire. Paiement Mobile Money sécurisé."/>
+  <meta property="og:type"        content="website"/>
+  <meta property="og:locale"      content="fr_CI"/>
+  <meta name="twitter:card"       content="summary_large_image"/>
+  <title>Market Center Place — Marketplace numéro 1 de Côte d'Ivoire</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+
+<style>
+/* ── LOADER ── */
+#loader {
+  position: fixed; inset: 0; z-index: 99999;
+  background: #0b1f4b;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.5rem;
+  transition: opacity .5s ease, visibility .5s ease;
+}
+#loader.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-bar {
+  width: 160px; height: 3px;
+  background: rgba(255,255,255,.12);
+  border-radius: 99px; overflow: hidden;
+}
+.loader-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, #c0202a, #c8a84b);
+  border-radius: 99px;
+  animation: loaderProgress 1.4s cubic-bezier(.4,0,.2,1) forwards;
+}
+@keyframes loaderProgress {
+  0%   { width: 0% }
+  60%  { width: 75% }
+  100% { width: 100% }
+}
+@keyframes logoRingSpin  { to { transform: rotate(360deg); } }
+@keyframes logoMDraw     { to { stroke-dashoffset: 0; } }
+@keyframes logoDotPulse  { 0%,100%{transform:scale(1)} 50%{transform:scale(1.3)} }
+
+/* ── PROGRESS BAR ── */
+#progress {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 3px; z-index: 9998;
+  background: linear-gradient(90deg, #c0202a, #c8a84b);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform .1s linear;
+}
+
+/* ── HERO AVEC VIDEO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex; align-items: center;
+  overflow: hidden;
+  padding-top: 64px;
+}
+
+/* Vidéo arrière-plan */
+.hero-video-wrap {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden;
+}
+.hero-video-wrap video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: .35;
+  filter: brightness(.6) saturate(1.1);
+}
+/* Overlay gradient par-dessus la vidéo */
+.hero-video-wrap::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(11,31,75,.92) 0%,
+    rgba(11,31,75,.75) 50%,
+    rgba(7,9,22,.85) 100%
+  );
+}
+
+/* Fallback si pas de vidéo */
+.hero-bg-fallback {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 700px 500px at 80% 20%, rgba(192,32,42,.25), transparent 60%),
+    radial-gradient(ellipse 500px 400px at 10% 80%, rgba(200,168,75,.12), transparent 60%),
+    linear-gradient(160deg, #060d1e 0%, #0b1f4b 50%, #050810 100%);
+}
+.hero-bg-line {
+  position: absolute;
+  width: 1px; height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,.05) 30%, rgba(255,255,255,.05) 70%, transparent);
+}
+.hero-bg-line:nth-child(1){ left: 20%; }
+.hero-bg-line:nth-child(2){ left: 40%; }
+.hero-bg-line:nth-child(3){ left: 60%; }
+.hero-bg-line:nth-child(4){ left: 80%; }
+
+/* Contenu hero */
+.hero-inner {
+  position: relative; z-index: 2;
+  max-width: 1200px; margin: 0 auto;
+  padding: 4rem 2rem;
+  width: 100%;
+}
+.hero-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: .72rem; font-weight: 800;
+  color: rgba(255,255,255,.55);
+  letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 1.4rem;
+}
+.hero-label::before {
+  content: '';
+  width: 28px; height: 2px;
+  background: #c0202a;
+}
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: .9;
+  letter-spacing: 2px;
+  color: white;
+  margin-bottom: 1.5rem;
+}
+.hero h1 em {
+  color: #c0202a;
+  font-style: normal;
+}
+.hero h1 .line-gold {
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(200,168,75,.8);
+}
+.hero-desc {
+  font-size: 1rem;
+  color: rgba(255,255,255,.6);
+  line-height: 1.7;
+  max-width: 520px;
+  margin-bottom: 2.2rem;
+  font-weight: 500;
+}
+.hero-cta {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.btn-hero-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px;
+  background: linear-gradient(135deg, #c0202a, #e8282f);
+  color: white; border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .82rem; font-weight: 900;
+  text-decoration: none; letter-spacing: .5px;
+  box-shadow: 0 8px 28px rgba(192,32,42,.45);
+  transition: transform .2s, box-shadow .2s;
+}
+.btn-hero-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(192,32,42,.55);
+}
+.btn-hero-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px;
+  background: rgba(255,255,255,.07);
+  border: 1.5px solid rgba(255,255,255,.25);
+  color: white; border-radius: 8px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: .82rem; font-weight: 800;
+  text-decoration: none; letter-spacing: .5px;
+  transition: all .2s;
+}
+.btn-hero-outline:hover {
+  background: rgba(255,255,255,.15);
+  border-color: rgba(255,255,255,.4);
+}
+
+/* Stats hero */
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 0;
+  max-width: 480px;
+}
+.hero-stat {
+  padding: .8rem 1.2rem;
+  border-right: 1px solid rgba(255,255,255,.1);
+}
+.hero-stat:first-child { padding-left: 0; }
+.hero-stat:last-child  { border-right: none; }
+.stat-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem; letter-spacing: 1px;
+  color: white; line-height: 1; display: block;
+}
+.stat-number em {
+  color: #c0202a; font-style: normal;
+}
+.stat-label {
+  font-size: .6rem; font-weight: 700;
+  color: rgba(255,255,255,.35);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  margin-top: 2px; display: block;
+}
+
+/* Badge Live */
+.hero-live-badge {
+  position: absolute; bottom: 2rem; right: 2rem;
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,.07);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 10px; padding: .8rem 1.2rem;
+  z-index: 2;
+}
+.live-dot-red {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #ff3b30;
+  box-shadow: 0 0 0 3px rgba(255,59,48,.2);
+  animation: livePulse 1.5s ease infinite;
+}
+@keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+.hero-live-text { font-size: .72rem; font-weight: 800; color: white; }
+.hero-live-sub  { font-size: .6rem; color: rgba(255,255,255,.4); }
+
+/* Scroll indicator */
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  z-index: 2;
+  animation: scrollBounce 2s ease infinite;
+}
+@keyframes scrollBounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+.hero-scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, rgba(255,255,255,.4), transparent);
+}
+.hero-scroll-text {
+  font-size: .55rem; font-weight: 700;
+  color: rgba(255,255,255,.3); letter-spacing: 2px; text-transform: uppercase;
+}
+
+/* Animations entrée */
+@keyframes fadeUpIn {
+  from { opacity:0; transform:translateY(30px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.hero-label  { animation: fadeUpIn .6s .2s both; }
+.hero h1     { animation: fadeUpIn .7s .35s both; }
+.hero-desc   { animation: fadeUpIn .6s .5s both; }
+.hero-cta    { animation: fadeUpIn .6s .65s both; }
+.hero-stats  { animation: fadeUpIn .6s .8s both; }
+
+/* Responsive hero */
+@media (max-width: 767px) {
+  .hero { min-height: 90vh; padding-top: 54px; }
+  .hero-inner { padding: 2.5rem 1rem 5rem; }
+  .hero h1 { font-size: clamp(2.4rem, 10vw, 3.5rem); }
+  .hero-desc { font-size: .88rem; }
+  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: .5rem; }
+  .hero-stat { border-right: none; padding: .5rem; }
+  .hero-live-badge { display: none; }
+  .hero-cta { flex-direction: column; }
+  .btn-hero-primary, .btn-hero-outline { width: 100%; justify-content: center; }
+}
+
+/* ── SECTIONS GÉNÉRALES ── */
+.section-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.section-tag {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: .62rem; font-weight: 900;
+  color: #c0202a; letter-spacing: 2.5px; text-transform: uppercase;
+  margin-bottom: .7rem;
+}
+.section-tag::before, .section-tag::after {
+  content: ''; width: 20px; height: 2px; background: #c0202a;
+}
+.section-title-main {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  letter-spacing: -1px; color: #0b1f4b;
+  line-height: 1.05;
+}
+.section-title-main em { color: #c0202a; font-style: normal; }
+.section-subtitle {
+  font-size: .88rem; color: #64748b;
+  line-height: 1.7; margin-top: .5rem;
+  max-width: 500px; margin-left: auto; margin-right: auto;
+}
+</style>
+</head>
+<body>
+
+<!-- BARRE PROGRESSION SCROLL -->
+<div id="progress" role="progressbar" aria-hidden="true"></div>
+
+<!-- LOADER CSS PUR — Se ferme en 1.5s sans GSAP -->
+<div id="loader" role="status" aria-label="Chargement de Market Center Place">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:1.5rem">
+    <svg width="72" height="72" viewBox="0 0 90 90" fill="none" aria-hidden="true">
+      <circle cx="45" cy="45" r="42" stroke="rgba(192,32,42,0.3)" stroke-width="1.5"
+        stroke-dasharray="6 8" fill="none"
+        style="transform-origin:45px 45px;animation:logoRingSpin 7s linear infinite"/>
+      <circle cx="45" cy="45" r="36" fill="#0b1f4b"/>
+      <polyline points="22,64 22,30 45,52 68,30 68,64"
+        stroke="#e8282f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"
+        fill="none"
+        style="stroke-dasharray:120;stroke-dashoffset:120;animation:logoMDraw 1.2s 0.3s ease forwards"/>
+      <circle cx="73" cy="19" r="7" fill="#c8a84b"
+        style="animation:logoDotPulse 2s ease-in-out infinite"/>
+    </svg>
+    <div class="loader-bar">
+      <div class="loader-fill"></div>
+    </div>
+    <div style="font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:3px;text-transform:uppercase">
+      Market Center Place
+    </div>
+  </div>
+</div>
+
+<!-- HEADER injecté par components.js -->
+<div id="header-slot"></div>
+
+<main id="main-content" role="main">
+
+<!-- ══════════════════════════════════════
+     HERO AVEC VIDÉO
+══════════════════════════════════════ -->
+<section class="hero" aria-label="Accueil Market Center Place">
+
+  <!-- Vidéo arrière-plan (Pexels - libre de droits) -->
+  <!-- Vidéo arrière-plan (Pexels - libre de droits) -->
+<div class="hero-video-wrap">
+  <video
+    autoplay muted loop playsinline
+    poster="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=1600&q=80"
+    aria-hidden="true"
+    preload="auto"
+  >
+    <source src="hero-video.mp4" type="video/mp4"/>
+  </video>
+</div>
+
+  <!-- Fond de secours si vidéo non disponible -->
+  <div class="hero-bg-fallback" aria-hidden="true">
+    <div class="hero-bg-line"></div>
+    <div class="hero-bg-line"></div>
+    <div class="hero-bg-line"></div>
+    <div class="hero-bg-line"></div>
+  </div>
+
+  <div class="hero-inner">
+    <div class="hero-label">La marketplace de référence — Côte d'Ivoire</div>
+
+    <h1>
+      <span class="line">La plateforme</span>
+      <span class="line">de commerce <em>nouvelle</em></span>
+      <span class="line">génération</span>
+    </h1>
+
+    <p class="hero-desc">
+      Des milliers de vendeurs vérifiés, des produits de qualité,
+      une livraison rapide partout en Côte d'Ivoire et en Afrique de l'Ouest.
+    </p>
+
+    <div class="hero-cta">
+      <a href="catalogue.html" class="btn-hero-primary">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white" aria-hidden="true">
+          <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+        </svg>
+        Découvrir nos produits
+      </a>
+      <a href="connexion.html?mode=vendor" class="btn-hero-outline">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white" aria-hidden="true">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        Devenir vendeur
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="stat-number" data-target="12000" data-suffix="+">12 000+</span>
+        <span class="stat-label">Produits</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-number" data-target="180" data-suffix="+">180+</span>
+        <span class="stat-label">Vendeurs</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-number" data-target="100" data-suffix="%">100%</span>
+        <span class="stat-label">Sécurisé</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-number">7J/7</span>
+        <span class="stat-label">Support</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Badge Live en direct -->
+  <div class="hero-live-badge" aria-label="Lives en cours">
+    <div class="live-dot-red"></div>
+    <div>
+      <div class="hero-live-text">3 Lives en cours</div>
+      <div class="hero-live-sub">Achetez en direct</div>
+    </div>
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="rgba(255,255,255,.5)" aria-hidden="true">
+      <polygon points="5 3 19 12 5 21 5 3"/>
+    </svg>
+  </div>
+
+  <!-- Indicateur scroll -->
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="hero-scroll-line"></div>
+    <span class="hero-scroll-text">Défiler</span>
+  </div>
+
+</section>
+<!-- CATEGORIES -->
+<div class="cats-bg" id="categories">
+  <div class="section">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Parcourir</div>
+      <h2 class="section-title">Toutes les <em>catégories</em></h2>
+      <p class="section-sub">Trouvez exactement ce que vous cherchez parmi nos 13 catégories et plus de 12 450 references.</p>
+    </div>
+    <div class="cats-grid">
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.05s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="cat-name">Mode</div><div class="cat-count">2 430 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.10s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+        <div class="cat-name">électronique</div><div class="cat-count">1 820 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.15s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="cat-name">Maison</div><div class="cat-count">980 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.20s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></div>
+        <div class="cat-name">Alimentation</div><div class="cat-count">670 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.25s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+        <div class="cat-name">beauté</div><div class="cat-count">1 140 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.27s;text-decoration:none">
+        <div class="cat-icon-wrap" style="background:rgba(16,185,129,0.12)"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="#10b981"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <div class="cat-name" style="color:#059669">santé</div><div class="cat-count">480 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.30s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div class="cat-name">Artisanat</div><div class="cat-count">310 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.35s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="5" r="3"/><path d="M6.5 8a2.5 2.5 0 0 0 0 5h11a2.5 2.5 0 0 0 0-5"/><path d="M12 8v13"/></svg></div>
+        <div class="cat-name">Agriculture</div><div class="cat-count">180 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.40s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+        <div class="cat-name">High-Tech</div><div class="cat-count">540 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.45s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg></div>
+        <div class="cat-name">Sport</div><div class="cat-count">430 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.50s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <div class="cat-name">Livres</div><div class="cat-count">290 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.55s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div class="cat-name">Bricolage</div><div class="cat-count">620 articles</div>
+      </a>
+      <a href="catalogue.html" class="cat-card reveal" style="transition-delay:0.60s;text-decoration:none">
+        <div class="cat-icon-wrap"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="m16 8 6-2v11l-6-2V8z"/></svg></div>
+        <div class="cat-name">Auto &amp; Moto</div><div class="cat-count">760 articles</div>
+      </a>
+    </div>
+  </div>
+</div>
+<!-- BANNIERES PROMO -->
+<div style="background:var(--off)">
+  <div class="section" style="padding-top:0">
+    <div class="promo-grid">
+      <div class="promo-card promo-main reveal-left">
+        <div class="promo-deco"></div>
+        <div class="promo-deco2"></div>
+        <span class="promo-tag">Offre du moment</span>
+        <h3>Smartphones<br/>jusqu'a -40%</h3>
+        <p>Les meilleures references électroniques disponibles maintenant avec garantie vendeur.</p>
+        <a href="catalogue.html" class="promo-link">Voir les offres &rarr;</a>
+      </div>
+      <div class="promo-card promo-alt reveal-right">
+        <div class="promo-deco"></div>
+        <span class="promo-tag">Collection</span>
+        <h3>Mode<br/>Africaine</h3>
+        <p>Wax, Bogolan, Kente et bien plus.</p>
+        <a href="catalogue.html" class="promo-link">Découvrir &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PRODUITS -->
+<div style="background:var(--white)" id="produits">
+  <div class="section">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Selection</div>
+      <h2 class="section-title">Produits <em>populaires</em></h2>
+      <p class="section-sub">Les articles les plus achetes cette semaine par nos clients en Côte d'Ivoire.</p>
+    </div>
+    <div class="prods-grid">
+      <div class="prod-card reveal" style="transition-delay:0.05s">
+    <div class="card-gloss"></div>
+        <span class="prod-badge">-25%</span>
+        <button class="prod-wish"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <a href="produit.html" style="text-decoration:none">
+          <div class="prod-img"><img loading="lazy" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Smartphone"/><div class="prod-overlay"><button class="prod-quick">Voir le produit</button></div></div>
+        </a>
+        <div class="prod-body">
+          <div class="prod-cat">électronique</div>
+          <div class="prod-name"><a href="produit.html" style="color:inherit;text-decoration:none">Smartphone Android 128 Go &mdash; Ecran 6.7"</a></div>
+          <div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(128 avis)</span></div>
+          <div class="prod-foot"><div><span class="prod-price">89 000 FCFA</span><span class="prod-old">119 000</span></div><button class="btn-add" onclick="addToCart(this,1,'Smartphone Android',89000)">Ajouter</button></div>
+        </div>
+      </div>
+      <div class="prod-card reveal" style="transition-delay:0.10s">
+    <div class="card-gloss"></div>
+        <button class="prod-wish"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <a href="produit.html" style="text-decoration:none">
+          <div class="prod-img" TEMP_PLACEHOLDER?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Mode Wax"/><div class="prod-overlay"><button class="prod-quick">Voir le produit</button></div></div>
+        </a>
+        <div class="prod-body">
+          <div class="prod-cat">Mode &amp; Wax</div>
+          <div class="prod-name"><a href="produit.html" style="color:inherit;text-decoration:none">Robe en Wax Ivoirien &mdash; Tailles S a XL</a></div>
+          <div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9734; <span>(87 avis)</span></div>
+          <div class="prod-foot"><div><span class="prod-price">18 500 FCFA</span></div><button class="btn-add" onclick="addToCart(this,2,'Robe Wax',18500)">Ajouter</button></div>
+        </div>
+      </div>
+      <div class="prod-card reveal" style="transition-delay:0.15s">
+    <div class="card-gloss"></div>
+        <span class="prod-badge new">Nouveau</span>
+        <button class="prod-wish"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <a href="produit.html" style="text-decoration:none">
+          <div class="prod-img" style="background:#f0f4f8;padding:0;overflow:hidden;position:relative"><img loading="lazy" src="https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Karite"/><div class="prod-overlay"><button class="prod-quick">Voir le produit</button></div></div>
+        </a>
+        <div class="prod-body">
+          <div class="prod-cat">beauté naturelle</div>
+          <div class="prod-name"><a href="produit.html" style="color:inherit;text-decoration:none">Huile de karite pur &mdash; 500 ml, locale</a></div>
+          <div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(214 avis)</span></div>
+          <div class="prod-foot"><div><span class="prod-price">7 200 FCFA</span></div><button class="btn-add" onclick="addToCart(this,3,'Karite',7200)">Ajouter</button></div>
+        </div>
+      </div>
+      <div class="prod-card reveal" style="transition-delay:0.20s">
+    <div class="card-gloss"></div>
+        <span class="prod-badge">-15%</span>
+        <button class="prod-wish"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <a href="produit.html" style="text-decoration:none">
+          <div class="prod-img" style="background:#f0f4f8;padding:0;overflow:hidden;position:relative"><img loading="lazy" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Coussin"/><div class="prod-overlay"><button class="prod-quick">Voir le produit</button></div></div>
+        </a>
+        <div class="prod-body">
+          <div class="prod-cat">Maison &amp; Deco</div>
+          <div class="prod-name"><a href="produit.html" style="color:inherit;text-decoration:none">Coussin decoratif africain &mdash; Set de 2</a></div>
+          <div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9734; <span>(43 avis)</span></div>
+          <div class="prod-foot"><div><span class="prod-price">12 000 FCFA</span><span class="prod-old">14 200</span></div><button class="btn-add" onclick="addToCart(this,4,'Coussin',12000)">Ajouter</button></div>
+        </div>
+      </div>
+      <div class="prod-card reveal" style="transition-delay:0.25s">
+    <div class="card-gloss"></div>
+        <button class="prod-wish"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <a href="produit.html" style="text-decoration:none">
+          <div class="prod-img" style="background:#f0f4f8;padding:0;overflow:hidden;position:relative"><img loading="lazy" src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Sac"/><div class="prod-overlay"><button class="prod-quick">Voir le produit</button></div></div>
+        </a>
+        <div class="prod-body">
+          <div class="prod-cat">Accessoires</div>
+          <div class="prod-name"><a href="produit.html" style="color:inherit;text-decoration:none">Sac artisanal Bogolan &mdash; Handmade Mali</a></div>
+          <div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(65 avis)</span></div>
+          <div class="prod-foot"><div><span class="prod-price">22 500 FCFA</span></div><button class="btn-add" onclick="addToCart(this,5,'Sac Bogolan',22500)">Ajouter</button></div>
+        </div>
+      </div>
+      <div class="prod-card reveal" style="transition-delay:0.30s">
+    <div class="card-gloss"></div>
+        <span class="prod-badge">-30%</span>
+        <button class="prod-wish"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <a href="produit.html" style="text-decoration:none">
+          <div class="prod-img" style="background:#f0f4f8;padding:0;overflow:hidden;position:relative"><img loading="lazy" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Casseroles"/><div class="prod-overlay"><button class="prod-quick">Voir le produit</button></div></div>
+        </a>
+        <div class="prod-body">
+          <div class="prod-cat">Cuisine</div>
+          <div class="prod-name"><a href="produit.html" style="color:inherit;text-decoration:none">Set casseroles inox &mdash; 5 pieces</a></div>
+          <div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9734; <span>(102 avis)</span></div>
+          <div class="prod-foot"><div><span class="prod-price">34 000 FCFA</span><span class="prod-old">49 000</span></div><button class="btn-add" onclick="addToCart(this,6,'Casseroles',34000)">Ajouter</button></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <a href="catalogue.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;padding:13px 32px;border-radius:4px;text-decoration:none;font-weight:800;font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;transition:background 0.2s" onmouseover="this.style.background='var(--red)'" onmouseout="this.style.background='var(--navy)'">
+        Voir tous les produits &rarr;
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- SANTE & BIEN-ETRE -->
+<div style="background:linear-gradient(135deg,#f0fdf4 0%,#ecfdf5 100%);padding:5rem 2.5rem">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="section-header center reveal">
+      <div class="section-eyebrow" style="color:#059669">Nouveau</div>
+      <h2 class="section-title">santé <em style="color:#059669">&amp; Bien-etre</em></h2>
+      <p class="section-sub">Produits naturels, complements alimentaires, pharmacie et soins — tout pour prendre soin de vous et votre famille.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1.2rem;margin-bottom:2.5rem">
+      <a href="catalogue.html" class="prod-card reveal" style="text-decoration:none;transition-delay:0.05s">
+    <div class="card-gloss"></div>
+        <div class="prod-img" style="background:#f0fdf4;padding:0;overflow:hidden">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Vitamine C"/>
+          <div class="prod-overlay"><button class="prod-quick">Voir le produit</button></div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Complements</div>
+          <div class="prod-name">Vitamine C 1000mg — 60 comprimes</div>
+          <div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(128 avis)</span></div>
+          <div class="prod-foot"><div><span class="prod-price">8 500 FCFA</span></div><button class="btn-add" onclick="addToCart(this,'sante-1','Vitamine C',8500)">Ajouter</button></div>
+        </div>
+      </a>
+      <a href="catalogue.html" class="prod-card reveal" style="text-decoration:none;transition-delay:0.1s">
+    <div class="card-gloss"></div>
+        <div class="prod-img" style="background:#f0fdf4;padding:0;overflow:hidden">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Karite naturel"/>
+          <div class="prod-overlay"><button class="prod-quick">Voir le produit</button></div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Soins naturels</div>
+          <div class="prod-name">Beurre de karite pur bio 500ml</div>
+          <div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9734; <span>(94 avis)</span></div>
+          <div class="prod-foot"><div><span class="prod-price">7 200 FCFA</span></div><button class="btn-add" onclick="addToCart(this,'sante-2','Karite bio',7200)">Ajouter</button></div>
+        </div>
+      </a>
+      <a href="catalogue.html" class="prod-card reveal" style="text-decoration:none;transition-delay:0.15s">
+    <div class="card-gloss"></div>
+        <div class="prod-img" style="background:#f0fdf4;padding:0;overflow:hidden">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1576671081837-49000212a370?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Tisane"/>
+          <div class="prod-overlay"><button class="prod-quick">Voir le produit</button></div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Phytotherapie</div>
+          <div class="prod-name">Tisane bien-etre gingembre citron</div>
+          <div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(67 avis)</span></div>
+          <div class="prod-foot"><div><span class="prod-price">4 500 FCFA</span></div><button class="btn-add" onclick="addToCart(this,'sante-3','Tisane',4500)">Ajouter</button></div>
+        </div>
+      </a>
+      <a href="catalogue.html" class="prod-card reveal" style="text-decoration:none;transition-delay:0.2s">
+    <div class="card-gloss"></div>
+        <div class="prod-img" style="background:#f0fdf4;padding:0;overflow:hidden">
+          <img loading="lazy" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Yoga"/>
+          <div class="prod-overlay"><button class="prod-quick">Voir le produit</button></div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-cat">Sport &amp; Bien-etre</div>
+          <div class="prod-name">Tapis de yoga antiderapant 6mm</div>
+          <div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(43 avis)</span></div>
+          <div class="prod-foot"><div><span class="prod-price">15 000 FCFA</span></div><button class="btn-add" onclick="addToCart(this,'sante-4','Tapis yoga',15000)">Ajouter</button></div>
+        </div>
+      </a>
+    </div>
+    <div style="text-align:center">
+      <a href="catalogue.html" style="display:inline-flex;align-items:center;gap:8px;background:#059669;color:#fff;padding:13px 32px;border-radius:4px;text-decoration:none;font-weight:800;font-size:0.8rem;letter-spacing:1px;text-transform:uppercase;transition:background 0.2s" onmouseover="this.style.background='#047857'" onmouseout="this.style.background='#059669'">
+        Voir tous les produits santé &rarr;
+      </a>
+    </div>
+  </div>
+</div>
+<!-- TRUST -->
+<div class="trust-strip">
+  <div class="trust-inner">
+    <div class="trust-item reveal">
+      <div class="trust-icon-box"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+      <div class="trust-text"><h4>livraison rapide</h4><p>24-48h a Abidjan, 3-5 jours en regions</p></div>
+    </div>
+    <div class="trust-item reveal" style="transition-delay:0.1s">
+      <div class="trust-icon-box"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+      <div class="trust-text"><h4>Paiement sécurisé</h4><p>Orange Money, MTN, Moov, Wave</p></div>
+    </div>
+    <div class="trust-item reveal" style="transition-delay:0.2s">
+      <div class="trust-icon-box"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <div class="trust-text"><h4>Vendeurs vérifiés</h4><p>Chaque vendeur controle par notre equipe</p></div>
+    </div>
+    <div class="trust-item reveal" style="transition-delay:0.3s">
+      <div class="trust-icon-box"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg></div>
+      <div class="trust-text"><h4>Retours faciles</h4><p>retour gratuit sous 7 jours</p></div>
+    </div>
+  </div>
+</div>
+<!-- VENDEURS -->
+<div class="vendors-bg" id="vendeurs">
+  <div class="section">
+    <div class="section-header center reveal">
+      <div class="section-eyebrow">Partenaires</div>
+      <h2 class="section-title">Vendeurs <em>top notes</em></h2>
+    </div>
+    <div class="vendors-grid">
+      <a href="profil-vendeur.html" class="vendor-card reveal" style="transition-delay:0.05s;text-decoration:none">
+        <div class="vendor-avatar">AS</div>
+        <div class="vendor-name">AbidjanStyle</div>
+        <div class="vendor-cat">Mode &amp; Vetements</div>
+        <div class="vendor-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <span class="vendor-badge">vérifié</span>
+      </a>
+      <a href="profil-vendeur.html" class="vendor-card reveal" style="transition-delay:0.10s;text-decoration:none">
+        <div class="vendor-avatar">TC</div>
+        <div class="vendor-name">TechCI Pro</div>
+        <div class="vendor-cat">électronique</div>
+        <div class="vendor-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <span class="vendor-badge">vérifié</span>
+      </a>
+      <a href="profil-vendeur.html" class="vendor-card reveal" style="transition-delay:0.15s;text-decoration:none">
+        <div class="vendor-avatar">NB</div>
+        <div class="vendor-name">NatureBio CI</div>
+        <div class="vendor-cat">beauté naturelle</div>
+        <div class="vendor-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+        <span class="vendor-badge">vérifié</span>
+      </a>
+      <a href="profil-vendeur.html" class="vendor-card reveal" style="transition-delay:0.20s;text-decoration:none">
+        <div class="vendor-avatar">AW</div>
+        <div class="vendor-name">Artisans Wax</div>
+        <div class="vendor-cat">Artisanat local</div>
+        <div class="vendor-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <span class="vendor-badge top">Top vendeur</span>
+      </a>
+      <a href="profil-vendeur.html" class="vendor-card reveal" style="transition-delay:0.25s;text-decoration:none">
+        <div class="vendor-avatar">MP</div>
+        <div class="vendor-name">MaisonPlus CI</div>
+        <div class="vendor-cat">Maison &amp; Deco</div>
+        <div class="vendor-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+        <span class="vendor-badge">vérifié</span>
+      </a>
+    </div>
+  </div>
+</div>
+<!-- CHIFFRES CLES -->
+<div class="numbers-bg" id="chiffres">
+  <div class="numbers-inner">
+    <div class="section-header center reveal">
+      <div class="section-eyebrow">Le groupe en chiffres</div>
+      <h2 class="section-title" style="color:#fff">Notre <em style="color:var(--red2)">impact</em> en Afrique de l'Ouest</h2>
+    </div>
+    <div class="numbers-grid">
+      <div class="number-item reveal" style="transition-delay:0.10s">
+        <span class="num-val" data-target="12000">0<span>+</span></span>
+        <span class="num-label">Produits references</span>
+      </div>
+      <div class="number-item reveal" style="transition-delay:0.20s">
+        <span class="num-val" data-target="850">0<span>+</span></span>
+        <span class="num-label">Vendeurs vérifiés</span>
+      </div>
+      <div class="number-item reveal" style="transition-delay:0.30s">
+        <span class="num-val" data-target="45000">0<span>+</span></span>
+        <span class="num-label">Clients satisfaits</span>
+      </div>
+      <div class="number-item reveal" style="transition-delay:0.40s">
+        <span class="num-val" data-target="7">0<span> pays</span></span>
+        <span class="num-label">En Afrique de l'Ouest</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- NEWSLETTER -->
+<div class="nl-section">
+  <div class="nl-bg-deco"></div>
+  <div class="nl-bg-deco"></div>
+  <div class="nl-inner reveal">
+    <h2>Restez informe en premier</h2>
+    <p>Inscrivez-vous a notre newsletter et recevez en avant-premiere toutes nos promotions et nouveautes exclusives.</p>
+    <div class="nl-form">
+      <input type="email" placeholder="Votre adresse email professionnelle..." id="nl-email"/>
+      <button onclick="subscribeNewsletter()" class="btn-submit">S'inscrire</button>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<!-- FOOTER injecté par components.js -->
+<div id="footer-slot"></div>
+
+<!-- ══ SCRIPTS ══ -->
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+<script src="ux-improvements.js"></script>
+
+<!-- GSAP en DEFER — non bloquant -->
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script defer src="gsap-animations.js"></script>
+
+<script>
+/* ════════════════════════════════════════════
+   LOADER — Fermeture CSS pure, sans GSAP
+   Garanti même hors ligne / GSAP non chargé
+════════════════════════════════════════════ */
+(function() {
+  var loader = document.getElementById('loader');
+  if (!loader) return;
+
+  function hideLoader() {
+    loader.classList.add('hide');
+    setTimeout(function() {
+      if (loader.parentNode) loader.parentNode.removeChild(loader);
+    }, 600);
+  }
+
+  // Fermer après 1.5s max — quoi qu'il arrive
+  var maxTimer = setTimeout(hideLoader, 1500);
+
+  // Ou dès que la page est prête
+  if (document.readyState === 'complete') {
+    clearTimeout(maxTimer);
+    setTimeout(hideLoader, 800);
+  } else {
+    window.addEventListener('load', function() {
+      clearTimeout(maxTimer);
+      setTimeout(hideLoader, 300);
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      clearTimeout(maxTimer);
+      setTimeout(hideLoader, 600);
+    });
+  }
+})();
+
+/* ════════════════════════════════════════════
+   BARRE DE PROGRESSION SCROLL
+════════════════════════════════════════════ */
+(function() {
+  var bar = document.getElementById('progress');
+  if (!bar) return;
+  window.addEventListener('scroll', function() {
+    var scrolled = window.scrollY;
+    var total    = document.documentElement.scrollHeight - window.innerHeight;
+    var pct      = total > 0 ? scrolled / total : 0;
+    bar.style.transform = 'scaleX(' + pct + ')';
+  }, { passive: true });
+})();
+
+/* ════════════════════════════════════════════
+   VIDÉO HERO — Fallback si non disponible
+════════════════════════════════════════════ */
+(function() {
+  var video = document.querySelector('.hero-video-wrap video');
+  if (!video) return;
+
+  video.addEventListener('error', function() {
+    // Masquer le wrapper vidéo si erreur
+    var wrap = document.querySelector('.hero-video-wrap');
+    if (wrap) wrap.style.display = 'none';
+  });
+
+  // Tenter de lancer la vidéo
+  var playPromise = video.play();
+  if (playPromise) {
+    playPromise.catch(function() {
+      var wrap = document.querySelector('.hero-video-wrap');
+      if (wrap) wrap.style.opacity = '0';
+    });
+  }
+})();
+
+/* ════════════════════════════════════════════
+   COUNT-UP STATS HERO
+════════════════════════════════════════════ */
+(function() {
+  var stats = document.querySelectorAll('[data-target]');
+  var started = false;
+
+  function countUp() {
+    if (started) return;
+    started = true;
+    stats.forEach(function(el) {
+      var target  = parseInt(el.dataset.target) || 0;
+      var suffix  = el.dataset.suffix || '';
+      var start   = 0;
+      var duration= 1800;
+      var step    = target / (duration / 16);
+      var timer   = setInterval(function() {
+        start += step;
+        if (start >= target) {
+          start = target;
+          clearInterval(timer);
+        }
+        el.textContent = Math.floor(start).toLocaleString('fr-FR') + suffix;
+      }, 16);
+    });
+  }
+
+  // Lancer quand la section est visible
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) countUp();
+      });
+    }, { threshold: .3 });
+    var statsSection = document.querySelector('.hero-stats');
+    if (statsSection) obs.observe(statsSection);
+  } else {
+    setTimeout(countUp, 1500);
+  }
+})();
+
+/* ════════════════════════════════════════════
+   SERVICE WORKER
+════════════════════════════════════════════ */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js').catch(function() {});
+  });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <title>Administration — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy:#0b1f4b; --red:#c0202a; --gold:#c8a84b;
+      --green:#16a34a; --orange:#f59e0b; --blue:#2563eb;
+      --white:#fff; --off:#f4f6fb; --lgray:#e2e8f0;
+      --gray:#64748b; --dark:#0f172a; --sidebar-w:240px;
+    }
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Montserrat',sans-serif;background:var(--off);color:var(--dark);min-height:100vh;}
+
+    /* LOGIN */
+    .login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy) 0%,#071230 100%);}
+    .login-box{background:var(--white);border-radius:12px;padding:2.5rem;width:100%;max-width:380px;box-shadow:0 30px 80px rgba(0,0,0,.4);}
+    .login-logo{text-align:center;margin-bottom:1.5rem;}
+    .login-logo .brand{font-size:1.2rem;font-weight:900;color:var(--navy);letter-spacing:-.5px;}
+    .login-logo .brand em{color:var(--red);font-style:normal;}
+    .login-logo small{display:block;font-size:.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:2px;}
+    .login-title{font-size:1.1rem;font-weight:900;color:var(--navy);margin-bottom:.3rem;}
+    .login-sub{font-size:.78rem;color:var(--gray);margin-bottom:1.5rem;}
+    .login-field{margin-bottom:1rem;}
+    .login-field label{display:block;font-size:.68rem;font-weight:800;color:var(--navy);letter-spacing:.5px;text-transform:uppercase;margin-bottom:.4rem;}
+    .login-field input{width:100%;padding:11px 14px;border:1.5px solid var(--lgray);border-radius:5px;font-family:'Montserrat',sans-serif;font-size:.85rem;outline:none;transition:border .2s;}
+    .login-field input:focus{border-color:var(--navy);}
+    .btn-login{width:100%;padding:13px;background:var(--navy);color:#fff;border:none;border-radius:5px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.82rem;letter-spacing:.5px;cursor:pointer;transition:background .2s;}
+    .btn-login:hover{background:var(--red);}
+    .login-error{background:#fef2f2;border:1px solid #fecaca;border-radius:5px;padding:9px 12px;font-size:.78rem;font-weight:700;color:var(--red);margin-top:1rem;display:none;}
+    .login-hint{background:var(--off);border-radius:5px;padding:8px 12px;font-size:.72rem;color:var(--gray);margin-top:.8rem;text-align:center;}
+
+    /* LAYOUT */
+    .admin-layout{display:none;min-height:100vh;}
+    .admin-layout.visible{display:flex;}
+
+    /* SIDEBAR */
+    .admin-sidebar{width:var(--sidebar-w);background:var(--navy);min-height:100vh;position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:100;box-shadow:4px 0 20px rgba(0,0,0,.2);}
+    .sidebar-logo{padding:1.5rem 1.2rem;border-bottom:1px solid rgba(255,255,255,.1);}
+    .sidebar-logo-name{font-size:.9rem;font-weight:900;color:#fff;letter-spacing:-.3px;}
+    .sidebar-logo-name em{color:var(--red);font-style:normal;}
+    .sidebar-logo-tag{font-size:.55rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:1px;}
+    .sidebar-admin-badge{display:inline-block;background:rgba(192,32,42,.3);border:1px solid rgba(192,32,42,.5);color:#ff8a8a;border-radius:3px;padding:2px 7px;font-size:.55rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-top:.4rem;}
+    .sidebar-section-title{font-size:.55rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.8rem 1.2rem .3rem;}
+    .sidebar-link{display:flex;align-items:center;gap:10px;padding:.7rem 1.2rem;text-decoration:none;font-size:.74rem;font-weight:700;color:rgba(255,255,255,.55);border-left:3px solid transparent;transition:all .2s;cursor:pointer;background:none;border-top:none;border-right:none;border-bottom:none;font-family:'Montserrat',sans-serif;width:100%;text-align:left;}
+    .sidebar-link svg{stroke:currentColor;flex-shrink:0;}
+    .sidebar-link:hover{color:#fff;background:rgba(255,255,255,.06);border-left-color:rgba(255,255,255,.2);}
+    .sidebar-link.active{color:#fff;background:rgba(255,255,255,.1);border-left-color:var(--red);font-weight:800;}
+    .sidebar-badge{margin-left:auto;background:var(--red);color:#fff;border-radius:99px;padding:1px 7px;font-size:.58rem;font-weight:900;}
+    .sidebar-badge.green{background:var(--green);}
+    .sidebar-sep{height:1px;background:rgba(255,255,255,.08);margin:.4rem 0;}
+    .sidebar-bottom{margin-top:auto;padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,.08);}
+    .sidebar-user{display:flex;align-items:center;gap:.7rem;}
+    .sidebar-avatar{width:32px;height:32px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;color:#fff;flex-shrink:0;}
+    .sidebar-user-name{font-size:.72rem;font-weight:700;color:#fff;}
+    .sidebar-user-role{font-size:.6rem;color:rgba(255,255,255,.4);}
+
+    /* MAIN */
+    .admin-main{margin-left:var(--sidebar-w);flex:1;}
+    .admin-topbar{background:var(--white);border-bottom:1px solid var(--lgray);padding:.9rem 2rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:50;}
+    .topbar-title{font-size:1rem;font-weight:900;color:var(--navy);flex:1;}
+    .topbar-search{display:flex;align-items:center;gap:8px;background:var(--off);border:1.5px solid var(--lgray);border-radius:5px;padding:7px 12px;}
+    .topbar-search svg{stroke:var(--gray);}
+    .topbar-search input{background:none;border:none;outline:none;font-family:'Montserrat',sans-serif;font-size:.8rem;width:180px;color:var(--dark);}
+    .admin-content{padding:1.5rem 2rem;}
+
+    /* KPIs */
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
+    .kpi{background:var(--white);border-radius:8px;padding:1.2rem 1.4rem;box-shadow:0 2px 8px rgba(0,0,0,.05);position:relative;overflow:hidden;}
+    .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+    .kpi.k-navy::before{background:var(--navy);}
+    .kpi.k-red::before{background:var(--red);}
+    .kpi.k-green::before{background:var(--green);}
+    .kpi.k-gold::before{background:var(--gold);}
+    .kpi-label{font-size:.6rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--gray);margin-bottom:.5rem;}
+    .kpi-val{font-size:1.9rem;font-weight:900;color:var(--navy);letter-spacing:-1px;line-height:1;}
+    .kpi-val span{font-size:1rem;color:var(--gray);font-weight:600;}
+    .kpi-delta{font-size:.72rem;font-weight:700;margin-top:.4rem;color:var(--green);}
+    .kpi-icon{position:absolute;right:1rem;top:50%;transform:translateY(-50%);opacity:.07;}
+    .kpi-icon svg{stroke:var(--navy);}
+
+    /* TABLES */
+    .card{background:var(--white);border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:1.5rem;overflow:hidden;}
+    .card-header{padding:.9rem 1.2rem;border-bottom:1px solid var(--lgray);display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;}
+    .card-title{font-size:.8rem;font-weight:900;color:var(--navy);letter-spacing:-.2px;flex:1;}
+    .filter-btn{padding:5px 12px;border:1.5px solid var(--lgray);border-radius:4px;background:var(--white);font-family:'Montserrat',sans-serif;font-size:.68rem;font-weight:700;color:var(--gray);cursor:pointer;transition:all .2s;}
+    .filter-btn:hover{border-color:var(--navy);color:var(--navy);}
+    .filter-btn.active{border-color:var(--navy);background:var(--navy);color:#fff;}
+    .search-mini{display:flex;align-items:center;gap:7px;background:var(--off);border:1.5px solid var(--lgray);border-radius:4px;padding:6px 10px;}
+    .search-mini svg{stroke:var(--gray);flex-shrink:0;}
+    .search-mini input{background:none;border:none;outline:none;font-family:'Montserrat',sans-serif;font-size:.78rem;width:140px;}
+    .data-table{width:100%;border-collapse:collapse;}
+    .data-table th{font-size:.6rem;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:var(--gray);padding:.7rem 1rem;text-align:left;background:var(--off);border-bottom:2px solid var(--lgray);white-space:nowrap;}
+    .data-table td{padding:.8rem 1rem;border-bottom:1px solid var(--lgray);font-size:.8rem;vertical-align:middle;}
+    .data-table tr:last-child td{border-bottom:none;}
+    .data-table tr:hover td{background:#fafbff;}
+    .badge{border-radius:99px;padding:3px 10px;font-size:.6rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;}
+    .badge.b-green{background:#dcfce7;color:#16a34a;}
+    .badge.b-yellow{background:#fef9c3;color:#854d0e;}
+    .badge.b-red{background:#fef2f2;color:var(--red);}
+    .badge.b-blue{background:#dbeafe;color:#1d4ed8;}
+    .btn-sm{padding:4px 10px;border-radius:4px;font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:800;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.3px;border:none;}
+    .btn-sm.b-approve{background:var(--green);color:#fff;}
+    .btn-sm.b-approve:hover{background:#15803d;}
+    .btn-sm.b-suspend{background:var(--off);border:1.5px solid var(--lgray)!important;color:var(--gray);}
+    .btn-sm.b-suspend:hover{border-color:var(--red)!important;color:var(--red);}
+    .btn-sm.b-view{background:var(--navy);color:#fff;}
+    .btn-sm.b-view:hover{background:var(--red);}
+    .tbl-foot{padding:.8rem 1.2rem;border-top:1px solid var(--lgray);display:flex;align-items:center;justify-content:space-between;}
+    .tbl-foot-info{font-size:.72rem;color:var(--gray);}
+    .pag-btns{display:flex;gap:.3rem;}
+    .pag-btn{width:30px;height:30px;border-radius:4px;border:1.5px solid var(--lgray);background:var(--white);font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;color:var(--gray);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;}
+    .pag-btn:hover{border-color:var(--navy);color:var(--navy);}
+    .pag-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+    .pag-btn:disabled{opacity:.35;cursor:default;pointer-events:none;}
+
+    /* CHART */
+    .chart-bars{display:flex;align-items:flex-end;gap:8px;height:120px;padding:0 .5rem;}
+    .chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+    .chart-bar{width:100%;border-radius:3px 3px 0 0;background:rgba(11,31,75,.15);min-height:4px;transition:height .6s ease;}
+    .chart-bar.cur{background:linear-gradient(to top,var(--navy),#1e40af);opacity:.9;}
+    .chart-label{font-size:.58rem;font-weight:700;color:var(--gray);}
+    .chart-val{font-size:.6rem;font-weight:800;color:var(--navy);}
+
+    /* SECTIONS */
+    .section{display:none;}
+    .section.active{display:block;}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--navy);color:#fff;border-radius:6px;padding:.8rem 1.2rem;font-size:.78rem;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:9999;transform:translateY(100px);transition:transform .3s ease;}
+    .toast.show{transform:translateY(0);}
+    .toast.t-success{background:var(--green);}
+    .toast.t-error{background:var(--red);}
+
+    @media(max-width:1024px){.kpi-grid{grid-template-columns:1fr 1fr;}}
+  </style>
+  <link rel="stylesheet" href="../components.css"/>
+  <link rel="stylesheet" href="../mobile.css"/>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- LOGIN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="brand">MARKET<em>CENTER</em>PLACE</div>
+      <small>Espace Administration</small>
+    </div>
+    <h2 class="login-title">Connexion Admin</h2>
+    <p class="login-sub">Accès réservé aux administrateurs</p>
+    <div class="login-field">
+      <label>Email ou téléphone</label>
+      <input type="text" id="admin-email" placeholder="admin@marketcenterplace.ci" onkeydown="if(event.key==='Enter')adminLogin()"/>
+    </div>
+    <div class="login-field">
+      <label>Mot de passe</label>
+      <input type="password" id="admin-pwd" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()"/>
+    </div>
+    <button class="btn-login" onclick="adminLogin()">Se connecter</button>
+    <div class="login-error" id="login-error"></div>
+    <div class="login-hint">Démo : admin@mcp.ci / admin2025</div>
+  </div>
+</div>
+
+<!-- INTERFACE ADMIN -->
+<div class="admin-layout" id="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-name">MARKET<em>CENTER</em>PLACE</div>
+      <div class="sidebar-logo-tag">Administration</div>
+      <span class="sidebar-admin-badge">Admin</span>
+    </div>
+
+    <div class="sidebar-section-title">Principal</div>
+    <button class="sidebar-link active" onclick="showSection('dashboard',this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Tableau de bord
+    </button>
+    <button class="sidebar-link" onclick="showSection('vendeurs',this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Vendeurs <span class="sidebar-badge" id="badge-vendeurs">0</span>
+    </button>
+    <button class="sidebar-link" onclick="showSection('produits',this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+      Produits
+    </button>
+    <button class="sidebar-link" onclick="showSection('commandes',this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+      Commandes
+    </button>
+    <button class="sidebar-link" onclick="showSection('utilisateurs',this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Utilisateurs
+    </button>
+    <div class="sidebar-sep"></div>
+    <div class="sidebar-section-title">Configuration</div>
+    <button class="sidebar-link" onclick="showSection('categories',this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      Catégories
+    </button>
+    <button class="sidebar-link" onclick="showSection('promos',this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+      Codes promo
+    </button>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="admin-avatar">A</div>
+        <div>
+          <div class="sidebar-user-name" id="admin-name">Admin</div>
+          <div class="sidebar-user-role">Administrateur</div>
+        </div>
+        <button onclick="adminLogout()" title="Déconnexion" style="margin-left:auto;background:none;border:none;cursor:pointer;padding:4px">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="rgba(255,255,255,.4)"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="admin-main" role="main">
+    <div class="admin-topbar">
+      <div class="topbar-title" id="topbar-title">Tableau de bord</div>
+      <div class="topbar-search">
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Recherche globale..." oninput="globalSearch(this.value)"/>
+      </div>
+      <button onclick="loadAll()" title="Actualiser" style="background:none;border:none;cursor:pointer;padding:6px;border-radius:4px;">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="var(--gray)"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      </button>
+      <a href="../index.html" target="_blank" style="display:flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;color:var(--gray);text-decoration:none;padding:6px 10px;border:1.5px solid var(--lgray);border-radius:4px;">
+        <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        Voir le site
+      </a>
+    </div>
+
+    <div class="admin-content">
+
+      <!-- DASHBOARD -->
+      <div class="section active" id="section-dashboard">
+        <div class="kpi-grid">
+          <div class="kpi k-navy">
+            <div class="kpi-label">Utilisateurs</div>
+            <div class="kpi-val" id="kpi-users">—</div>
+            <div class="kpi-delta" id="kpi-users-sub"></div>
+            <div class="kpi-icon"><svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke-width="1.2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
+          </div>
+          <div class="kpi k-red">
+            <div class="kpi-label">Vendeurs actifs</div>
+            <div class="kpi-val" id="kpi-vendors">—</div>
+            <div class="kpi-delta" id="kpi-vendors-sub"></div>
+            <div class="kpi-icon"><svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke-width="1.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg></div>
+          </div>
+          <div class="kpi k-green">
+            <div class="kpi-label">CA mois (FCFA)</div>
+            <div class="kpi-val" id="kpi-ca">—</div>
+            <div class="kpi-delta">+18% vs mois dernier</div>
+            <div class="kpi-icon"><svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke-width="1.2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          </div>
+          <div class="kpi k-gold">
+            <div class="kpi-label">Commandes payées</div>
+            <div class="kpi-val" id="kpi-orders">—</div>
+            <div class="kpi-delta" id="kpi-orders-sub"></div>
+            <div class="kpi-icon"><svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke-width="1.2"><path d="M14 2H6a2 2 0 0 0-2 2v16"/></svg></div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:1rem">
+          <div class="card">
+            <div class="card-header"><div class="card-title">CA mensuel — 6 derniers mois</div></div>
+            <div style="padding:1.5rem 1rem 1rem"><div class="chart-bars" id="admin-chart"></div></div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">Vendeurs en attente</div>
+              <button class="btn-sm b-view" onclick="showSection('vendeurs',document.querySelectorAll('.sidebar-link')[1])">Voir tous</button>
+            </div>
+            <div id="pending-list" style="padding:.4rem 0">
+              <div style="text-align:center;padding:2rem;color:var(--gray);font-size:.8rem">Chargement...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VENDEURS -->
+      <div class="section" id="section-vendeurs">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Gestion des vendeurs</div>
+            <button class="filter-btn active" onclick="setFilter('vendors','',this)">Tous</button>
+            <button class="filter-btn" onclick="setFilter('vendors','en_attente',this)">En attente</button>
+            <button class="filter-btn" onclick="setFilter('vendors','approuve',this)">Approuvés</button>
+            <button class="filter-btn" onclick="setFilter('vendors','suspendu',this)">Suspendus</button>
+            <div class="search-mini">
+              <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" placeholder="Rechercher..." oninput="setSearch('vendors',this.value)"/>
+            </div>
+          </div>
+          <table class="data-table">
+            <thead><tr><th>Boutique</th><th>Propriétaire</th><th>Téléphone</th><th>Produits</th><th>Note</th><th>Statut</th><th>Inscrit le</th><th>Actions</th></tr></thead>
+            <tbody id="vendors-tbody"><tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--gray)">Chargement...</td></tr></tbody>
+          </table>
+          <div class="tbl-foot"><div class="tbl-foot-info" id="vendors-info"></div><div class="pag-btns" id="vendors-pag"></div></div>
+        </div>
+      </div>
+
+      <!-- PRODUITS -->
+      <div class="section" id="section-produits">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Modération des produits</div>
+            <button class="filter-btn active" onclick="setFilter('products','',this)">Tous</button>
+            <button class="filter-btn" onclick="setFilter('products','1',this)">Actifs</button>
+            <button class="filter-btn" onclick="setFilter('products','0',this)">Inactifs</button>
+            <div class="search-mini">
+              <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" placeholder="Rechercher..." oninput="setSearch('products',this.value)"/>
+            </div>
+          </div>
+          <table class="data-table">
+            <thead><tr><th>Produit</th><th>Vendeur</th><th>Catégorie</th><th>Prix</th><th>Ventes</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody id="products-tbody"><tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--gray)">Chargement...</td></tr></tbody>
+          </table>
+          <div class="tbl-foot"><div class="tbl-foot-info" id="products-info"></div><div class="pag-btns" id="products-pag"></div></div>
+        </div>
+      </div>
+
+      <!-- COMMANDES -->
+      <div class="section" id="section-commandes">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Toutes les commandes</div>
+            <button class="filter-btn active" onclick="setFilter('orders','',this)">Toutes</button>
+            <button class="filter-btn" onclick="setFilter('orders','en_attente',this)">En attente</button>
+            <button class="filter-btn" onclick="setFilter('orders','confirmee',this)">Confirmées</button>
+            <button class="filter-btn" onclick="setFilter('orders','livree',this)">Livrées</button>
+            <button class="filter-btn" onclick="setFilter('orders','annulee',this)">Annulées</button>
+          </div>
+          <table class="data-table">
+            <thead><tr><th>Référence</th><th>Client</th><th>Montant</th><th>Paiement</th><th>Statut paiement</th><th>Statut livraison</th><th>Date</th></tr></thead>
+            <tbody id="orders-tbody"><tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--gray)">Chargement...</td></tr></tbody>
+          </table>
+          <div class="tbl-foot"><div class="tbl-foot-info" id="orders-info"></div><div class="pag-btns" id="orders-pag"></div></div>
+        </div>
+      </div>
+
+      <!-- UTILISATEURS -->
+      <div class="section" id="section-utilisateurs">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Utilisateurs inscrits</div>
+            <button class="filter-btn active" onclick="setFilter('users','',this)">Tous</button>
+            <button class="filter-btn" onclick="setFilter('users','acheteur',this)">Acheteurs</button>
+            <button class="filter-btn" onclick="setFilter('users','vendeur',this)">Vendeurs</button>
+            <div class="search-mini">
+              <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" placeholder="Nom, email..." oninput="setSearch('users',this.value)"/>
+            </div>
+          </div>
+          <table class="data-table">
+            <thead><tr><th>Nom</th><th>Email</th><th>Téléphone</th><th>Rôle</th><th>Inscrit le</th><th>Statut</th><th>Actions</th></tr></thead>
+            <tbody id="users-tbody"><tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--gray)">Chargement...</td></tr></tbody>
+          </table>
+          <div class="tbl-foot"><div class="tbl-foot-info" id="users-info"></div><div class="pag-btns" id="users-pag"></div></div>
+        </div>
+      </div>
+
+      <!-- CATÉGORIES -->
+      <div class="section" id="section-categories">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Catégories produits</div></div>
+          <table class="data-table">
+            <thead><tr><th>Nom</th><th>Slug</th><th>Ordre</th><th>Statut</th></tr></thead>
+            <tbody id="cats-tbody"><tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--gray)">Chargement...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CODES PROMO -->
+      <div class="section" id="section-promos">
+        <div class="card">
+          <div class="card-header"><div class="card-title">Codes promotionnels actifs</div></div>
+          <table class="data-table">
+            <thead><tr><th>Code</th><th>Type</th><th>Valeur</th><th>Min. commande</th><th>Utilisations</th><th>Statut</th></tr></thead>
+            <tbody id="promos-tbody">
+              <tr><td style="font-weight:800">BIENVENUE10</td><td>Pourcentage</td><td>10%</td><td>20 000 FCFA</td><td>0 / 500</td><td><span class="badge b-green">Actif</span></td></tr>
+              <tr><td style="font-weight:800">MCP2025</td><td>Montant fixe</td><td>5 000 FCFA</td><td>50 000 FCFA</td><td>0 / 100</td><td><span class="badge b-green">Actif</span></td></tr>
+              <tr><td style="font-weight:800">SANTE15</td><td>Pourcentage</td><td>15%</td><td>10 000 FCFA</td><td>0 / 200</td><td><span class="badge b-green">Actif</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+const API = 'http://localhost:3000/api';
+let adminToken = localStorage.getItem('mcp_admin_token');
+
+// ── AUTH ───────────────────────────────────────────────────
+async function adminLogin() {
+  const email = document.getElementById('admin-email').value.trim();
+  const pwd   = document.getElementById('admin-pwd').value;
+  if (!email || !pwd) return showLoginError('Remplissez tous les champs');
+
+  // Mode démo offline
+  if (email === 'admin@mcp.ci' && pwd === 'admin2025') {
+    adminToken = 'demo';
+    localStorage.setItem('mcp_admin_token', 'demo');
+    return initAdmin({ prenom:'Admin', nom:'MCP', role:'admin' });
+  }
+
+  try {
+    const res  = await fetch(`${API}/auth/login`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email,password:pwd}) });
+    const data = await res.json();
+    if (!res.ok)              return showLoginError(data.error || 'Erreur connexion');
+    if (data.user.role !== 'admin') return showLoginError('Accès réservé aux administrateurs');
+    adminToken = data.token;
+    localStorage.setItem('mcp_admin_token', adminToken);
+    localStorage.setItem('mcp_admin_user', JSON.stringify(data.user));
+    initAdmin(data.user);
+  } catch {
+    showLoginError('API non disponible — utilisez admin@mcp.ci / admin2025 pour la démo');
+  }
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg; el.style.display = 'block';
+  setTimeout(() => el.style.display='none', 5000);
+}
+
+function adminLogout() {
+  localStorage.removeItem('mcp_admin_token');
+  localStorage.removeItem('mcp_admin_user');
+  adminToken = null;
+  document.getElementById('admin-layout').classList.remove('visible');
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+function initAdmin(user) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-layout').classList.add('visible');
+  document.getElementById('admin-name').textContent    = (user.prenom||'Admin') + ' ' + (user.nom||'');
+  document.getElementById('admin-avatar').textContent  = (user.prenom||'A')[0].toUpperCase();
+  loadAll();
+}
+
+// ── API ───────────────────────────────────────────────────
+async function apiFetch(endpoint, opts={}) {
+  if (adminToken === 'demo') return demoData(endpoint);
+  const res = await fetch(`${API}${endpoint}`, {
+    ...opts,
+    headers: { 'Content-Type':'application/json', 'Authorization':`Bearer ${adminToken}`, ...opts.headers }
+  });
+  return res.json();
+}
+
+// ── DEMO DATA ─────────────────────────────────────────────
+function demoData(ep) {
+  if (ep.includes('/admin/stats'))   return { users:{total:247,vendeurs:18,acheteurs:229}, produits:{total:142,actifs:128}, commandes:{total:87,payees:79,ca_total:48200000}, ca_mois:1240000 };
+  if (ep.includes('/admin/vendors')) return { data:[
+    {id:1,nom_boutique:'TechCI Pro',prenom:'Konan',nom:'Kouassi',telephone:'+225 07 11 22 33',nb_produits:34,note_moyenne:4.8,statut:'approuve',created_at:'2023-03-15'},
+    {id:2,nom_boutique:'AbidjanStyle',prenom:'Adjoua',nom:'Bamba',telephone:'+225 05 44 55 66',nb_produits:12,note_moyenne:4.6,statut:'approuve',created_at:'2023-07-22'},
+    {id:3,nom_boutique:'NatureBio CI',prenom:'Fatou',nom:'Diallo',telephone:'+225 07 77 88 99',nb_produits:8,note_moyenne:4.9,statut:'en_attente',created_at:'2024-01-10'},
+    {id:4,nom_boutique:'SportPlus CI',prenom:'Ibrahim',nom:'Sylla',telephone:'+225 01 23 45 67',nb_produits:5,note_moyenne:0,statut:'en_attente',created_at:'2024-02-18'},
+    {id:5,nom_boutique:'DecoAfrique',prenom:'Marie',nom:'Koné',telephone:'+225 05 98 76 54',nb_produits:22,note_moyenne:4.3,statut:'approuve',created_at:'2023-11-05'},
+  ], total:18 };
+  if (ep.includes('/admin/products')) return { data:[
+    {id:1,nom:'Smartphone Android 128 Go',vendeur:'TechCI Pro',categorie:'Electronique',prix:89000,nb_ventes:342,actif:1},
+    {id:2,nom:'Ecouteurs Bluetooth 5.3',vendeur:'TechCI Pro',categorie:'Electronique',prix:24000,nb_ventes:128,actif:1},
+    {id:3,nom:'Robe en Wax Ivoirien',vendeur:'AbidjanStyle',categorie:'Mode',prix:18500,nb_ventes:94,actif:1},
+    {id:4,nom:'Beurre de karite pur 500ml',vendeur:'NatureBio CI',categorie:'Sante',prix:7200,nb_ventes:67,actif:0},
+    {id:5,nom:'Tapis de yoga antiderapant',vendeur:'SportPlus CI',catégorie:'Sport',prix:15000,nb_ventes:43,actif:1},
+  ], total:142 };
+  if (ep.includes('/admin/orders')) return { data:[
+    {id:1,reference:'MCP-2025-00847',prenom:'Konan',nom:'Kouassi',telephone:'+225 07 11 22 33',total:89000,mode_paiement:'Orange Money',statut_paiement:'paye',statut:'confirmee',created_at:'2025-11-13 14:32'},
+    {id:2,reference:'MCP-2025-00846',prenom:'Adjoua',nom:'Bamba',telephone:'+225 05 44 55 66',total:48000,mode_paiement:'Wave CI',statut_paiement:'paye',statut:'en_preparation',created_at:'2025-11-13 11:15'},
+    {id:3,reference:'MCP-2025-00845',prenom:'Seydou',nom:'Coulibaly',telephone:'+225 07 77 88 99',total:275000,mode_paiement:'MTN Money',statut_paiement:'en_attente',statut:'en_attente',created_at:'2025-11-13 09:47'},
+    {id:4,reference:'MCP-2025-00844',prenom:'Mariame',nom:'Yao',telephone:'+225 01 23 45 67',total:36000,mode_paiement:'Orange Money',statut_paiement:'paye',statut:'livree',created_at:'2025-11-12 18:22'},
+  ], total:87 };
+  if (ep.includes('/admin/users')) return { data:[
+    {id:1,prenom:'Konan',nom:'Kouassi',email:'konan@email.com',telephone:'+225 07 11 22 33',role:'acheteur',actif:1,created_at:'2023-05-10'},
+    {id:2,prenom:'TechCI',nom:'Pro',email:'techci@email.com',telephone:'+225 05 44 55 66',role:'vendeur',actif:1,created_at:'2023-03-15'},
+    {id:3,prénom:'Adjoua',nom:'Bamba',email:'adjoua@email.com',telephone:'+225 07 77 88 99',role:'acheteur',actif:1,created_at:'2024-01-20'},
+    {id:4,Prénom:'Fatou',nom:'Diallo',email:'fatou@email.com',téléphone:'+225 01 98 76 54',role:'vendeur',actif:1,created_at:'2024-01-10'},
+  ], total:247 };
+  if (ep.includes('/catégories')) return [
+    {id:1,nom:'Electronique',slug:'électronique',ordre:1,actif:1},
+    {id:2,nom:'Mode & Wax',slug:'mode-wax',ordre:2,actif:1},
+    {id:3,nom:'Sante & Bien-etre',slug:'santé',ordre:3,actif:1},
+    {id:4,nom:'Maison & Deco',slug:'maison-deco',ordre:4,actif:1},
+    {id:5,nom:'Beaute & Soins',slug:'beauté-soins',ordre:5,actif:1},
+  ];
+  return { data:[], total:0 };
+}
+
+// ── LOAD ALL ──────────────────────────────────────────────
+function loadAll() { loadDashboard(); loadVendors(); loadProducts(); loadOrders(); loadUsers(); loadCategories(); }
+
+// ── DASHBOARD ─────────────────────────────────────────────
+async function loadDashboard() {
+  const d = await apiFetch('/admin/stats');
+  if (!d) return;
+  document.getElementById('kpi-users').textContent      = (d.users?.total||0).toLocaleString('fr-FR');
+  document.getElementById('kpi-users-sub').textContent  = `${d.users?.vendeurs||0} vendeurs · ${d.users?.acheteurs||0} acheteurs`;
+  document.getElementById('kpi-vendors').textContent    = d.users?.vendeurs||0;
+  document.getElementById('kpi-vendors-sub').textContent= `${d.produits?.actifs||0} produits actifs`;
+  document.getElementById('kpi-ca').innerHTML           = Math.round((d.ca_mois||0)/1000) + '<span>K FCFA</span>';
+  document.getElementById('kpi-orders').textContent     = d.commandes?.payees||0;
+  document.getElementById('kpi-orders-sub').textContent = `sur ${d.commandes?.total||0} commandes`;
+
+  // Graphique
+  const months=['Juin','Juil','Août','Sep','Oct','Nov'];
+  const vals=[680,820,750,1100,980,1240];
+  const mx=Math.max(...vals);
+  document.getElementById('admin-chart').innerHTML=months.map((m,i)=>`
+    <div class="chart-bar-wrap">
+      <div class="chart-val">${vals[i]}K</div>
+      <div class="chart-bar${i===5?' cur':''}" style="height:${Math.round(vals[i]/mx*100)}px"></div>
+      <div class="chart-label">${m}</div>
+    </div>`).join('');
+
+  // Vendeurs en attente
+  const vd = await apiFetch('/admin/vendors?statut=en_attente&limit=5');
+  const pending = (vd?.data||[]).filter(v=>v.statut==='en_attente');
+  document.getElementById('badge-vendeurs').textContent = pending.length;
+  document.getElementById('pending-list').innerHTML = pending.length
+    ? pending.map(v=>`
+      <div style="display:flex;align-items:center;gap:.8rem;padding:.7rem 1.2rem;border-bottom:1px solid var(--lgray)">
+        <div style="width:34px;height:34px;border-radius:6px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:900;color:#fff;flex-shrink:0">${v.nom_boutique[0]}</div>
+        <div style="flex:1">
+          <div style="font-size:.78rem;font-weight:800;color:var(--navy)">${v.nom_boutique}</div>
+          <div style="font-size:.68rem;color:var(--gray)">${v.Prénom} ${v.nom} · ${v.nb_produits||0} produits</div>
+        </div>
+        <button class="btn-sm b-approve" onclick="approveVendor(${v.id},'approuve')">Approuver</button>
+      </div>`).join('')
+    : '<div style="text-align:center;padding:1.5rem;color:var(--gray);font-size:.8rem">Aucun vendeur en attente</div>';
+}
+
+// ── VENDEURS ──────────────────────────────────────────────
+const state = { vendors:{filter:'',search:'',page:1}, products:{filter:'',search:'',page:1}, orders:{filter:'',search:'',page:1}, users:{filter:'',search:'',page:1} };
+
+function setFilter(section, val, btn) {
+  const s = document.getElementById('section-'+{vendors:'vendeurs',products:'produits',orders:'commandes',users:'utilisateurs'}[section]);
+  s?.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  state[section].filter = val; state[section].page = 1;
+  if (section==='vendors')  loadVendors();
+  if (section==='products') loadProducts();
+  if (section==='orders')   loadOrders();
+  if (section==='users')    loadUsers();
+}
+function setSearch(section, val) {
+  state[section].search = val; state[section].page = 1;
+  if (section==='vendors')  loadVendors();
+  if (section==='products') loadProducts();
+  if (section==='users')    loadUsers();
+}
+
+async function loadVendors() {
+  const {filter,search,page} = state.vendors;
+  const qs = new URLSearchParams({page,limit:10,...(filter&&{statut:filter}),...(search&&{q:search})});
+  const data = await apiFetch('/admin/vendors?'+qs);
+  const sl = {approuve:'Approuvé',en_attente:'En attente',suspendu:'Suspendu'};
+  document.getElementById('vendors-tbody').innerHTML = (data.data||[]).map(v=>`
+    <tr>
+      <td><strong style="font-size:.82rem">${v.nom_boutique}</strong></td>
+      <td style="font-size:.8rem">${v.Prénom} ${v.nom}</td>
+      <td style="font-size:.75rem;color:var(--gray)">${v.téléphone||'—'}</td>
+      <td style="font-size:.82rem;font-weight:700">${v.nb_produits||0}</td>
+      <td style="font-size:.82rem">${v.note_moyenne>0?'★ '+Number(v.note_moyenne).toFixed(1):'—'}</td>
+      <td><span class="badge ${v.statut==='approuve'?'b-green':v.statut==='en_attente'?'b-yellow':'b-red'}">${sl[v.statut]||v.statut}</span></td>
+      <td style="font-size:.72rem;color:var(--gray)">${new Date(v.created_at).toLocaleDateString('fr-FR')}</td>
+      <td style="display:flex;gap:.3rem;flex-wrap:wrap">
+        ${v.statut==='en_attente'?`<button class="btn-sm b-approve" onclick="approveVendor(${v.id},'approuve')">Approuver</button>`:''}
+        ${v.statut==='approuve'?`<button class="btn-sm b-suspend" onclick="approveVendor(${v.id},'suspendu')">Suspendre</button>`:''}
+        ${v.statut==='suspendu'?`<button class="btn-sm b-approve" onclick="approveVendor(${v.id},'approuve')">Réactiver</button>`:''}
+      </td>
+    </tr>`).join()||'<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--gray)">Aucun vendeur</td></tr>';
+  renderPag('vendors',data.total||0,10,page);
+}
+
+async function approveVendor(id, statut) {
+  await apiFetch(`/admin/vendors/${id}/approve`,{method:'PUT',body:JSON.stringify({statut})});
+  showToast(statut==='approuve'?'Vendeur approuvé !':'Vendeur suspendu', statut==='approuve'?'t-success':'t-error');
+  loadVendors(); loadDashboard();
+}
+
+async function loadProducts() {
+  const {filter,search,page} = state.products;
+  const qs = new URLSearchParams({page,limit:10,...(filter!==''&&{actif:filter}),...(search&&{q:search})});
+  const data = await apiFetch('/admin/products?'+qs);
+  document.getElementById('products-tbody').innerHTML = (data.data||[]).map(p=>`
+    <tr>
+      <td style="font-size:.8rem;font-weight:700;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.nom}</td>
+      <td style="font-size:.78rem">${p.vendeur||'—'}</td>
+      <td style="font-size:.72rem;color:var(--gray)">${p.catégorie||'—'}</td>
+      <td style="font-size:.82rem;font-weight:800">${Number(p.prix).toLocaleString('fr-FR')} FCFA</td>
+      <td style="font-size:.82rem">${p.nb_ventes||0}</td>
+      <td><span class="badge ${p.actif?'b-green':'b-red'}">${p.actif?'Actif':'Inactif'}</span></td>
+      <td><button class="btn-sm ${p.actif?'b-suspend':'b-approve'}" onclick="toggleProduct(${p.id},${p.actif})">${p.actif?'Désactiver':'Activer'}</button></td>
+    </tr>`).join()||'<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--gray)">Aucun produit</td></tr>';
+  renderPag('products',data.total||0,10,page);
+}
+
+async function toggleProduct(id,current) {
+  await apiFetch(`/admin/products/${id}/toggle`,{method:'PUT'});
+  showToast(current?'Produit désactivé':'Produit activé',current?'t-error':'t-success');
+  loadProducts();
+}
+
+async function loadOrders() {
+  const {filter,page} = state.orders;
+  const qs = new URLSearchParams({page,limit:10,...(filter&&{statut:filter})});
+  const data = await apiFetch('/admin/orders?'+qs);
+  const sl = {en_attente:'En attente',confirmee:'Confirmée',en_preparation:'Préparation',en_livraison:'Livraison',livree:'Livrée',annulee:'Annulée'};
+  document.getElementById('orders-tbody').innerHTML = (data.data||[]).map(o=>`
+    <tr>
+      <td style="font-size:.8rem;font-weight:800;color:var(--navy)">${o.reference}</td>
+      <td style="font-size:.8rem">${o.Prénom} ${o.nom}<div style="font-size:.7rem;color:var(--gray)">${o.téléphone||''}</div></td>
+      <td style="font-size:.82rem;font-weight:800">${Number(o.total).toLocaleString('fr-FR')} FCFA</td>
+      <td><span style="font-size:.7rem;font-weight:700;background:rgba(11,31,75,.08);padding:3px 8px;border-radius:3px">${o.mode_paiement||'—'}</span></td>
+      <td><span class="badge ${o.statut_paiement==='paye'?'b-green':'b-yellow'}">${o.statut_paiement==='paye'?'Payé':'En attente'}</span></td>
+      <td><span class="badge ${o.statut==='livree'?'b-green':o.statut==='annulee'?'b-red':o.statut==='en_attente'?'b-yellow':'b-blue'}">${sl[o.statut]||o.statut}</span></td>
+      <td style="font-size:.72rem;color:var(--gray)">${new Date(o.created_at).toLocaleDateString('fr-FR')}</td>
+    </tr>`).join()||'<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--gray)">Aucune commande</td></tr>';
+  renderPag('orders',data.total||0,10,page);
+}
+
+async function loadUsers() {
+  const {filter,search,page} = state.users;
+  const qs = new URLSearchParams({page,limit:10,...(filter&&{role:filter}),...(search&&{q:search})});
+  const data = await apiFetch('/admin/users?'+qs);
+  document.getElementById('users-tbody').innerHTML = (data.data||[]).map(u=>`
+    <tr>
+      <td style="font-size:.82rem;font-weight:700">${u.Prénom} ${u.nom}</td>
+      <td style="font-size:.75rem;color:var(--gray)">${u.email}</td>
+      <td style="font-size:.78rem">${u.téléphone||'—'}</td>
+      <td><span class="badge ${u.role==='admin'?'b-blue':u.role==='vendeur'?'b-yellow':'b-green'}">${u.role}</span></td>
+      <td style="font-size:.72rem;color:var(--gray)">${new Date(u.created_at).toLocaleDateString('fr-FR')}</td>
+      <td><span class="badge ${u.actif?'b-green':'b-red'}">${u.actif?'Actif':'Banni'}</span></td>
+      <td><button class="btn-sm ${u.actif?'b-suspend':'b-approve'}" onclick="banUser(${u.id},${u.actif?0:1})">${u.actif?'Bannir':'Réactiver'}</button></td>
+    </tr>`).join()||'<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--gray)">Aucun utilisateur</td></tr>';
+  renderPag('users',data.total||0,10,page);
+}
+
+async function banUser(id,actif) {
+  await apiFetch(`/admin/users/${id}/ban`,{method:'PUT',body:JSON.stringify({actif})});
+  showToast(actif?'Utilisateur réactivé':'Utilisateur banni',actif?'t-success':'t-error');
+  loadUsers();
+}
+
+async function loadCategories() {
+  const data = await apiFetch('/catégories');
+  const cats = Array.isArray(data)?data:(data.data||[]);
+  document.getElementById('cats-tbody').innerHTML = cats.map(c=>`
+    <tr>
+      <td style="font-size:.82rem;font-weight:700">${c.nom}</td>
+      <td style="font-size:.75rem;color:var(--gray)">${c.slug}</td>
+      <td style="font-size:.82rem">${c.ordre||0}</td>
+      <td><span class="badge ${c.actif?'b-green':'b-red'}">${c.actif?'Actif':'Inactif'}</span></td>
+    </tr>`).join();
+}
+
+// ── PAGINATION ────────────────────────────────────────────
+const sectionMap = {vendors:'vendeurs',products:'produits',orders:'commandes',users:'utilisateurs'};
+function renderPag(sec, total, perPage, cur) {
+  const pages = Math.ceil(total/perPage)||1;
+  const info  = document.getElementById(`${sec}-info`);
+  const btns  = document.getElementById(`${sec}-pag`);
+  if (info) info.textContent = `${Math.min((cur-1)*perPage+1,total)}–${Math.min(cur*perPage,total)} sur ${total.toLocaleString('fr-FR')}`;
+  if (!btns) return;
+  let h = `<button class="pag-btn" onclick="goPage('${sec}',${cur-1})" ${cur<=1?'disabled':''}>&#8249;</button>`;
+  for(let i=1;i<=Math.min(pages,5);i++) h+=`<button class="pag-btn${i===cur?' active':''}" onclick="goPage('${sec}',${i})">${i}</button>`;
+  h += `<button class="pag-btn" onclick="goPage('${sec}',${cur+1})" ${cur>=pages?'disabled':''}>&#8250;</button>`;
+  btns.innerHTML = h;
+}
+function goPage(sec, p) {
+  if(p<1)return;
+  state[sec].page = p;
+  if(sec==='vendors')  loadVendors();
+  if(sec==='products') loadProducts();
+  if(sec==='orders')   loadOrders();
+  if(sec==='users')    loadUsers();
+}
+
+// ── NAVIGATION ────────────────────────────────────────────
+const pageTitles = {dashboard:'Tableau de bord',vendeurs:'Vendeurs',produits:'Produits',commandes:'Commandes',utilisateurs:'Utilisateurs',categories:'Catégories',promos:'Codes promo'};
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('section-'+id)?.classList.add('active');
+  document.querySelectorAll('.sidebar-link').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.getElementById('topbar-title').textContent = pageTitles[id]||id;
+}
+
+function globalSearch(q) {
+  if(!q.trim()) return;
+  state.vendors.search = q; state.products.search = q; state.users.search = q;
+  loadVendors(); loadProducts(); loadUsers();
+}
+
+// ── TOAST ─────────────────────────────────────────────────
+function showToast(msg, type='') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `toast ${type} show`;
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+// ── INIT ──────────────────────────────────────────────────
+if (adminToken) {
+  const stored = JSON.parse(localStorage.getItem('mcp_admin_user')||'{}');
+  if (stored.role==='admin'||adminToken==='demo') {
+    initAdmin(stored.prénom ? stored : {Prénom:'Admin',nom:'MCP',role:'admin'});
+  }
+}
+</script>
+<script src="../ux-improvements.js"></script>
+</body>
+</html>

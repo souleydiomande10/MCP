@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Decouvrez l'histoire et les valeurs de Market Center Place, la marketplace de reference en Cote d'Ivoire depuis 2022."/>
+  <meta property="og:title" content="A propos — Market Center Place"/>
+  <meta property="og:description" content="Decouvrez l'histoire et les valeurs de Market Center Place, la marketplace de reference en Cote d'Ivoire depuis 2022."/>
+  <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>À propos — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <style>
+    /* ── HERO ── */
+    .about-hero {
+      background: var(--navy);
+      min-height: 55vh; display: flex; align-items: center;
+      position: relative; overflow: hidden; padding: 4rem 2.5rem;
+      border-bottom: 3px solid var(--red);
+    }
+    .about-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at 80% 50%, rgba(192,32,42,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 400px at 10% 80%, rgba(26,75,170,0.2) 0%, transparent 70%);
+    }
+    .about-hero-lines {
+      position: absolute; inset: 0; overflow: hidden;
+    }
+    .about-hero-line {
+      position: absolute; background: rgba(255,255,255,0.03); width: 1px; height: 200%; top: -50%;
+    }
+    .about-hero-line:nth-child(1){left:15%;transform:rotate(12deg)}
+    .about-hero-line:nth-child(2){left:35%;transform:rotate(12deg)}
+    .about-hero-line:nth-child(3){left:60%;transform:rotate(12deg)}
+    .about-hero-line:nth-child(4){left:82%;transform:rotate(12deg)}
+    .about-hero-inner {
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      position: relative; z-index: 1;
+    }
+    .about-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .about-eyebrow::before { content:''; width:28px; height:2px; background:var(--gold); }
+    .about-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem); font-weight: 900;
+      color: var(--white); letter-spacing: -2px; line-height: 1.05;
+      margin-bottom: 1.2rem;
+      animation: slideUp 0.8s 0.3s ease both;
+    }
+    .about-hero h1 em { color: var(--red2); font-style: normal; }
+    .about-hero p {
+      color: rgba(255,255,255,0.6); font-size: 1rem; max-width: 560px;
+      line-height: 1.8; font-weight: 400;
+      animation: slideUp 0.8s 0.5s ease both;
+    }
+    @keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── CHIFFRES ── */
+    .numbers-strip {
+      background: var(--red); padding: 0;
+    }
+    .numbers-strip-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4,1fr);
+    }
+    .strip-num {
+      padding: 2rem; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.2);
+      transition: background 0.2s;
+    }
+    .strip-num:last-child { border-right: none; }
+    .strip-num:hover { background: rgba(0,0,0,0.1); }
+    .strip-val { font-size: 2.2rem; font-weight: 900; color: var(--white); letter-spacing: -1px; display: block; }
+    .strip-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-top: 4px; }
+
+    /* ── SECTIONS ── */
+    .about-section { padding: 6rem 2.5rem; max-width: 1200px; margin: 0 auto; }
+    .about-section.dark-bg { background: var(--navy); max-width: 100%; padding: 6rem 2.5rem; }
+    .about-section.dark-bg .about-section-inner { max-width: 1200px; margin: 0 auto; }
+
+    /* Mission */
+    .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+    .mission-label {
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--red); margin-bottom: 0.8rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .mission-label::before { content:''; width:18px; height:2px; background:var(--red); }
+    .mission-title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 900;
+      color: var(--navy); letter-spacing: -1px; line-height: 1.15; margin-bottom: 1.2rem;
+    }
+    .mission-title em { color: var(--blue); font-style: normal; }
+    .mission-text { font-size: 0.92rem; color: var(--gray); line-height: 1.9; margin-bottom: 1rem; }
+    .mission-visual {
+      background: linear-gradient(135deg, var(--navy) 0%, #0d2558 100%);
+      border-radius: 12px; padding: 3rem; position: relative; overflow: hidden;
+      min-height: 320px; display: flex; flex-direction: column; justify-content: flex-end;
+    }
+    .mission-visual::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 280px; height: 280px; border-radius: 50%;
+      border: 50px solid rgba(255,255,255,0.05);
+    }
+    .mission-visual-icon { font-size: 5rem; margin-bottom: 1.5rem; display: block; }
+    .mission-visual h3 { font-size: 1.3rem; font-weight: 900; color: var(--white); letter-spacing: -0.3px; margin-bottom: 0.5rem; }
+    .mission-visual p  { font-size: 0.82rem; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+    /* Valeurs */
+    .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .value-card {
+      background: var(--white); border-radius: 10px; padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      border-top: 4px solid transparent;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.2s;
+      cursor: default;
+    }
+    .value-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.1); border-top-color: var(--red); }
+    .value-icon {
+      width: 52px; height: 52px; border-radius: 10px;
+      background: var(--off); display: flex; align-items: center;
+      justify-content: center; margin-bottom: 1.2rem;
+      transition: background 0.2s;
+    }
+    .value-card:hover .value-icon { background: var(--navy); }
+    .value-card:hover .value-icon svg { stroke: var(--white); }
+    .value-icon svg { stroke: var(--navy); transition: stroke 0.2s; }
+    .value-title { font-size: 1rem; font-weight: 900; color: var(--navy); margin-bottom: 0.6rem; }
+    .value-text  { font-size: 0.82rem; color: var(--gray); line-height: 1.7; }
+
+    /* Timeline histoire */
+    .timeline-section { padding: 6rem 2.5rem; background: var(--off); }
+    .timeline-inner { max-width: 800px; margin: 0 auto; }
+    .timeline-header { text-align: center; margin-bottom: 4rem; }
+    .timeline-vert { position: relative; }
+    .timeline-vert::before {
+      content: ''; position: absolute; left: 20px; top: 0; bottom: 0;
+      width: 2px; background: var(--lgray);
+    }
+    .timeline-event {
+      display: flex; gap: 2rem; margin-bottom: 3rem;
+      position: relative;
+    }
+    .timeline-event:last-child { margin-bottom: 0; }
+    .timeline-dot-vert {
+      width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+      background: var(--white); border: 3px solid var(--lgray);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .timeline-event:hover .timeline-dot-vert { border-color: var(--red); background: var(--red); }
+    .timeline-event:hover .timeline-dot-vert svg { stroke: var(--white); }
+    .timeline-dot-vert svg { stroke: var(--gray); transition: stroke 0.3s; }
+    .timeline-event-body { padding-top: 6px; }
+    .timeline-year {
+      font-size: 0.65rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--red); margin-bottom: 4px;
+    }
+    .timeline-event-title { font-size: 1.05rem; font-weight: 900; color: var(--navy); margin-bottom: 0.5rem; }
+    .timeline-event-text  { font-size: 0.85rem; color: var(--gray); line-height: 1.7; }
+
+    /* Equipe */
+    .team-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .team-card {
+      background: rgba(255,255,255,0.06); border-radius: 10px; padding: 2rem 1.5rem;
+      text-align: center; border: 1px solid rgba(255,255,255,0.08);
+      transition: transform 0.3s, background 0.3s;
+      cursor: default;
+    }
+    .team-card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.1); }
+    .team-avatar {
+      width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 1rem;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; font-weight: 900; color: var(--white); letter-spacing: -1px;
+    }
+    .team-name  { font-size: 0.95rem; font-weight: 800; color: var(--white); margin-bottom: 3px; }
+    .team-role  { font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.8rem; }
+    .team-quote { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.6; font-style: italic; }
+    .dark-label { color: var(--gold) !important; }
+    .dark-label::before { background: var(--gold) !important; }
+    .dark-title { color: var(--white) !important; }
+    .dark-title em { color: var(--red2) !important; }
+
+    /* CTA */
+    .about-cta {
+      background: linear-gradient(135deg, var(--red) 0%, #8b0e15 100%);
+      padding: 5rem 2.5rem; text-align: center; position: relative; overflow: hidden;
+    }
+    .about-cta::before {
+      content: ''; position: absolute; right: -100px; top: -100px;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: rgba(255,255,255,0.06); pointer-events: none;
+    }
+    .about-cta h2 { font-size: 2.4rem; font-weight: 900; color: var(--white); letter-spacing: -1px; margin-bottom: 0.8rem; }
+    .about-cta p  { color: rgba(255,255,255,0.65); font-size: 0.95rem; max-width: 500px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-cta-primary {
+      background: var(--white); color: var(--red);
+      border: none; border-radius: 4px; padding: 14px 32px;
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
+      font-size: 0.82rem; letter-spacing: 1px; text-transform: uppercase;
+      cursor: none; text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+    }
+    .btn-cta-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.3); }
+    .btn-cta-outline {
+      background: transparent; color: var(--white);
+      border: 2px solid rgba(255,255,255,0.4); border-radius: 4px;
+      padding: 14px 32px; font-family: 'Montserrat', sans-serif;
+      font-weight: 700; font-size: 0.82rem; letter-spacing: 1px;
+      text-transform: uppercase; cursor: none; text-decoration: none;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .btn-cta-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .mission-grid  { grid-template-columns: 1fr; gap: 2rem; }
+      .values-grid   { grid-template-columns: 1fr 1fr; }
+      .numbers-strip-inner { grid-template-columns: 1fr 1fr; }
+      .strip-num { border-bottom: 1px solid rgba(255,255,255,0.2); }
+    }
+    @media (max-width: 600px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .numbers-strip-inner { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<div id="header-slot" data-page=""></div>
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="about-hero-lines">
+    <div class="about-hero-line"></div>
+    <div class="about-hero-line"></div>
+    <div class="about-hero-line"></div>
+    <div class="about-hero-line"></div>
+  </div>
+  <div class="about-hero-inner">
+    <div class="about-eyebrow">Notre histoire</div>
+    <h1>Construire le commerce<br/>de demain <em>en Afrique</em></h1>
+    <p>Market Center Place est ne d'une conviction simple : chaque entrepreneur ivoirien merite une plateforme a la hauteur de son ambition, adaptee a sa realite.</p>
+  </div>
+</section>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>À propos</span>
+  </div>
+</div>
+
+<!-- CHIFFRES -->
+<div class="numbers-strip">
+  <div class="numbers-strip-inner">
+    <div class="strip-num reveal"><span class="strip-val" data-target="12000">0</span><span class="strip-label">Produits references</span></div>
+    <div class="strip-num reveal" style="transition-delay:0.1s"><span class="strip-val" data-target="850">0</span><span class="strip-label">Vendeurs vérifiés</span></div>
+    <div class="strip-num reveal" style="transition-delay:0.2s"><span class="strip-val" data-target="45000">0</span><span class="strip-label">Clients satisfaits</span></div>
+    <div class="strip-num reveal" style="transition-delay:0.3s"><span class="strip-val" data-target="7">0</span><span class="strip-label">Pays en Afrique de l'Ouest</span></div>
+  </div>
+</div>
+
+<!-- MISSION -->
+<section class="about-section">
+  <div class="mission-grid">
+    <div class="reveal-left">
+      <div class="mission-label">Notre mission</div>
+      <h2 class="mission-title">Connecter chaque <em>acheteur</em><br/>a chaque <em>vendeur</em></h2>
+      <p class="mission-text">Market Center Place est la premiere marketplace multi-catégories de Côte d'Ivoire, construite pour la realite africaine. Nous integrons les modes de paiement locaux — Orange Money, MTN Money, Moov Money, Wave — pour que chaque transaction soit simple et sécurisée.</p>
+      <p class="mission-text">Notre plateforme valorise les producteurs et artisans locaux tout en offrant aux consommateurs un acces a des milliers de references avec une livraison rapide partout dans le pays.</p>
+    </div>
+    <div class="mission-visual reveal-right">
+      <span class="mission-visual-icon">&#127758;</span>
+      <h3>Une plateforme pensee pour l'Afrique</h3>
+      <p>Interface en francais, paiement mobile, livraison locale, vendeurs vérifiés — tout est concu pour le marche ivoirien.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALEURS -->
+<div style="background:var(--off); padding: 6rem 0;">
+  <div style="max-width:1200px; margin:0 auto; padding: 0 2.5rem;">
+    <div class="section-header center reveal">
+      <div class="section-eyebrow">Ce qui nous guide</div>
+      <h2 class="section-title">Nos <em>valeurs</em></h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal" style="transition-delay:0.05s">
+        <div class="value-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="value-title">Confiance</div>
+        <div class="value-text">Chaque vendeur est vérifié manuellement par notre equipe avant d'etre autorise a vendre. Les avis clients sont authentiques et non modifies.</div>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.1s">
+        <div class="value-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="value-title">Communaute</div>
+        <div class="value-text">Nous croyons en l'economie locale. Chaque achat sur notre plateforme contribue directement au developpement des entrepreneurs ivoiriens.</div>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.15s">
+        <div class="value-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div class="value-title">Innovation</div>
+        <div class="value-text">Nous adaptons en permanence notre plateforme aux besoins reels du marche africain : paiement mobile, interface legere, support local.</div>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.2s">
+        <div class="value-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div class="value-title">Rapidite</div>
+        <div class="value-text">Livraison en 24-48h a Abidjan, 3 a 5 jours en regions. Nous partenariat avec les meilleurs livreurs locaux pour garantir la ponctualite.</div>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.25s">
+        <div class="value-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="value-title">sécurité</div>
+        <div class="value-text">Paiements cryptes, transactions surveillees, protection acheteur et vendeur. Votre argent est en sécurité jusqu'a la confirmation de reception.</div>
+      </div>
+      <div class="value-card reveal" style="transition-delay:0.3s">
+        <div class="value-icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg></div>
+        <div class="value-title">Transparence</div>
+        <div class="value-text">Prix clairs, commissions affichees, politique de retour simple. Pas de frais caches, pas de mauvaises surprises pour nos acheteurs et vendeurs.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HISTOIRE -->
+<section class="timeline-section">
+  <div class="timeline-inner">
+    <div class="timeline-header reveal">
+      <div class="section-eyebrow" style="justify-content:center">Notre parcours</div>
+      <h2 class="section-title" style="text-align:center">L'histoire de <em>Market Center Place</em></h2>
+    </div>
+    <div class="timeline-vert">
+      <div class="timeline-event reveal">
+        <div class="timeline-dot-vert"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="timeline-event-body">
+          <div class="timeline-year">2022 — Origine</div>
+          <div class="timeline-event-title">L'idee nait a Abidjan</div>
+          <div class="timeline-event-text">Face aux difficultes des commercants locaux a se digitaliser et aux problemes de confiance dans le commerce en ligne ivoirien, l'idee de Créer une marketplace de confiance, adaptee au contexte africain, emerge.</div>
+        </div>
+      </div>
+      <div class="timeline-event reveal">
+        <div class="timeline-dot-vert"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="timeline-event-body">
+          <div class="timeline-year">2023 — Construction</div>
+          <div class="timeline-event-title">Premiers vendeurs et beta test</div>
+          <div class="timeline-event-text">Lancement de la version beta avec 50 vendeurs pilotes recrutes a Abidjan. Integration des premiers modes de paiement mobile. Plus de 1 000 commandes traitees durant la phase de test.</div>
+        </div>
+      </div>
+      <div class="timeline-event reveal">
+        <div class="timeline-dot-vert"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="timeline-event-body">
+          <div class="timeline-year">2024 — Lancement officiel</div>
+          <div class="timeline-event-title">Ouverture au public et expansion</div>
+          <div class="timeline-event-text">Lancement officiel de Market Center Place en janvier 2024. En quelques mois, plus de 850 vendeurs rejoignent la plateforme. Extension de la livraison a toutes les villes de Côte d'Ivoire.</div>
+        </div>
+      </div>
+      <div class="timeline-event reveal">
+        <div class="timeline-dot-vert"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></div>
+        <div class="timeline-event-body">
+          <div class="timeline-year">2025 — Aujourd'hui</div>
+          <div class="timeline-event-title">12 000 produits, 7 pays</div>
+          <div class="timeline-event-text">Market Center Place franchit le cap des 45 000 clients actifs et etend ses operations au Senegal, Mali, Burkina Faso, Ghana, Guinee et Togo. L'ambition : devenir la reference du e-commerce en Afrique de l'Ouest.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPE -->
+<div class="about-section dark-bg">
+  <div class="about-section-inner">
+    <div class="section-header center reveal">
+      <div class="section-eyebrow dark-label">Les personnes</div>
+      <h2 class="section-title dark-title">Notre <em>equipe</em></h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal" style="transition-delay:0.05s">
+        <div class="team-avatar" style="background:linear-gradient(135deg,var(--red),#8b0e15)">AK</div>
+        <div class="team-name">Adjoua Kouassi</div>
+        <div class="team-role">Fondatrice &amp; CEO</div>
+        <div class="team-quote">"Le commerce africain merite une plateforme africaine."</div>
+      </div>
+      <div class="team-card reveal" style="transition-delay:0.1s">
+        <div class="team-avatar" style="background:linear-gradient(135deg,var(--blue),#0d2558)">KB</div>
+        <div class="team-name">Koffi Bamba</div>
+        <div class="team-role">Directeur Technique</div>
+        <div class="team-quote">"La technologie doit etre au service des gens, pas l'inverse."</div>
+      </div>
+      <div class="team-card reveal" style="transition-delay:0.15s">
+        <div class="team-avatar" style="background:linear-gradient(135deg,#16a34a,#166534)">MY</div>
+        <div class="team-name">Mariame Yao</div>
+        <div class="team-role">Directrice Operations</div>
+        <div class="team-quote">"Chaque commande livree a temps est une promesse tenue."</div>
+      </div>
+      <div class="team-card reveal" style="transition-delay:0.2s">
+        <div class="team-avatar" style="background:linear-gradient(135deg,var(--gold),#a07800)">SC</div>
+        <div class="team-name">Seydou Coulibaly</div>
+        <div class="team-role">Responsable Vendeurs</div>
+        <div class="team-quote">"Notre succes passe par celui de nos vendeurs partenaires."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="about-cta">
+  <h2>prêt a rejoindre l'aventure ?</h2>
+  <p>Que vous soyez acheteur ou vendeur, Market Center Place est la pour vous. Rejoignez des milliers de personnes qui font confiance a notre plateforme.</p>
+  <div class="cta-btns">
+    <a href="catalogue.html" class="btn-cta-primary">Découvrir les produits</a>
+    <a href="connexion.html" class="btn-cta-outline">Devenir vendeur</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div id="footer-slot"></div>
+
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script>
+  /* ── COUNT-UP ── */
+  const numObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target, target = parseInt(el.dataset.target);
+        if (!target) return;
+        let start = null;
+        const step = ts => {
+          if (!start) start = ts;
+          const p   = Math.min((ts - start) / 1800, 1);
+          const val = Math.floor(p * target);
+          el.textContent = val.toLocaleString('fr-FR');
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+        numObs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('[data-target]').forEach(el => numObs.observe(el));
+
+  window.addEventListener('load', () => {
+    setTimeout(() => { const l = document.getElementById('loader'); if(l) l.classList.add('hidden'); }, 800);
+  });
+</script>
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

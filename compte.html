@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Gerez vos commandes, favoris et informations personnelles depuis votre espace client Market Center Place."/>
+  <meta property="og:title" content="Mon espace client — Market Center Place"/>
+  <meta property="og:description" content="Gerez vos commandes, favoris et informations personnelles depuis votre espace client Market Center Place."/>
+  <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mon Compte — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <style>
+    /* ── PAGE COMPTE ── */
+    .compte-hero {
+      background: var(--navy);
+      padding: 2.5rem; border-bottom: 3px solid var(--red);
+      position: relative; overflow: hidden;
+    }
+    .compte-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 500px 300px at 90% 50%, rgba(192,32,42,0.15) 0%, transparent 70%);
+    }
+    .compte-hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; gap: 1.5rem;
+      position: relative; z-index: 1;
+    }
+    .compte-avatar-big {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--red), #8b0e15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; font-weight: 900; color: var(--white);
+      border: 3px solid rgba(255,255,255,0.2); flex-shrink: 0;
+    }
+    .compte-hero-info h1 {
+      font-size: 1.6rem; font-weight: 900; color: var(--white);
+      letter-spacing: -0.5px; margin-bottom: 2px;
+    }
+    .compte-hero-info p { color: rgba(255,255,255,0.5); font-size: 0.82rem; }
+    .compte-hero-badge {
+      margin-left: auto;
+      background: rgba(200,168,75,0.2); border: 1px solid rgba(200,168,75,0.4);
+      color: var(--gold); border-radius: 50px; padding: 6px 16px;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    /* ── LAYOUT ── */
+    .compte-layout {
+      max-width: 1200px; margin: 0 auto; padding: 2.5rem;
+      display: grid; grid-template-columns: 240px 1fr; gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── SIDEBAR NAVIGATION ── */
+    .compte-nav {
+      background: var(--white); border-radius: 8px;
+      overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      position: sticky; top: 90px;
+    }
+    .compte-nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0.9rem 1.2rem; cursor: none;
+      font-size: 0.78rem; font-weight: 700; color: var(--gray);
+      letter-spacing: 0.3px; border-left: 3px solid transparent;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+      text-decoration: none;
+    }
+    .compte-nav-item svg { stroke: currentColor; flex-shrink: 0; }
+    .compte-nav-item:hover { background: var(--off); color: var(--navy); }
+    .compte-nav-item.active { background: var(--off); color: var(--navy); border-left-color: var(--red); font-weight: 800; }
+    .compte-nav-sep { height: 1px; background: var(--lgray); margin: 0.3rem 0; }
+    .compte-nav-item.danger { color: var(--red); }
+    .compte-nav-item.danger:hover { background: #fef2f2; }
+    .compte-nav-badge {
+      margin-left: auto; background: var(--red); color: var(--white);
+      border-radius: 99px; padding: 1px 7px; font-size: 0.62rem; font-weight: 900;
+    }
+
+    /* ── SECTIONS ── */
+    .compte-section { display: none; }
+    .compte-section.active { display: block; animation: sectionIn 0.35s ease; }
+    @keyframes sectionIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+    .section-card {
+      background: var(--white); border-radius: 8px; padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 1.2rem;
+    }
+    .section-card-title {
+      font-size: 0.68rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--navy);
+      margin-bottom: 1.3rem; padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--lgray);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .btn-edit {
+      font-size: 0.68rem; font-weight: 700; color: var(--blue);
+      background: none; border: none; cursor: none; text-transform: uppercase;
+      letter-spacing: 0.5px; transition: color 0.2s;
+    }
+    .btn-edit:hover { color: var(--red); }
+
+    /* Stats rapides */
+    .account-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.2rem;
+    }
+    .account-stat {
+      background: var(--white); border-radius: 8px; padding: 1.2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05); text-align: center;
+      border-top: 3px solid transparent; transition: border-color 0.2s, transform 0.2s;
+      cursor: none;
+    }
+    .account-stat:hover { border-top-color: var(--red); transform: translateY(-3px); }
+    .account-stat-val {
+      font-size: 1.8rem; font-weight: 900; color: var(--navy);
+      letter-spacing: -1px; display: block; margin-bottom: 4px;
+    }
+    .account-stat-val span { color: var(--red2); font-size: 1.2rem; }
+    .account-stat-label { font-size: 0.68rem; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.8px; }
+
+    /* Formulaire profil */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block; font-size: 0.68rem; font-weight: 800;
+      letter-spacing: 1px; text-transform: uppercase; color: var(--navy); margin-bottom: 5px;
+    }
+    .form-group input, .form-group select {
+      width: 100%; padding: 11px 14px;
+      background: var(--off); border: 1.5px solid var(--lgray); border-radius: 4px;
+      font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: var(--dark);
+      outline: none; transition: border-color 0.2s, background 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--blue); background: var(--white); }
+    .btn-save {
+      background: var(--navy); color: var(--white); border: none;
+      border-radius: 4px; padding: 11px 24px; cursor: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 0.78rem; letter-spacing: 1px;
+      text-transform: uppercase; transition: background 0.2s, transform 0.2s;
+    }
+    .btn-save:hover { background: var(--red); transform: translateY(-1px); }
+
+    /* Commandes */
+    .orders-filter {
+      display: flex; gap: 0.5rem; margin-bottom: 1.2rem; flex-wrap: wrap;
+    }
+    .order-filter-btn {
+      padding: 6px 14px; border: 1.5px solid var(--lgray); border-radius: 4px;
+      background: var(--white); font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem; font-weight: 700; color: var(--gray); cursor: none;
+      transition: all 0.2s;
+    }
+    .order-filter-btn.active { border-color: var(--navy); background: var(--navy); color: var(--white); }
+
+    .order-card {
+      background: var(--white); border-radius: 8px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 1rem;
+      border-left: 4px solid transparent; transition: border-color 0.2s;
+    }
+    .order-card:hover { border-left-color: var(--red); }
+    .order-card-header {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem; border-bottom: 1px solid var(--lgray);
+      background: var(--off);
+    }
+    .order-ref { font-size: 0.82rem; font-weight: 900; color: var(--navy); }
+    .order-date { font-size: 0.72rem; color: var(--gray); font-weight: 500; }
+    .order-status {
+      margin-left: auto; border-radius: 99px; padding: 4px 12px;
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .order-status.livree    { background: #dcfce7; color: #16a34a; }
+    .order-status.en-cours  { background: #dbeafe; color: #1d4ed8; }
+    .order-status.annulee   { background: #fef2f2; color: var(--red); }
+    .order-status.prep      { background: #fef9c3; color: #854d0e; }
+    .order-card-body { padding: 1rem 1.2rem; }
+    .order-items-preview { display: flex; gap: 0.5rem; margin-bottom: 0.8rem; }
+    .order-item-thumb {
+      width: 46px; height: 46px; background: var(--lgray); border-radius: 5px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+    }
+    .order-more-items {
+      width: 46px; height: 46px; background: var(--off); border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 800; color: var(--gray);
+      border: 1px solid var(--lgray);
+    }
+    .order-card-footer {
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+    }
+    .order-total-display { font-size: 1rem; font-weight: 900; color: var(--navy); }
+    .order-actions { display: flex; gap: 0.5rem; }
+    .btn-order-action {
+      padding: 7px 14px; border-radius: 4px; font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.5px; cursor: none;
+      text-transform: uppercase; transition: all 0.2s; text-decoration: none;
+    }
+    .btn-order-action.primary { background: var(--navy); color: var(--white); border: none; }
+    .btn-order-action.primary:hover { background: var(--red); }
+    .btn-order-action.outline { background: none; color: var(--navy); border: 1.5px solid var(--lgray); }
+    .btn-order-action.outline:hover { border-color: var(--navy); }
+
+    /* Favoris */
+    .favoris-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+    .favori-card {
+      background: var(--white); border-radius: 8px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: none;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .favori-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .favori-img {
+      height: 130px; background: var(--lgray);
+      display: flex; align-items: center; justify-content: center; font-size: 3rem;
+      position: relative;
+    }
+    .favori-remove {
+      position: absolute; top: 8px; right: 8px;
+      background: var(--white); border: none; border-radius: 50%;
+      width: 28px; height: 28px; cursor: none;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12); transition: background 0.2s;
+    }
+    .favori-remove:hover { background: var(--red); }
+    .favori-remove:hover svg { stroke: var(--white); }
+    .favori-remove svg { stroke: var(--gray); }
+    .favori-body { padding: 0.8rem; }
+    .favori-cat  { font-size: 0.62rem; font-weight: 800; color: var(--blue); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+    .favori-name { font-size: 0.82rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; line-height: 1.3; }
+    .favori-price { font-size: 0.9rem; font-weight: 900; color: var(--navy); }
+    .btn-favori-add {
+      width: 100%; padding: 8px; background: var(--navy); color: var(--white);
+      border: none; border-radius: 4px; font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; cursor: none;
+      transition: background 0.2s; margin-top: 6px;
+    }
+    .btn-favori-add:hover { background: var(--red); }
+
+    /* Adresses */
+    .addresses-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .address-card {
+      border: 2px solid var(--lgray); border-radius: 8px; padding: 1.2rem;
+      position: relative; transition: border-color 0.2s;
+    }
+    .address-card.default { border-color: var(--navy); }
+    .address-default-badge {
+      position: absolute; top: -10px; left: 12px;
+      background: var(--navy); color: var(--white);
+      font-size: 0.6rem; font-weight: 900; letter-spacing: 0.8px;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 3px;
+    }
+    .address-name { font-weight: 800; font-size: 0.88rem; color: var(--navy); margin-bottom: 6px; }
+    .address-text { font-size: 0.8rem; color: var(--gray); line-height: 1.6; margin-bottom: 0.8rem; }
+    .address-actions { display: flex; gap: 0.5rem; }
+    .btn-address { padding: 5px 12px; border-radius: 3px; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 800; cursor: none; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.2s; }
+    .btn-address.edit { background: var(--off); color: var(--navy); border: 1px solid var(--lgray); }
+    .btn-address.edit:hover { border-color: var(--navy); }
+    .btn-address.del  { background: none; color: var(--red); border: 1px solid var(--lgray); }
+    .btn-address.del:hover { border-color: var(--red); background: #fef2f2; }
+    .btn-add-address {
+      border: 2px dashed var(--lgray); border-radius: 8px; padding: 1.2rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.5rem; cursor: none; transition: border-color 0.2s, background 0.2s;
+      text-align: center;
+    }
+    .btn-add-address:hover { border-color: var(--blue); background: var(--off); }
+    .btn-add-address svg { stroke: var(--gray); }
+    .btn-add-address span { font-size: 0.75rem; font-weight: 700; color: var(--gray); }
+
+    /* sécurité */
+    .security-items { display: flex; flex-direction: column; gap: 0.8rem; }
+    .security-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem; background: var(--off); border-radius: 6px;
+    }
+    .security-icon {
+      width: 40px; height: 40px; border-radius: 6px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .security-icon.ok  { background: #dcfce7; }
+    .security-icon.ok svg  { stroke: #16a34a; }
+    .security-icon.warn { background: #fef9c3; }
+    .security-icon.warn svg { stroke: #854d0e; }
+    .security-info { flex: 1; }
+    .security-label { font-size: 0.82rem; font-weight: 800; color: var(--navy); margin-bottom: 2px; }
+    .security-desc  { font-size: 0.72rem; color: var(--gray); }
+    .btn-security { padding: 7px 14px; background: var(--navy); color: var(--white); border: none; border-radius: 4px; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; font-weight: 800; cursor: none; letter-spacing: 0.5px; text-transform: uppercase; transition: background 0.2s; white-space: nowrap; }
+    .btn-security:hover { background: var(--red); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .compte-layout { grid-template-columns: 1fr; }
+      .compte-nav { position: static; display: flex; overflow-x: auto; border-radius: 8px; }
+      .compte-nav-item { white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; }
+      .compte-nav-item.active { border-bottom-color: var(--red); border-left-color: transparent; }
+      .compte-nav-sep { width: 1px; height: auto; margin: 0.3rem 0; }
+      .account-stats { grid-template-columns: 1fr 1fr; }
+      .addresses-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .account-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<div id="header-slot" data-page="compte"></div>
+
+<!-- HERO -->
+<div class="compte-hero">
+  <div class="compte-hero-inner">
+    <div class="compte-avatar-big">KK</div>
+    <div class="compte-hero-info">
+      <h1>Konan Kouassi</h1>
+      <p>contact@marketcenterplace.ci &mdash; Membre depuis janvier 2024</p>
+    </div>
+    <div class="compte-hero-badge">Membre vérifié</div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>Mon compte</span>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="compte-layout">
+
+  <!-- SIDEBAR NAV -->
+  <nav class="compte-nav">
+    <a class="compte-nav-item active" onclick="showSection('tableau-bord', this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Tableau de bord
+    </a>
+    <a class="compte-nav-item" onclick="showSection('commandes', this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Mes commandes
+      <span class="compte-nav-badge">2</span>
+    </a>
+    <a class="compte-nav-item" onclick="showSection('favoris', this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Mes favoris
+    </a>
+    <a class="compte-nav-item" onclick="showSection('adresses', this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Mes adresses
+    </a>
+    <div class="compte-nav-sep"></div>
+    <a class="compte-nav-item" onclick="showSection('profil', this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Mon profil
+    </a>
+    <a class="compte-nav-item" onclick="showSection('securite', this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      sécurité
+    </a>
+    <div class="compte-nav-sep"></div>
+    <div class="compte-nav-sep"></div>
+    <a class="compte-nav-item" onclick="showSection('fidelite', this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Programme fidélité
+      <span class="compte-nav-badge" style="background:#c8a84b;color:#080e20">850 pts</span>
+    </a>
+    <a class="compte-nav-item" onclick="showSection('parrainage', this)">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Parrainage
+      <span class="compte-nav-badge" style="background:#16a34a">3 filleuls</span>
+    </a>
+    <div class="compte-nav-sep"></div>
+    <a class="compte-nav-item danger" href="connexion.html">
+      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Déconnexion
+    </a>
+  </nav>
+
+  <!-- CONTENU -->
+  <div>
+
+    <!-- TABLEAU DE BORD -->
+    <div class="compte-section active" id="section-tableau-bord">
+      <div class="account-stats">
+        <div class="account-stat reveal" onclick="showSection('commandes', null)">
+          <span class="account-stat-val">7<span></span></span>
+          <span class="account-stat-label">Commandes</span>
+        </div>
+        <div class="account-stat reveal" style="transition-delay:0.1s" onclick="showSection('favoris', null)">
+          <span class="account-stat-val">12<span></span></span>
+          <span class="account-stat-label">Favoris</span>
+        </div>
+        <div class="account-stat reveal" style="transition-delay:0.2s">
+          <span class="account-stat-val">4<span>.8</span></span>
+          <span class="account-stat-label">Note moyenne</span>
+        </div>
+        <div class="account-stat reveal" style="transition-delay:0.3s">
+          <span class="account-stat-val">245<span>K</span></span>
+          <span class="account-stat-label">FCFA depenses</span>
+        </div>
+      </div>
+
+      <!-- CARTES FIDÉLITÉ + PARRAINAGE -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem">
+
+        <!-- Carte Points Fidélité -->
+        <div class="section-card reveal" style="background:linear-gradient(135deg,#0b1f4b 0%,#162d6e 100%);color:white;cursor:pointer" onclick="showSection('fidelite',null)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem">
+            <div style="font-size:.65rem;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5)">Programme fidélité</div>
+            <div style="width:32px;height:32px;border-radius:8px;background:rgba(200,168,75,.2);border:1px solid rgba(200,168,75,.3);display:flex;align-items:center;justify-content:center">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="#c8a84b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+          <div id="dash-points" style="font-size:2rem;font-weight:900;color:#c8a84b;letter-spacing:-2px;line-height:1">850</div>
+          <div style="font-size:.68rem;color:rgba(255,255,255,.5);margin-top:2px">points disponibles</div>
+          <div style="margin-top:.9rem;height:5px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden">
+            <div id="dash-points-bar" style="height:100%;background:linear-gradient(90deg,#c8a84b,#e8c55a);border-radius:99px;width:42%;transition:width 1s ease"></div>
+          </div>
+          <div style="font-size:.62rem;color:rgba(255,255,255,.4);margin-top:4px">850 / 2000 pts pour le niveau Or</div>
+        </div>
+
+        <!-- Carte Parrainage -->
+        <div class="section-card reveal" style="background:linear-gradient(135deg,#052010 0%,#0a3020 100%);color:white;cursor:pointer" onclick="showSection('parrainage',null)">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem">
+            <div style="font-size:.65rem;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.5)">Parrainage</div>
+            <div style="width:32px;height:32px;border-radius:8px;background:rgba(22,163,74,.2);border:1px solid rgba(22,163,74,.3);display:flex;align-items:center;justify-content:center">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="#4ade80"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+          </div>
+          <div style="font-size:2rem;font-weight:900;color:#4ade80;letter-spacing:-2px;line-height:1" id="dash-filleuls">3</div>
+          <div style="font-size:.68rem;color:rgba(255,255,255,.5);margin-top:2px">filleuls actifs</div>
+          <div style="margin-top:.9rem;background:rgba(255,255,255,.07);border-radius:6px;padding:.5rem .7rem">
+            <div style="font-size:.6rem;color:rgba(255,255,255,.4);margin-bottom:2px">Gains parrainage</div>
+            <div style="font-size:.9rem;font-weight:900;color:#4ade80" id="dash-gains-parrainage">9 000 FCFA</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Derniere commande -->
+      <div class="section-card reveal">
+        <div class="section-card-title">
+          Derniere commande
+          <button class="btn-edit" onclick="showSection('commandes', null)">Voir tout</button>
+        </div>
+        <div class="order-card" style="margin-bottom:0;box-shadow:none;border:1.5px solid var(--lgray)">
+          <div class="order-card-header">
+            <div>
+              <div class="order-ref">MCP-2025-00847</div>
+              <div class="order-date">Aujourd'hui</div>
+            </div>
+            <span class="order-status prep">En preparation</span>
+          </div>
+          <div class="order-card-body">
+            <div class="order-items-preview">
+              <div class="order-item-thumb">&#128241;</div>
+              <div class="order-item-thumb">&#127807;</div>
+              <div class="order-item-thumb">&#127890;</div>
+            </div>
+            <div class="order-card-footer">
+              <span class="order-total-display">125 900 FCFA</span>
+              <div class="order-actions">
+                <a href="confirmation.html" class="btn-order-action primary">Suivre</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produits recommandes -->
+      <div class="section-card reveal">
+        <div class="section-card-title">
+          Recommandes pour vous
+          <a href="catalogue.html" class="btn-edit">Voir le catalogue</a>
+        </div>
+        <div id="wishlist-container" class="favoris-grid">
+          <div class="favori-card">
+            <div class="favori-img" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe)">&#128187;</div>
+            <div class="favori-body">
+              <div class="favori-cat">High-Tech</div>
+              <div class="favori-name">Ordinateur portable 15" 8Go RAM</div>
+              <div class="favori-price">275 000 FCFA</div>
+              <button class="btn-favori-add">Ajouter au panier</button>
+            </div>
+          </div>
+          <div class="favori-card">
+            <div class="favori-img" style="background:linear-gradient(135deg,#f3e8ff,#ddd6fe)">&#127911;</div>
+            <div class="favori-body">
+              <div class="favori-cat">électronique</div>
+              <div class="favori-name">Ecouteurs Bluetooth 5.3</div>
+              <div class="favori-price">24 000 FCFA</div>
+              <button class="btn-favori-add">Ajouter au panier</button>
+            </div>
+          </div>
+          <div class="favori-card">
+            <div class="favori-img" style="background:linear-gradient(135deg,#fef3c7,#fde68a)">&#128248;</div>
+            <div class="favori-body">
+              <div class="favori-cat">Mode</div>
+              <div class="favori-name">Ensemble Wax homme 3 pieces</div>
+              <div class="favori-price">35 000 FCFA</div>
+              <button class="btn-favori-add">Ajouter au panier</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMANDES -->
+    <div class="compte-section" id="section-commandes">
+      <div class="section-card">
+        <div class="section-card-title">Mes commandes</div>
+        <div class="orders-filter">
+          <button class="order-filter-btn active" onclick="filterOrders(this, 'all')">Toutes (7)</button>
+          <button class="order-filter-btn" onclick="filterOrders(this, 'en-cours')">En cours (2)</button>
+          <button class="order-filter-btn" onclick="filterOrders(this, 'livree')">Livrees (4)</button>
+          <button class="order-filter-btn" onclick="filterOrders(this, 'annulee')">Annulees (1)</button>
+        </div>
+
+        <div class="order-card reveal">
+          <div class="order-card-header">
+            <div><div class="order-ref">MCP-2025-00847</div><div class="order-date">Aujourd'hui &mdash; 3 articles</div></div>
+            <span class="order-status prep">En preparation</span>
+          </div>
+          <div class="order-card-body">
+            <div class="order-items-preview">
+              <div class="order-item-thumb">&#128241;</div>
+              <div class="order-item-thumb">&#127807;</div>
+              <div class="order-item-thumb">&#127890;</div>
+            </div>
+            <div class="order-card-footer">
+              <span class="order-total-display">125 900 FCFA</span>
+              <div class="order-actions">
+                <a href="confirmation.html" class="btn-order-action primary">Suivre</a>
+                <button class="btn-order-action outline">Contacter</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-card reveal" style="transition-delay:0.1s">
+          <div class="order-card-header">
+            <div><div class="order-ref">MCP-2025-00791</div><div class="order-date">12 novembre 2024 &mdash; 2 articles</div></div>
+            <span class="order-status en-cours">En livraison</span>
+          </div>
+          <div class="order-card-body">
+            <div class="order-items-preview">
+              <div class="order-item-thumb">&#128248;</div>
+              <div class="order-item-thumb">&#128187;</div>
+            </div>
+            <div class="order-card-footer">
+              <span class="order-total-display">53 500 FCFA</span>
+              <div class="order-actions">
+                <a href="confirmation.html" class="btn-order-action primary">Suivre</a>
+                <button class="btn-order-action outline">Signaler</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-card reveal" style="transition-delay:0.2s">
+          <div class="order-card-header">
+            <div><div class="order-ref">MCP-2025-00634</div><div class="order-date">28 octobre 2024 &mdash; 1 article</div></div>
+            <span class="order-status livree">Livree</span>
+          </div>
+          <div class="order-card-body">
+            <div class="order-items-preview">
+              <div class="order-item-thumb">&#127807;</div>
+            </div>
+            <div class="order-card-footer">
+              <span class="order-total-display">7 200 FCFA</span>
+              <div class="order-actions">
+                <button class="btn-order-action primary">Laisser un avis</button>
+                <button class="btn-order-action outline">Reacheter</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-card reveal" style="transition-delay:0.3s">
+          <div class="order-card-header">
+            <div><div class="order-ref">MCP-2025-00512</div><div class="order-date">3 octobre 2024 &mdash; 4 articles</div></div>
+            <span class="order-status annulee">Annulee</span>
+          </div>
+          <div class="order-card-body">
+            <div class="order-items-preview">
+              <div class="order-item-thumb">&#127890;</div>
+              <div class="order-item-thumb">&#128241;</div>
+              <div class="order-more-items">+2</div>
+            </div>
+            <div class="order-card-footer">
+              <span class="order-total-display">148 000 FCFA</span>
+              <div class="order-actions">
+                <button class="btn-order-action outline">Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAVORIS -->
+    <div class="compte-section" id="section-favoris">
+      <div class="section-card">
+        <div class="section-card-title">Mes favoris <span style="font-weight:500;color:var(--gray)">(12 produits)</span></div>
+        <div id="wishlist-container" class="favoris-grid">
+          <div class="favori-card reveal">
+            <div class="favori-img">&#128241;
+              <button class="favori-remove"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+            <div class="favori-body">
+              <div class="favori-cat">électronique</div>
+              <div class="favori-name">Smartphone Android 128 Go</div>
+              <div class="favori-price">89 000 FCFA</div>
+              <button class="btn-favori-add">Ajouter au panier</button>
+            </div>
+          </div>
+          <div class="favori-card reveal" style="transition-delay:0.1s">
+            <div class="favori-img" style="background:linear-gradient(135deg,#fef3c7,#fde68a)">&#128248;
+              <button class="favori-remove"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+            <div class="favori-body">
+              <div class="favori-cat">Mode</div>
+              <div class="favori-name">Robe en Wax Ivoirien</div>
+              <div class="favori-price">18 500 FCFA</div>
+              <button class="btn-favori-add">Ajouter au panier</button>
+            </div>
+          </div>
+          <div class="favori-card reveal" style="transition-delay:0.2s">
+            <div class="favori-img" style="background:linear-gradient(135deg,#dcfce7,#bbf7d0)">&#127807;
+              <button class="favori-remove"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+            <div class="favori-body">
+              <div class="favori-cat">beauté</div>
+              <div class="favori-name">Huile de karite pur 500 ml</div>
+              <div class="favori-price">7 200 FCFA</div>
+              <button class="btn-favori-add">Ajouter au panier</button>
+            </div>
+          </div>
+          <div class="favori-card reveal" style="transition-delay:0.3s">
+            <div class="favori-img" style="background:linear-gradient(135deg,#dbeafe,#bfdbfe)">&#128187;
+              <button class="favori-remove"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+            <div class="favori-body">
+              <div class="favori-cat">High-Tech</div>
+              <div class="favori-name">Ordinateur portable 15"</div>
+              <div class="favori-price">275 000 FCFA</div>
+              <button class="btn-favori-add">Ajouter au panier</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADRESSES -->
+    <div class="compte-section" id="section-adresses">
+      <div class="section-card">
+        <div class="section-card-title">Mes adresses de livraison</div>
+        <div class="addresses-grid">
+          <div class="address-card default">
+            <span class="address-default-badge">Principale</span>
+            <div class="address-name">Konan Kouassi</div>
+            <div class="address-text">
+              Cocody Riviera 3, Residence Les Palmiers<br/>
+              Face au carrefour Shell<br/>
+              Abidjan, Côte d'Ivoire<br/>
+              +225 07 00 00 00 00
+            </div>
+            <div class="address-actions">
+              <button class="btn-address edit">Modifier</button>
+              <button class="btn-address del">Supprimer</button>
+            </div>
+          </div>
+          <div class="address-card">
+            <div class="address-name">Bureau &mdash; Plateau</div>
+            <div class="address-text">
+              Avenue Botreau Roussel, Immeuble Alpha 2000<br/>
+              4eme etage, porte 412<br/>
+              Plateau, Abidjan<br/>
+              +225 05 00 00 00 00
+            </div>
+            <div class="address-actions">
+              <button class="btn-address edit">Modifier</button>
+              <button class="btn-address del">Supprimer</button>
+            </div>
+          </div>
+          <div class="btn-add-address" onclick="alert('Ajouter une adresse')">
+            <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            <span>Ajouter une adresse</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFIL -->
+    <div class="compte-section" id="section-profil">
+      <div class="section-card">
+        <div class="section-card-title">Informations personnelles <button class="btn-edit">Modifier</button></div>
+        <div class="form-row">
+          <div class="form-group"><label>Prénom</label><input type="text" value="Konan"/></div>
+          <div class="form-group"><label>Nom</label><input type="text" value="Kouassi"/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Email</label><input type="email" value="konan.kouassi@email.com"/></div>
+          <div class="form-group"><label>téléphone</label><input type="tel" value="+225 07 00 00 00 00"/></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date de naissance</label>
+            <input type="date" value="1992-03-15"/>
+          </div>
+          <div class="form-group">
+            <label>Genre</label>
+            <select><option>Homme</option><option>Femme</option><option>Non precise</option></select>
+          </div>
+        </div>
+        <button class="btn-save">Enregistrer les modifications</button>
+      </div>
+
+      <div class="section-card">
+        <div class="section-card-title">Preferences de communication</div>
+        <div class="form-group">
+          <label style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:0.85rem;cursor:none">
+            <input type="checkbox" checked style="accent-color:var(--red)"/> Recevoir les offres promotionnelles par SMS
+          </label>
+        </div>
+        <div class="form-group">
+          <label style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:0.85rem;cursor:none">
+            <input type="checkbox" checked style="accent-color:var(--red)"/> Recevoir la newsletter par email
+          </label>
+        </div>
+        <div class="form-group">
+          <label style="display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:0.85rem;cursor:none">
+            <input type="checkbox" style="accent-color:var(--red)"/> Notifications WhatsApp pour les livraisons
+          </label>
+        </div>
+        <button class="btn-save">Enregistrer</button>
+      </div>
+    </div>
+
+    <!-- SECURITE -->
+    <div class="compte-section" id="section-securite">
+      <div class="section-card">
+        <div class="section-card-title">sécurité du compte</div>
+        <div class="security-items">
+          <div class="security-item">
+            <div class="security-icon ok"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="security-info">
+              <div class="security-label">Mot de passe</div>
+              <div class="security-desc">Derniere modification il y a 3 mois</div>
+            </div>
+            <button class="btn-security">Modifier</button>
+          </div>
+          <div class="security-item">
+            <div class="security-icon ok"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="security-info">
+              <div class="security-label">Email vérifié</div>
+              <div class="security-desc">contact@marketcenterplace.ci</div>
+            </div>
+            <button class="btn-security">Modifier</button>
+          </div>
+          <div class="security-item">
+            <div class="security-icon ok"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="security-info">
+              <div class="security-label">téléphone vérifié</div>
+              <div class="security-desc">+225 07 00 00 00 00</div>
+            </div>
+            <button class="btn-security">Modifier</button>
+          </div>
+          <div class="security-item">
+            <div class="security-icon warn"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+            <div class="security-info">
+              <div class="security-label">Double authentification</div>
+              <div class="security-desc">Non active &mdash; Recommande pour securiser votre compte</div>
+            </div>
+            <button class="btn-security">Activer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+
+
+    <!-- ══════════════════════════════════════
+         SECTION PROGRAMME FIDÉLITÉ
+    ══════════════════════════════════════ -->
+    <div class="compte-section" id="section-fidelite">
+
+      <!-- En-tête hero -->
+      <div style="background:linear-gradient(135deg,#0b1f4b,#162d6e);border-radius:12px;padding:1.8rem 2rem;margin-bottom:1.5rem;position:relative;overflow:hidden">
+        <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(200,168,75,.08)"></div>
+        <div style="position:relative;z-index:1;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap">
+          <div style="width:64px;height:64px;border-radius:16px;background:rgba(200,168,75,.15);border:1.5px solid rgba(200,168,75,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.6" stroke="#c8a84b"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:.65rem;font-weight:900;color:rgba(255,255,255,.4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.3rem">Programme fidélité MCP</div>
+            <div style="font-size:1.5rem;font-weight:900;color:white;letter-spacing:-1px;margin-bottom:.3rem">Niveau <span style="color:#c8a84b" id="fid-niveau">Argent</span></div>
+            <div style="font-size:.78rem;color:rgba(255,255,255,.5)">Cumulez des points à chaque achat et échangez-les contre des réductions.</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:2.5rem;font-weight:900;color:#c8a84b;letter-spacing:-2px;line-height:1" id="fid-total-points">850</div>
+            <div style="font-size:.65rem;color:rgba(255,255,255,.4);font-weight:700;text-transform:uppercase;letter-spacing:.8px">points</div>
+          </div>
+        </div>
+        <!-- Barre de progression niveau -->
+        <div style="margin-top:1.2rem;position:relative;z-index:1">
+          <div style="display:flex;justify-content:space-between;font-size:.65rem;color:rgba(255,255,255,.4);margin-bottom:.4rem">
+            <span>Niveau Argent</span>
+            <span id="fid-pts-restants">1 150 pts pour le niveau Or</span>
+          </div>
+          <div style="height:6px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden">
+            <div id="fid-barre" style="height:100%;background:linear-gradient(90deg,#c8a84b,#e8c55a);border-radius:99px;width:42%;transition:width 1.2s cubic-bezier(.22,1,.36,1)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:.58rem;color:rgba(255,255,255,.25);margin-top:.3rem">
+            <span>0</span><span>500 — Bronze</span><span>1000 — Argent</span><span>2000 — Or</span><span>5000 — Platine</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Niveaux -->
+      <div class="section-card reveal" style="margin-bottom:1.2rem">
+        <div class="section-card-title">Les niveaux du programme</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.8rem;margin-top:.8rem">
+          <div style="border-radius:8px;padding:1rem;border:1.5px solid #e8edf5;text-align:center">
+            <div style="font-size:1.3rem;margin-bottom:.4rem">🥉</div>
+            <div style="font-weight:900;color:#92400e;font-size:.82rem">Bronze</div>
+            <div style="font-size:.65rem;color:var(--gray);margin:.3rem 0">0 — 499 pts</div>
+            <div style="font-size:.68rem;font-weight:700;color:var(--navy)">1 pt = 1 FCFA</div>
+          </div>
+          <div style="border-radius:8px;padding:1rem;border:2px solid #c8a84b;text-align:center;background:rgba(200,168,75,.05)">
+            <div style="font-size:1.3rem;margin-bottom:.4rem">🥈</div>
+            <div style="font-weight:900;color:#9a7a20;font-size:.82rem">Argent ✓</div>
+            <div style="font-size:.65rem;color:var(--gray);margin:.3rem 0">500 — 1 999 pts</div>
+            <div style="font-size:.68rem;font-weight:700;color:var(--navy)">+5% bonus points</div>
+          </div>
+          <div style="border-radius:8px;padding:1rem;border:1.5px solid #e8edf5;text-align:center;opacity:.7">
+            <div style="font-size:1.3rem;margin-bottom:.4rem">🥇</div>
+            <div style="font-weight:900;color:#c8a84b;font-size:.82rem">Or</div>
+            <div style="font-size:.65rem;color:var(--gray);margin:.3rem 0">2 000 — 4 999 pts</div>
+            <div style="font-size:.68rem;font-weight:700;color:var(--navy)">+10% bonus + livraison gratuite</div>
+          </div>
+          <div style="border-radius:8px;padding:1rem;border:1.5px solid #e8edf5;text-align:center;opacity:.5">
+            <div style="font-size:1.3rem;margin-bottom:.4rem">💎</div>
+            <div style="font-weight:900;color:#7c3aed;font-size:.82rem">Platine</div>
+            <div style="font-size:.65rem;color:var(--gray);margin:.3rem 0">5 000+ pts</div>
+            <div style="font-size:.68rem;font-weight:700;color:var(--navy)">+15% + accès ventes privées</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comment gagner des points -->
+      <div class="section-card reveal" style="margin-bottom:1.2rem">
+        <div class="section-card-title">Comment gagner des points</div>
+        <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:.8rem">
+          <div style="display:flex;align-items:center;gap:.9rem;padding:.8rem;background:var(--off);border-radius:8px">
+            <div style="width:36px;height:36px;border-radius:8px;background:#dbeafe;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#1d4ed8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+            <div style="flex:1"><div style="font-size:.8rem;font-weight:800;color:var(--dark)">Chaque achat</div><div style="font-size:.72rem;color:var(--gray)">1 pt pour chaque 100 FCFA dépensés</div></div>
+            <div style="font-size:.9rem;font-weight:900;color:#1d4ed8;white-space:nowrap">× 1 pt/100F</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.9rem;padding:.8rem;background:var(--off);border-radius:8px">
+            <div style="width:36px;height:36px;border-radius:8px;background:#dcfce7;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#16a34a"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+            <div style="flex:1"><div style="font-size:.8rem;font-weight:800;color:var(--dark)">Parrainage réussi</div><div style="font-size:.72rem;color:var(--gray)">Votre filleul passe sa 1ère commande</div></div>
+            <div style="font-size:.9rem;font-weight:900;color:#16a34a;white-space:nowrap">+500 pts</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.9rem;padding:.8rem;background:var(--off);border-radius:8px">
+            <div style="width:36px;height:36px;border-radius:8px;background:#fef9c3;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#ca8a04"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+            <div style="flex:1"><div style="font-size:.8rem;font-weight:800;color:var(--dark)">Laisser un avis</div><div style="font-size:.72rem;color:var(--gray)">Après réception de votre commande</div></div>
+            <div style="font-size:.9rem;font-weight:900;color:#ca8a04;white-space:nowrap">+50 pts</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.9rem;padding:.8rem;background:var(--off);border-radius:8px">
+            <div style="width:36px;height:36px;border-radius:8px;background:#fce7f3;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#db2777"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            <div style="flex:1"><div style="font-size:.8rem;font-weight:800;color:var(--dark)">Inscription complète</div><div style="font-size:.72rem;color:var(--gray)">Photo de profil + adresse + téléphone</div></div>
+            <div style="font-size:.9rem;font-weight:900;color:#db2777;white-space:nowrap">+200 pts</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.9rem;padding:.8rem;background:var(--off);border-radius:8px">
+            <div style="width:36px;height:36px;border-radius:8px;background:#ede9fe;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#7c3aed"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></div>
+            <div style="flex:1"><div style="font-size:.8rem;font-weight:800;color:var(--dark)">Regarder un Live</div><div style="font-size:.72rem;color:var(--gray)">Par direct regardé jusqu'à la fin</div></div>
+            <div style="font-size:.9rem;font-weight:900;color:#7c3aed;white-space:nowrap">+20 pts</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Utiliser ses points -->
+      <div class="section-card reveal">
+        <div class="section-card-title" style="display:flex;align-items:center;justify-content:space-between">
+          Utiliser mes points
+          <span style="font-size:.72rem;font-weight:700;color:var(--gray)"><strong style="color:#c8a84b" id="fid-points-label">850</strong> pts disponibles</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem;margin-top:.9rem">
+          <div style="border:1.5px solid var(--lgray);border-radius:10px;padding:1.1rem;text-align:center">
+            <div style="font-size:1.4rem;font-weight:900;color:#c8a84b">500 pts</div>
+            <div style="font-size:.72rem;color:var(--gray);margin:.3rem 0">= 500 FCFA de réduction</div>
+            <button onclick="redeemPoints(500)" style="margin-top:.5rem;width:100%;padding:8px;border:none;border-radius:6px;background:var(--navy);color:white;font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;cursor:pointer">Utiliser</button>
+          </div>
+          <div style="border:1.5px solid var(--lgray);border-radius:10px;padding:1.1rem;text-align:center">
+            <div style="font-size:1.4rem;font-weight:900;color:#c8a84b">850 pts</div>
+            <div style="font-size:.72rem;color:var(--gray);margin:.3rem 0">= 850 FCFA de réduction</div>
+            <button onclick="redeemPoints(850)" style="margin-top:.5rem;width:100%;padding:8px;border:none;border-radius:6px;background:linear-gradient(135deg,#c8a84b,#e8c55a);color:#080e20;font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:800;cursor:pointer">Tout utiliser</button>
+          </div>
+          <div style="border:1.5px solid var(--lgray);border-radius:10px;padding:1.1rem;text-align:center;opacity:.5">
+            <div style="font-size:1.4rem;font-weight:900;color:#c8a84b">2 000 pts</div>
+            <div style="font-size:.72rem;color:var(--gray);margin:.3rem 0">= Livraison gratuite × 5</div>
+            <div style="font-size:.65rem;color:var(--red);font-weight:700">Niveau Or requis</div>
+          </div>
+        </div>
+        <!-- Historique points -->
+        <div style="margin-top:1.2rem;border-top:1px solid var(--lgray);padding-top:1rem">
+          <div style="font-size:.68rem;font-weight:900;color:var(--navy);letter-spacing:.5px;margin-bottom:.7rem">HISTORIQUE DES POINTS</div>
+          <div style="display:flex;flex-direction:column;gap:.5rem" id="points-history">
+            <div style="display:flex;align-items:center;gap:.8rem;font-size:.76rem">
+              <div style="color:var(--gray);font-size:.68rem;white-space:nowrap">12 nov.</div>
+              <div style="flex:1;color:var(--dark)">Commande #MCP-2024-0342</div>
+              <div style="color:#16a34a;font-weight:900">+250 pts</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.8rem;font-size:.76rem">
+              <div style="color:var(--gray);font-size:.68rem;white-space:nowrap">8 nov.</div>
+              <div style="flex:1;color:var(--dark)">Parrainage — Adjoua B.</div>
+              <div style="color:#16a34a;font-weight:900">+500 pts</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.8rem;font-size:.76rem">
+              <div style="color:var(--gray);font-size:.68rem;white-space:nowrap">3 nov.</div>
+              <div style="flex:1;color:var(--dark)">Avis laissé sur Smartphone</div>
+              <div style="color:#16a34a;font-weight:900">+50 pts</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:.8rem;font-size:.76rem">
+              <div style="color:var(--gray);font-size:.68rem;white-space:nowrap">1 nov.</div>
+              <div style="flex:1;color:var(--dark)">Réduction utilisée au checkout</div>
+              <div style="color:var(--red);font-weight:900">-200 pts</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         SECTION PARRAINAGE
+    ══════════════════════════════════════ -->
+    <div class="compte-section" id="section-parrainage">
+
+      <!-- Hero code de parrainage -->
+      <div style="background:linear-gradient(135deg,#052010,#0a3020);border-radius:12px;padding:1.8rem 2rem;margin-bottom:1.5rem;position:relative;overflow:hidden">
+        <div style="position:absolute;top:-30px;right:-30px;width:160px;height:160px;border-radius:50%;background:rgba(22,163,74,.08)"></div>
+        <div style="position:relative;z-index:1">
+          <div style="font-size:.65rem;font-weight:900;color:rgba(255,255,255,.4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:.5rem">Votre code de parrainage</div>
+          <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+            <div style="font-size:2rem;font-weight:900;color:#4ade80;letter-spacing:4px;font-family:monospace" id="referral-code">MCP-KONAN</div>
+            <button onclick="copyReferralCode()" style="display:flex;align-items:center;gap:6px;padding:8px 16px;border:1.5px solid rgba(74,222,128,.3);border-radius:6px;background:rgba(74,222,128,.1);color:#4ade80;font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:800;cursor:pointer;transition:all .2s" id="copy-ref-btn">
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copier le code
+            </button>
+          </div>
+          <div style="font-size:.75rem;color:rgba(255,255,255,.4);margin-top:.6rem">Partagez ce code — votre ami reçoit <strong style="color:#4ade80">1 000 FCFA</strong> de réduction sur sa 1ère commande, et vous recevez <strong style="color:#4ade80">2 000 FCFA</strong> + 500 points !</div>
+        </div>
+      </div>
+
+      <!-- Statistiques parrainage -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem">
+        <div class="section-card reveal" style="text-align:center">
+          <div style="font-size:1.8rem;font-weight:900;color:var(--navy);letter-spacing:-1px" id="ref-total-invites">8</div>
+          <div style="font-size:.65rem;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-top:2px">Invités</div>
+        </div>
+        <div class="section-card reveal" style="text-align:center">
+          <div style="font-size:1.8rem;font-weight:900;color:#16a34a;letter-spacing:-1px" id="ref-total-actifs">3</div>
+          <div style="font-size:.65rem;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-top:2px">Filleuls actifs</div>
+        </div>
+        <div class="section-card reveal" style="text-align:center">
+          <div style="font-size:1.8rem;font-weight:900;color:#c8a84b;letter-spacing:-1px" id="ref-total-gains">9 000</div>
+          <div style="font-size:.65rem;color:var(--gray);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-top:2px">FCFA gagnés</div>
+        </div>
+      </div>
+
+      <!-- Partage multi-canaux -->
+      <div class="section-card reveal" style="margin-bottom:1.2rem">
+        <div class="section-card-title">Partager votre code</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem;margin-top:.9rem">
+          <button onclick="shareReferral('whatsapp')" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border:1.5px solid #e8edf5;border-radius:8px;background:white;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.73rem;font-weight:700;color:#080e20;transition:all .2s" onmouseover="this.style.borderColor='#25D366'" onmouseout="this.style.borderColor='#e8edf5'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </button>
+          <button onclick="shareReferral('facebook')" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border:1.5px solid #e8edf5;border-radius:8px;background:white;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.73rem;font-weight:700;color:#080e20;transition:all .2s" onmouseover="this.style.borderColor='#1877F2'" onmouseout="this.style.borderColor='#e8edf5'">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </button>
+          <button onclick="shareReferral('sms')" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border:1.5px solid #e8edf5;border-radius:8px;background:white;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.73rem;font-weight:700;color:#080e20;transition:all .2s">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#64748b"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            SMS
+          </button>
+          <button onclick="shareReferral('copy')" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;border:1.5px solid #e8edf5;border-radius:8px;background:white;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.73rem;font-weight:700;color:#080e20;transition:all .2s">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#64748b"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            Copier le lien
+          </button>
+        </div>
+      </div>
+
+      <!-- Liste filleuls -->
+      <div class="section-card reveal">
+        <div class="section-card-title">Mes filleuls</div>
+        <div style="display:flex;flex-direction:column;gap:.6rem;margin-top:.8rem" id="filleuls-list">
+          <div style="display:flex;align-items:center;gap:.9rem;padding:.8rem;background:var(--off);border-radius:8px">
+            <div style="width:38px;height:38px;border-radius:50%;background:#16a34a;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;color:white;flex-shrink:0">AB</div>
+            <div style="flex:1">
+              <div style="font-size:.8rem;font-weight:800;color:var(--dark)">Adjoua Bamba</div>
+              <div style="font-size:.68rem;color:var(--gray)">Inscrit le 8 nov. · 3 commandes</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:.7rem;font-weight:900;color:#16a34a">+2 500 FCFA</div>
+              <div style="font-size:.6rem;background:#dcfce7;color:#16a34a;border-radius:3px;padding:1px 6px;font-weight:800">Actif</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.9rem;padding:.8rem;background:var(--off);border-radius:8px">
+            <div style="width:38px;height:38px;border-radius:50%;background:#0b1f4b;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;color:white;flex-shrink:0">SK</div>
+            <div style="flex:1">
+              <div style="font-size:.8rem;font-weight:800;color:var(--dark)">Seydou Koné</div>
+              <div style="font-size:.68rem;color:var(--gray)">Inscrit le 5 nov. · 1 commande</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:.7rem;font-weight:900;color:#16a34a">+2 000 FCFA</div>
+              <div style="font-size:.6rem;background:#dcfce7;color:#16a34a;border-radius:3px;padding:1px 6px;font-weight:800">Actif</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.9rem;padding:.8rem;background:var(--off);border-radius:8px">
+            <div style="width:38px;height:38px;border-radius:50%;background:#c8a84b;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;color:white;flex-shrink:0">FD</div>
+            <div style="flex:1">
+              <div style="font-size:.8rem;font-weight:800;color:var(--dark)">Fatou Diallo</div>
+              <div style="font-size:.68rem;color:var(--gray)">Inscrit le 1 nov. · 2 commandes</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:.7rem;font-weight:900;color:#16a34a">+4 500 FCFA</div>
+              <div style="font-size:.6rem;background:#dcfce7;color:#16a34a;border-radius:3px;padding:1px 6px;font-weight:800">Actif</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:.9rem;padding:.8rem;background:var(--off);border-radius:8px;opacity:.5">
+            <div style="width:38px;height:38px;border-radius:50%;background:#94a3b8;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:900;color:white;flex-shrink:0">MY</div>
+            <div style="flex:1">
+              <div style="font-size:.8rem;font-weight:800;color:var(--dark)">Marie Yao</div>
+              <div style="font-size:.68rem;color:var(--gray)">Inscrit le 28 oct. · En attente de commande</div>
+            </div>
+            <div style="font-size:.6rem;background:#f4f6fb;color:#94a3b8;border-radius:3px;padding:2px 7px;font-weight:800;align-self:center">En attente</div>
+          </div>
+        </div>
+
+        <!-- Lien d'invitation via email -->
+        <div style="margin-top:1.2rem;padding:1rem;border:1.5px dashed var(--lgray);border-radius:8px">
+          <div style="font-size:.72rem;font-weight:800;color:var(--navy);margin-bottom:.5rem">Inviter par email</div>
+          <div style="display:flex;gap:.5rem">
+            <input type="email" id="invite-email" placeholder="email de votre ami..." style="flex:1;padding:9px 12px;border:1.5px solid var(--lgray);border-radius:6px;font-family:'Montserrat',sans-serif;font-size:.78rem;outline:none"/>
+            <button onclick="sendInviteEmail()" style="padding:9px 16px;background:var(--navy);color:white;border:none;border-radius:6px;font-family:'Montserrat',sans-serif;font-size:.73rem;font-weight:800;cursor:pointer;white-space:nowrap;transition:background .2s" onmouseover="this.style.background='#c0202a'" onmouseout="this.style.background='var(--navy)'">Inviter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<div id="footer-slot"></div>
+
+</script><script src="api.js"></script>
+<script src="components.js">
+  /* ── FAVORIS LOCALSTORAGE ── */
+  function loadWishlist() {
+    const wishes = JSON.parse(localStorage.getItem('mcp_wishes') || '[]');
+    const container = document.getElementById('wishlist-container');
+    if (!container) return;
+    
+    const allProducts = [
+      { id:1, name:'Smartphone Android 128 Go', price:89000, cat:'électronique', img:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200&q=80' },
+      { id:4, name:'Beurre de karite pur 500ml', price:7200, cat:'santé', img:'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=200&q=80' },
+      { id:7, name:'Tapis de yoga', price:15000, cat:'Sport', img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&q=80' },
+    ];
+    
+    const wished = allProducts.filter(p => wishes.includes(p.id));
+    const countEl = document.getElementById('wishlist-count');
+    if (countEl) countEl.textContent = wished.length;
+    
+    if (wished.length === 0) {
+      container.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--gray)"><div style="font-size:2.5rem;margin-bottom:1rem">♡</div><p style="font-weight:600">Aucun favori pour le moment</p><a href="catalogue.html" style="color:var(--red);text-decoration:none;font-weight:700">Parcourir le catalogue →</a></div>';
+      return;
+    }
+    
+    container.innerHTML = wished.map(p => `
+      <div class="favori-card">
+        <div class="favori-img"><img loading="lazy" src="${p.img}" style="width:100%;height:100%;object-fit:cover" alt="${p.name}"/>
+          <button class="favori-remove" onclick="removeWish(${p.id},this)" title="Retirer des favoris">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="favori-body">
+          <div class="favori-cat">${p.cat}</div>
+          <div class="favori-name">${p.name}</div>
+          <div class="favori-price">${p.price.toLocaleString('fr-FR')} FCFA</div>
+          <button class="btn-favori-add" onclick="addToCartFromWish('${p.name}',${p.price})">Ajouter au panier</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  
+  function removeWish(id, btn) {
+    const wishes = JSON.parse(localStorage.getItem('mcp_wishes') || '[]');
+    const idx = wishes.indexOf(id);
+    if (idx >= 0) wishes.splice(idx, 1);
+    localStorage.setItem('mcp_wishes', JSON.stringify(wishes));
+    btn.closest('.favori-card').style.opacity = '0';
+    btn.closest('.favori-card').style.transform = 'scale(0.9)';
+    setTimeout(() => loadWishlist(), 300);
+  }
+  
+  function addToCartFromWish(name, price) {
+    const items = JSON.parse(localStorage.getItem('mcp_cart') || '[]');
+    const id = 'wish-' + name.replace(/\s/g,'-').toLowerCase();
+    const found = items.find(i => i.id === id);
+    if (found) found.qty = (found.qty||1)+1;
+    else items.push({ id, name, price, qty:1 });
+    localStorage.setItem('mcp_cart', JSON.stringify(items));
+    if (typeof mcpUpdateCart === 'function') mcpUpdateCart();
+    alert('Ajouté au panier !');
+  }
+  
+  /* Charger les favoris quand on affiche la section */
+  const _origShowSection = typeof showSection !== 'undefined' ? showSection : null;
+  function showSection(id, navEl) {
+    if (_origShowSection) _origShowSection(id, navEl);
+    else {
+      document.querySelectorAll('.compte-section').forEach(s => s.classList.remove('active'));
+      document.getElementById('section-' + id)?.classList.add('active');
+      if (navEl) {
+        document.querySelectorAll('.compte-nav-item').forEach(n => n.classList.remove('active'));
+        navEl.classList.add('active');
+      }
+    }
+    if (id === 'favoris') loadWishlist();
+  }
+  
+  // Charger au démarrage si section favoris active
+  document.addEventListener('DOMContentLoaded', () => {
+    const wishCount = JSON.parse(localStorage.getItem('mcp_wishes') || '[]').length;
+    const countEl = document.getElementById('wishlist-count');
+    if (countEl) countEl.textContent = wishCount;
+  });
+
+
+  /* ── COMMANDES DEPUIS API ── */
+  async function loadOrders() {
+    const container = document.getElementById('orders-list');
+    if (!container) return;
+    if (!MCP_API.isLoggedIn()) return;
+    try {
+      const res = await MCP_API.getMyOrders();
+      if (!res?.data?.length) { container.innerHTML = '<div style="text-align:center;padding:3rem;color:var(--gray)"><p>Aucune commande pour le moment</p><a href="catalogue.html" style="color:var(--red);font-weight:700;text-decoration:none">Découvrir nos produits →</a></div>'; return; }
+      const statusLabels = { en_attente:'En attente', confirmee:'Confirmée', en_preparation:'En préparation', en_livraison:'En livraison', livree:'Livrée', annulee:'Annulée' };
+      const statusColors = { confirmee:'#16a34a', en_preparation:'#2563eb', livree:'#16a34a', annulee:'var(--red)', en_attente:'#f59e0b' };
+      container.innerHTML = res.data.map(o => `
+        <div class="order-card reveal" onclick="window.location.href='compte.html?order=${o.reference}'" style="cursor:pointer">
+          <div class="order-card-header">
+            <span class="order-ref">${o.reference}</span>
+            <span style="font-size:.7rem;font-weight:800;color:${statusColors[o.statut]||'var(--gray)'}">${statusLabels[o.statut]||o.statut}</span>
+          </div>
+          <div style="font-size:.8rem;color:var(--gray);margin:.4rem 0">${new Date(o.created_at).toLocaleDateString('fr-FR')} · ${o.nb_articles} article(s)</div>
+          <div style="font-size:.9rem;font-weight:800;color:var(--navy)">${Number(o.total).toLocaleString('fr-FR')} FCFA</div>
+        </div>`
+      ).join('');
+    } catch {}
+  }
+
+  /* Appel auto si section commandes active */
+  const _origShowSectionAccount = typeof showSection !== 'undefined' ? showSection : null;
+  document.addEventListener('DOMContentLoaded', () => {
+    if (MCP_API.isLoggedIn()) {
+      const u = MCP_API.getUser();
+      if (u) {
+        const nameEl = document.querySelector('.compte-name, .user-prénom');
+        if (nameEl) nameEl.textContent = u.Prénom + ' ' + u.nom;
+      }
+      loadOrders();
+    }
+  });
+
+</script>
+<script>
+  /* ── NAVIGATION SECTIONS ── */
+  /* showSection — définie plus haut */
+
+  /* ── FILTRE COMMANDES ── */
+  function filterOrders(btn, status) 
+<script src="script.js"></script>
+<script src="chatbot.js">
+  /* ═══════════════════════════════════════
+     PROGRAMME FIDÉLITÉ
+  ═══════════════════════════════════════ */
+  var userPoints = 850;
+
+  function redeemPoints(pts) {
+    if (pts > userPoints) {
+      if (typeof showToast === 'function') showToast('Pas assez de points', 'error');
+      return;
+    }
+    userPoints -= pts;
+    // Générer un code de réduction
+    var code = 'FIDELITE-' + pts + '-' + Math.random().toString(36).substr(2,5).toUpperCase();
+    updatePointsDisplay();
+    if (typeof showToast === 'function') showToast('Code généré : ' + code + ' — ' + pts + ' FCFA de réduction !', 'success');
+    // En prod : POST /api/fidelite/redeem { points: pts }
+  }
+
+  function updatePointsDisplay() {
+    var els = ['fid-total-points','fid-points-label','dash-points'];
+    els.forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = userPoints.toLocaleString('fr-FR');
+    });
+    // Barre de progression
+    var bar = document.getElementById('fid-barre');
+    var pct = Math.min((userPoints / 2000) * 100, 100);
+    if (bar) bar.style.width = pct + '%';
+    var reste = document.getElementById('fid-pts-restants');
+    if (reste) {
+      var toGold = Math.max(0, 2000 - userPoints);
+      reste.textContent = toGold > 0
+        ? toGold.toLocaleString('fr-FR') + ' pts pour le niveau Or'
+        : 'Niveau Or atteint !';
+    }
+    // Dashboard
+    var dashBar = document.getElementById('dash-points-bar');
+    if (dashBar) dashBar.style.width = pct + '%';
+  }
+
+  /* ═══════════════════════════════════════
+     PARRAINAGE
+  ═══════════════════════════════════════ */
+  var referralCode = 'MCP-KONAN';
+
+  function copyReferralCode() {
+    navigator.clipboard.writeText(referralCode).then(function() {
+      var btn = document.getElementById('copy-ref-btn');
+      if (btn) {
+        var orig = btn.innerHTML;
+        btn.innerHTML = '<svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg> Copié !';
+        btn.style.background = 'rgba(74,222,128,.2)';
+        setTimeout(function() { btn.innerHTML = orig; btn.style.background = ''; }, 2000);
+      }
+      if (typeof showToast === 'function') showToast('Code copié : ' + referralCode, 'success');
+    }).catch(function() {
+      if (typeof showToast === 'function') showToast('Code : ' + referralCode, 'success');
+    });
+  }
+
+  function shareReferral(channel) {
+    var url  = 'https://marketcenterplace.ci?ref=' + referralCode;
+    var msg  = 'Rejoins Market Center Place avec mon code ' + referralCode + ' et obtiens 1 000 FCFA de réduction sur ta 1ère commande ! ' + url;
+    if (channel === 'whatsapp') {
+      window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+    } else if (channel === 'facebook') {
+      window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url), '_blank');
+    } else if (channel === 'sms') {
+      window.open('sms:?body=' + encodeURIComponent(msg));
+    } else {
+      navigator.clipboard.writeText(url).then(function() {
+        if (typeof showToast === 'function') showToast('Lien copié !', 'success');
+      });
+    }
+  }
+
+  function sendInviteEmail() {
+    var email = (document.getElementById('invite-email')?.value || '').trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      if (typeof showToast === 'function') showToast('Email invalide', 'error');
+      return;
+    }
+    // En prod : POST /api/parrainage/invite { email }
+    document.getElementById('invite-email').value = '';
+    if (typeof showToast === 'function') showToast('Invitation envoyée à ' + email + ' !', 'success');
+  }
+
+  /* Init au chargement */
+  document.addEventListener('DOMContentLoaded', function() {
+    updatePointsDisplay();
+    // En prod : charger depuis l'API
+    // fetch('/api/fidelite/points').then(r=>r.json()).then(d=>{ userPoints=d.points; updatePointsDisplay(); });
+    // fetch('/api/parrainage/code').then(r=>r.json()).then(d=>{ referralCode=d.code; document.getElementById('referral-code').textContent=d.code; });
+  });
+</script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

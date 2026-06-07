@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Recherche produits — Market Center Place. Trouvez parmi 12 000 produits en Cote d'Ivoire."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta property="og:title" content="Recherche — Market Center Place"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <title>Recherche — Market Center Place</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <style>
+    /* ── HERO RECHERCHE ── */
+    .search-hero {
+      background: var(--navy);
+      padding: 2.5rem 2.5rem 3rem;
+      border-bottom: 3px solid var(--red);
+      position: relative; overflow: hidden;
+    }
+    .search-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 600px 300px at 70% 50%, rgba(192,32,42,0.12), transparent 70%);
+    }
+    .search-hero-inner { max-width: 800px; margin: 0 auto; position: relative; z-index: 1; }
+    .search-hero-label { font-size: .62rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: .5rem; }
+    .search-hero-title { font-size: 1.5rem; font-weight: 900; color: white; letter-spacing: -.5px; margin-bottom: 1.2rem; line-height: 1.2; }
+    .search-hero-title em { color: var(--gold); font-style: normal; }
+
+    /* Grande barre de recherche */
+    .search-bar-big {
+      display: flex; align-items: center;
+      background: white; border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      overflow: hidden; position: relative;
+    }
+    .search-bar-big svg { position: absolute; left: 18px; stroke: var(--gray); pointer-events: none; }
+    .search-input-big {
+      flex: 1; padding: 16px 16px 16px 52px;
+      border: none; outline: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .95rem; color: var(--dark);
+    }
+    .search-input-big::placeholder { color: #94a3b8; }
+    .search-btn-big {
+      background: var(--red); color: white; border: none;
+      padding: 0 24px; height: 100%; min-width: 120px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: .8rem;
+      letter-spacing: .5px; cursor: pointer;
+      transition: background .2s; white-space: nowrap;
+    }
+    .search-btn-big:hover { background: var(--red2); }
+
+    /* Recherches récentes + tendances */
+    .search-hints { display: flex; gap: .5rem; margin-top: .8rem; flex-wrap: wrap; }
+    .search-hint { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15); border-radius: 20px; padding: 4px 12px; font-size: .68rem; font-weight: 600; color: rgba(255,255,255,.7); cursor: pointer; transition: all .2s; }
+    .search-hint:hover { background: rgba(255,255,255,.2); color: white; }
+
+    /* ── LAYOUT ── */
+    .search-layout {
+      max-width: 1300px; margin: 0 auto; padding: 2rem 2.5rem;
+      display: grid; grid-template-columns: 260px 1fr; gap: 2rem; align-items: start;
+    }
+
+    /* ── SIDEBAR FILTRES ── */
+    .filter-sidebar { position: sticky; top: 85px; }
+    .filter-block { background: var(--white); border-radius: 8px; padding: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,.06); margin-bottom: 1rem; }
+    .filter-block-title { font-size: .62rem; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: var(--navy); margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center; }
+    .filter-clear-btn { font-size: .6rem; font-weight: 700; color: var(--red); background: none; border: none; cursor: pointer; text-decoration: underline; }
+    .filter-option { display: flex; align-items: center; gap: 8px; padding: 5px 0; cursor: pointer; font-size: .78rem; font-weight: 600; color: var(--gray); transition: color .2s; }
+    .filter-option:hover { color: var(--navy); }
+    .filter-option input[type="checkbox"] { accent-color: var(--navy); cursor: pointer; }
+    .filter-option input[type="radio"]    { accent-color: var(--navy); cursor: pointer; }
+    .filter-count { margin-left: auto; font-size: .65rem; background: var(--off); border-radius: 99px; padding: 1px 7px; color: var(--gray); font-weight: 600; }
+
+    /* Slider prix */
+    .price-range { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-bottom: .8rem; }
+    .price-input-wrap { position: relative; }
+    .price-input-wrap label { font-size: .6rem; font-weight: 700; color: var(--gray); display: block; margin-bottom: 3px; text-transform: uppercase; letter-spacing: .5px; }
+    .price-input { width: 100%; padding: 7px 8px; border: 1.5px solid var(--lgray); border-radius: 5px; font-family: 'Montserrat', sans-serif; font-size: .78rem; color: var(--dark); outline: none; transition: border .2s; }
+    .price-input:focus { border-color: var(--navy); }
+    .btn-apply-price { width: 100%; padding: 8px; background: var(--navy); color: white; border: none; border-radius: 5px; font-family: 'Montserrat', sans-serif; font-size: .72rem; font-weight: 800; cursor: pointer; transition: background .2s; margin-top: .3rem; }
+    .btn-apply-price:hover { background: var(--red); }
+
+    /* Note min */
+    .star-filter { display: flex; flex-direction: column; gap: 4px; }
+    .star-option { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: .75rem; font-weight: 600; color: var(--gray); padding: 3px 0; }
+    .star-option:hover { color: var(--navy); }
+    .stars-mini { color: #f59e0b; font-size: .75rem; letter-spacing: -1px; }
+
+    /* ── RÉSULTATS ── */
+    .results-header {
+      display: flex; align-items: center; gap: 1rem;
+      flex-wrap: wrap; margin-bottom: 1.2rem;
+    }
+    .results-count { font-size: .8rem; color: var(--gray); font-weight: 600; flex: 1; }
+    .results-count strong { color: var(--navy); font-weight: 900; }
+    .sort-select {
+      padding: 8px 12px; border: 1.5px solid var(--lgray); border-radius: 5px;
+      font-family: 'Montserrat', sans-serif; font-size: .75rem; font-weight: 700;
+      color: var(--dark); background: var(--white); outline: none; cursor: pointer;
+    }
+    .view-toggles { display: flex; gap: .3rem; }
+    .view-btn { width: 34px; height: 34px; border: 1.5px solid var(--lgray); border-radius: 5px; background: var(--white); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+    .view-btn svg { stroke: var(--gray); }
+    .view-btn.active, .view-btn:hover { border-color: var(--navy); background: var(--navy); }
+    .view-btn.active svg, .view-btn:hover svg { stroke: white; }
+
+    /* Tags filtres actifs */
+    .active-filters { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .active-filter-tag {
+      display: flex; align-items: center; gap: 5px;
+      background: var(--navy); color: white;
+      border-radius: 20px; padding: 4px 10px;
+      font-size: .68rem; font-weight: 700;
+    }
+    .active-filter-tag button { background: none; border: none; color: rgba(255,255,255,.7); cursor: pointer; padding: 0; line-height: 1; font-size: .8rem; }
+    .active-filter-tag button:hover { color: white; }
+    .clear-all-btn { background: none; border: none; color: var(--red); font-family: 'Montserrat', sans-serif; font-size: .72rem; font-weight: 800; cursor: pointer; text-decoration: underline; margin-left: auto; }
+
+    /* Grille produits */
+    .results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.2rem; }
+    .results-grid.list-view { grid-template-columns: 1fr; }
+    .results-grid.list-view .prod-card { display: grid; grid-template-columns: 140px 1fr; }
+    .results-grid.list-view .prod-img { height: 140px; }
+
+    /* Pas de résultats */
+    .no-results {
+      grid-column: 1/-1; text-align: center; padding: 4rem 2rem;
+    }
+    .no-results-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+    .no-results h3 { font-size: 1.1rem; font-weight: 900; color: var(--navy); margin-bottom: .5rem; }
+    .no-results p { font-size: .85rem; color: var(--gray); margin-bottom: 1.5rem; line-height: 1.7; }
+    .no-results-suggestions { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; }
+    .suggestion-tag { background: var(--off); border: 1.5px solid var(--lgray); border-radius: 20px; padding: 6px 14px; font-size: .75rem; font-weight: 700; color: var(--navy); cursor: pointer; transition: all .2s; }
+    .suggestion-tag:hover { background: var(--navy); color: white; border-color: var(--navy); }
+
+    /* Skeleton loading */
+    .skeleton-card { background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
+    .skeleton { background: linear-gradient(90deg, var(--lgray) 25%, #f0f2f7 50%, var(--lgray) 75%); background-size: 200% 100%; animation: shimmer 1.4s ease-in-out infinite; border-radius: 4px; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+    .skeleton-img { height: 180px; border-radius: 0; }
+    .skeleton-body { padding: 1rem; display: flex; flex-direction: column; gap: 8px; }
+    .skeleton-line { height: 10px; }
+    .skeleton-line.w80 { width: 80%; }
+    .skeleton-line.w60 { width: 60%; }
+    .skeleton-line.w40 { width: 40%; }
+
+    /* Pagination */
+    .results-pagination { display: flex; align-items: center; justify-content: center; gap: .4rem; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--lgray); }
+    .pag-btn { width: 36px; height: 36px; border-radius: 5px; border: 1.5px solid var(--lgray); background: var(--white); font-family: 'Montserrat', sans-serif; font-size: .78rem; font-weight: 700; color: var(--gray); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .2s; }
+    .pag-btn:hover { border-color: var(--navy); color: var(--navy); }
+    .pag-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
+    .pag-btn:disabled { opacity: .35; cursor: default; pointer-events: none; }
+
+    /* Responsive */
+    @media(max-width: 900px) {
+      .search-layout { grid-template-columns: 1fr; }
+      .filter-sidebar { position: static; }
+      .search-hero { padding: 1.5rem 1.2rem 2rem; }
+      .search-hero-title { font-size: 1.2rem; }
+    }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div id="header-slot" data-page=""></div>
+
+<!-- HERO RECHERCHE -->
+<div class="search-hero">
+  <div class="search-hero-inner">
+    <div class="search-hero-label">Recherche</div>
+    <h1 class="search-hero-title" id="search-title">Que <em>recherchez-vous</em> ?</h1>
+    <div class="search-bar-big">
+      <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" class="search-input-big" id="main-search-input"
+        placeholder="Ex: Smartphone, Robe Wax, Karite, Ordinateur..."
+        oninput="onSearchInput(this.value)"
+        onkeydown="if(event.key==='Enter') doSearch()"/>
+      <button class="search-btn-big" onclick="doSearch()">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white" style="margin-right:6px;vertical-align:middle"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Rechercher
+      </button>
+    </div>
+    <div class="search-hints" id="search-hints">
+      <span class="search-hint" onclick="quickSearch('Smartphone')">Smartphone</span>
+      <span class="search-hint" onclick="quickSearch('Wax')">Tissu Wax</span>
+      <span class="search-hint" onclick="quickSearch('Karite')">Karite</span>
+      <span class="search-hint" onclick="quickSearch('Ordinateur')">Ordinateur</span>
+      <span class="search-hint" onclick="quickSearch('Ecouteurs')">Ecouteurs</span>
+      <span class="search-hint" onclick="quickSearch('Yoga')">Yoga</span>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span id="bc-query">Recherche</span>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="search-layout">
+
+  <!-- SIDEBAR FILTRES -->
+  <aside class="filter-sidebar">
+
+    <!-- Catégories -->
+    <div class="filter-block">
+      <div class="filter-block-title">
+        Catégories
+        <button class="filter-clear-btn" onclick="clearFilter('cat')">Effacer</button>
+      </div>
+      <label class="filter-option"><input type="radio" name="cat" value="" checked onchange="applyFilters()"/> Toutes <span class="filter-count" id="count-all">18</span></label>
+      <label class="filter-option"><input type="radio" name="cat" value="électronique" onchange="applyFilters()"/> électronique <span class="filter-count">7</span></label>
+      <label class="filter-option"><input type="radio" name="cat" value="Mode" onchange="applyFilters()"/> Mode &amp; Wax <span class="filter-count">2</span></label>
+      <label class="filter-option"><input type="radio" name="cat" value="santé" onchange="applyFilters()"/> santé <span class="filter-count">4</span></label>
+      <label class="filter-option"><input type="radio" name="cat" value="Maison" onchange="applyFilters()"/> Maison <span class="filter-count">1</span></label>
+      <label class="filter-option"><input type="radio" name="cat" value="beauté" onchange="applyFilters()"/> beauté <span class="filter-count">1</span></label>
+      <label class="filter-option"><input type="radio" name="cat" value="Artisanat" onchange="applyFilters()"/> Artisanat <span class="filter-count">1</span></label>
+    </div>
+
+    <!-- Prix -->
+    <div class="filter-block">
+      <div class="filter-block-title">Prix (FCFA) <button class="filter-clear-btn" onclick="clearFilter('price')">Effacer</button></div>
+      <div class="price-range">
+        <div class="price-input-wrap">
+          <label>Min</label>
+          <input type="number" class="price-input" id="price-min" placeholder="0" min="0"/>
+        </div>
+        <div class="price-input-wrap">
+          <label>Max</label>
+          <input type="number" class="price-input" id="price-max" placeholder="500 000" min="0"/>
+        </div>
+      </div>
+      <button class="btn-apply-price" onclick="applyPriceFilter()">Appliquer</button>
+      <div style="margin-top:.8rem">
+        <label class="filter-option"><input type="radio" name="price-range" value="0-15000" onchange="applyQuickPrice(0,15000)"/> Moins de 15 000</label>
+        <label class="filter-option"><input type="radio" name="price-range" value="15000-50000" onchange="applyQuickPrice(15000,50000)"/> 15 000 – 50 000</label>
+        <label class="filter-option"><input type="radio" name="price-range" value="50000-150000" onchange="applyQuickPrice(50000,150000)"/> 50 000 – 150 000</label>
+        <label class="filter-option"><input type="radio" name="price-range" value="150000-999999" onchange="applyQuickPrice(150000,999999)"/> Plus de 150 000</label>
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="filter-block">
+      <div class="filter-block-title">Note minimale <button class="filter-clear-btn" onclick="clearFilter('rating')">Effacer</button></div>
+      <div class="star-filter">
+        <label class="star-option"><input type="radio" name="rating" value="0" checked onchange="applyFilters()"/> Toutes les notes</label>
+        <label class="star-option"><input type="radio" name="rating" value="4.5" onchange="applyFilters()"/> <span class="stars-mini">★★★★★</span> 4.5 et +</label>
+        <label class="star-option"><input type="radio" name="rating" value="4" onchange="applyFilters()"/>  <span class="stars-mini">★★★★☆</span> 4 et +</label>
+        <label class="star-option"><input type="radio" name="rating" value="3" onchange="applyFilters()"/>  <span class="stars-mini">★★★☆☆</span> 3 et +</label>
+      </div>
+    </div>
+
+    <!-- Disponibilité -->
+    <div class="filter-block">
+      <div class="filter-block-title">Disponibilité</div>
+      <label class="filter-option"><input type="checkbox" id="filter-stock" onchange="applyFilters()"/> En stock uniquement</label>
+      <label class="filter-option"><input type="checkbox" id="filter-promo" onchange="applyFilters()"/> Produits en promo</label>
+    </div>
+
+    <!-- Vendeurs -->
+    <div class="filter-block">
+      <div class="filter-block-title">Vendeurs</div>
+      <label class="filter-option"><input type="checkbox" value="TechCI Pro" onchange="applyVendorFilter(this)"/> TechCI Pro <span class="filter-count">8</span></label>
+      <label class="filter-option"><input type="checkbox" value="AbidjanStyle" onchange="applyVendorFilter(this)"/> AbidjanStyle <span class="filter-count">3</span></label>
+      <label class="filter-option"><input type="checkbox" value="NatureBio CI" onchange="applyVendorFilter(this)"/> NatureBio CI <span class="filter-count">3</span></label>
+      <label class="filter-option"><input type="checkbox" value="SportPlus" onchange="applyVendorFilter(this)"/> SportPlus <span class="filter-count">2</span></label>
+      <label class="filter-option"><input type="checkbox" value="MaisonCI" onchange="applyVendorFilter(this)"/> MaisonCI <span class="filter-count">2</span></label>
+    </div>
+
+  </aside>
+
+  <!-- RÉSULTATS -->
+  <div>
+
+    <!-- Tags filtres actifs -->
+    <div class="active-filters" id="active-filters" style="display:none"></div>
+
+    <!-- Barre résultats -->
+    <div class="results-header">
+      <div class="results-count" id="results-count">
+        <strong id="results-num">18</strong> produits trouvés
+      </div>
+      <select class="sort-select" onchange="setSortOrder(this.value)">
+        <option value="popular">Les plus populaires</option>
+        <option value="newest">Nouveautés</option>
+        <option value="price-asc">Prix croissant</option>
+        <option value="price-desc">Prix décroissant</option>
+        <option value="rating">Mieux notés</option>
+      </select>
+      <div class="view-toggles">
+        <button class="view-btn active" id="btn-grid" onclick="setView('grid')" title="Vue grille">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </button>
+        <button class="view-btn" id="btn-list" onclick="setView('list')" title="Vue liste">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Grille -->
+    <div class="results-grid" id="results-grid"></div>
+
+    <!-- Pagination -->
+    <div class="results-pagination" id="results-pagination"></div>
+
+  </div>
+</div>
+
+<div id="footer-slot"></div>
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+<script>
+/* ════════════════════════════════════════════════
+   DONNÉES PRODUITS (partagées avec catalogue.js)
+   ════════════════════════════════════════════════ */
+const ALL_PRODUCTS = [
+  { id:1,  name:'Smartphone Android 128 Go', cat:'Electronique', price:89000,  oldPrice:119000, rating:4.8, reviews:342, badge:'-25%', img:'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80', vendeur:'TechCI Pro',   stock:true, slug:'produit.html' },
+  { id:2,  name:'Ecouteurs Bluetooth 5.3',   cat:'Electronique', price:24000,  oldPrice:30000,  rating:4.6, reviews:128, badge:'',     img:'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80', vendeur:'TechCI Pro',   stock:true, slug:'produit.html' },
+  { id:3,  name:'Robe en Wax Ivoirien',      cat:'Mode',         price:18500,  oldPrice:null,   rating:4.9, reviews:94,  badge:'Neuf', img:'https://images.unsplash.com/photo-1590735213920-68192a487bc2?w=400&q=80', vendeur:'AbidjanStyle', stock:true, slug:'produit.html' },
+  { id:4,  name:'Beurre de karite pur 500ml',cat:'Sante',        price:7200,   oldPrice:null,   rating:4.7, reviews:67,  badge:'',     img:'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=400&q=80', vendeur:'NatureBio CI', stock:true, slug:'produit.html' },
+  { id:5,  name:'Ordinateur portable 15"',   cat:'Electronique', price:275000, oldPrice:null,   rating:4.5, reviews:45,  badge:'',     img:'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80', vendeur:'TechCI Pro',   stock:true, slug:'produit.html' },
+  { id:6,  name:'Sac artisanal Bogolan',     cat:'Artisanat',    price:22500,  oldPrice:null,   rating:4.9, reviews:65,  badge:'',     img:'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&q=80', vendeur:'AbidjanStyle', stock:true, slug:'produit.html' },
+  { id:7,  name:'Tapis de yoga antiderapant',cat:'Sante',        price:15000,  oldPrice:null,   rating:4.8, reviews:43,  badge:'',     img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80', vendeur:'SportPlus',    stock:true, slug:'produit.html' },
+  { id:8,  name:'Vitamine C 1000mg 60 cp',   cat:'Sante',        price:8500,   oldPrice:null,   rating:4.7, reviews:128, badge:'',     img:'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80', vendeur:'NatureBio CI', stock:true, slug:'produit.html' },
+  { id:9,  name:'Set casseroles inox 5 pcs', cat:'Maison',       price:34000,  oldPrice:49000,  rating:4.4, reviews:102, badge:'-30%', img:'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=400&q=80', vendeur:'MaisonCI',     stock:true, slug:'produit.html' },
+  { id:10, name:'Chargeur rapide USB-C 65W', cat:'Electronique', price:12000,  oldPrice:null,   rating:4.6, reviews:201, badge:'',     img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80', vendeur:'TechCI Pro',   stock:true, slug:'produit.html' },
+  { id:11, name:'Coussin decoratif africain',cat:'Maison',       price:12000,  oldPrice:14200,  rating:4.3, reviews:43,  badge:'-15%', img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80', vendeur:'MaisonCI',     stock:true, slug:'produit.html' },
+  { id:12, name:'Huile essentielle lavande', cat:'Sante',        price:5500,   oldPrice:null,   rating:4.8, reviews:89,  badge:'',     img:'https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=400&q=80', vendeur:'NatureBio CI', stock:true, slug:'produit.html' },
+  { id:13, name:'Montre connectee sport',    cat:'Electronique', price:45000,  oldPrice:null,   rating:4.5, reviews:19,  badge:'Neuf', img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80', vendeur:'TechCI Pro',   stock:true, slug:'produit.html' },
+  { id:14, name:'Tisane gingembre citron',   cat:'santé',        price:4500,   oldPrice:null,   rating:4.7, reviews:67,  badge:'',     img:'https://images.unsplash.com/photo-1576671081837-49000212a370?w=400&q=80', vendeur:'NatureBio CI', stock:true, slug:'produit.html' },
+  { id:15, name:'Appareil photo numerique',  cat:'Electronique', price:85000,  oldPrice:110000, rating:4.6, reviews:38,  badge:'-22%', img:'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80', vendeur:'TechCI Pro',   stock:true, slug:'produit.html' },
+  { id:16, name:'Ensemble Wax homme 3 pcs',  cat:'Mode',         price:35000,  oldPrice:null,   rating:4.8, reviews:56,  badge:'',     img:'https://images.unsplash.com/photo-1603400521630-9f2de124b33b?w=400&q=80', vendeur:'AbidjanStyle', stock:true, slug:'produit.html' },
+  { id:17, name:'Creme corps beurre cacao',  cat:'beauté',       price:6800,   oldPrice:null,   rating:4.9, reviews:134, badge:'',     img:'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=400&q=80', vendeur:'NatureBio CI', stock:true, slug:'produit.html' },
+  { id:18, name:'Lecteur ebook 6 pouces',    cat:'électronique', price:68000,  oldPrice:85000,  rating:4.4, reviews:22,  badge:'-20%', img:'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&q=80', vendeur:'TechCI Pro',   stock:false, slug:'produit.html' },
+];
+
+/* ════════════════════════════════════
+   ÉTAT
+   ════════════════════════════════════ */
+let state = {
+  query:    '',
+  cat:      '',
+  priceMin: 0,
+  priceMax: Infinity,
+  rating:   0,
+  stockOnly:false,
+  promoOnly:false,
+  vendors:  new Set(),
+  sort:     'popular',
+  page:     1,
+  view:     'grid',
+};
+const PER_PAGE = 12;
+
+/* ════════════════════════════════════
+   RECHERCHE
+   ════════════════════════════════════ */
+function onSearchInput(val) {
+  // Suggestions instantanées (debounce simple)
+  clearTimeout(window._searchTimer);
+  window._searchTimer = setTimeout(() => {
+    state.query = val.trim();
+    state.page  = 1;
+    applyFilters();
+    updateSearchTitle();
+  }, 300);
+}
+
+function doSearch() {
+  const input = document.getElementById('main-search-input');
+  state.query = input.value.trim();
+  state.page  = 1;
+  applyFilters();
+  updateSearchTitle();
+  // Mettre à jour l'URL
+  const url = new URL(window.location);
+  if (state.query) url.searchParams.set('q', state.query);
+  else url.searchParams.delete('q');
+  window.history.pushState({}, '', url);
+}
+
+function quickSearch(term) {
+  document.getElementById('main-search-input').value = term;
+  state.query = term;
+  state.page  = 1;
+  applyFilters();
+  updateSearchTitle();
+}
+
+function updateSearchTitle() {
+  const title = document.getElementById('search-title');
+  if (title) {
+    title.innerHTML = state.query
+      ? `Résultats pour <em>"${state.query}"</em>`
+      : `Que <em>recherchez-vous</em> ?`;
+  }
+  const bc = document.getElementById('bc-query');
+  if (bc) bc.textContent = state.query || 'Recherche';
+}
+
+/* ════════════════════════════════════
+   FILTRES
+   ════════════════════════════════════ */
+function applyFilters() {
+  // Lire l'état des checkboxes/radios
+  const catEl   = document.querySelector('input[name="cat"]:checked');
+  const ratingEl = document.querySelector('input[name="rating"]:checked');
+  state.cat      = catEl ? catEl.value : '';
+  state.rating   = ratingEl ? parseFloat(ratingEl.value) : 0;
+  state.stockOnly = document.getElementById('filter-stock')?.checked || false;
+  state.promoOnly = document.getElementById('filter-promo')?.checked || false;
+
+  renderResults();
+  renderActiveTags();
+}
+
+function applyPriceFilter() {
+  const min = parseInt(document.getElementById('price-min').value) || 0;
+  const max = parseInt(document.getElementById('price-max').value) || Infinity;
+  state.priceMin = min;
+  state.priceMax = max;
+  state.page = 1;
+  applyFilters();
+}
+
+function applyQuickPrice(min, max) {
+  document.getElementById('price-min').value = min;
+  document.getElementById('price-max').value = max === 999999 ? '' : max;
+  state.priceMin = min;
+  state.priceMax = max;
+  state.page = 1;
+  applyFilters();
+}
+
+function applyVendorFilter(cb) {
+  if (cb.checked) state.vendors.add(cb.value);
+  else            state.vendors.delete(cb.value);
+  state.page = 1;
+  applyFilters();
+}
+
+function setSortOrder(val) {
+  state.sort = val;
+  state.page = 1;
+  applyFilters();
+}
+
+function clearFilter(type) {
+  if (type === 'cat') {
+    document.querySelector('input[name="cat"][value=""]').checked = true;
+    state.cat = '';
+  }
+  if (type === 'price') {
+    document.getElementById('price-min').value = '';
+    document.getElementById('price-max').value = '';
+    document.querySelector('input[name="price-range"][value="0-15000"]')?.closest('label')?.querySelector('input') && (document.querySelectorAll('input[name="price-range"]').forEach(r => r.checked = false));
+    state.priceMin = 0; state.priceMax = Infinity;
+  }
+  if (type === 'rating') {
+    document.querySelector('input[name="rating"][value="0"]').checked = true;
+    state.rating = 0;
+  }
+  state.page = 1;
+  applyFilters();
+}
+
+/* ════════════════════════════════════
+   FILTRAGE + TRI
+   ════════════════════════════════════ */
+function getFiltered() {
+  let p = [...ALL_PRODUCTS];
+
+  if (state.query) {
+    const q = state.query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    p = p.filter(x => {
+      const name = x.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      const cat  = x.cat.toLowerCase();
+      const vend = x.vendeur.toLowerCase();
+      return name.includes(q) || cat.includes(q) || vend.includes(q);
+    });
+  }
+  if (state.cat)        p = p.filter(x => x.cat === state.cat);
+  if (state.priceMin)   p = p.filter(x => x.price >= state.priceMin);
+  if (state.priceMax < Infinity) p = p.filter(x => x.price <= state.priceMax);
+  if (state.rating)     p = p.filter(x => x.rating >= state.rating);
+  if (state.stockOnly)  p = p.filter(x => x.stock);
+  if (state.promoOnly)  p = p.filter(x => x.oldPrice);
+  if (state.vendors.size > 0) p = p.filter(x => state.vendors.has(x.vendeur));
+
+  switch(state.sort) {
+    case 'price-asc':  p.sort((a,b) => a.price - b.price); break;
+    case 'price-desc': p.sort((a,b) => b.price - a.price); break;
+    case 'rating':     p.sort((a,b) => b.rating - a.rating); break;
+    case 'newest':     p.sort((a,b) => b.id - a.id); break;
+    default:           p.sort((a,b) => b.reviews - a.reviews);
+  }
+  return p;
+}
+
+/* ════════════════════════════════════
+   RENDU
+   ════════════════════════════════════ */
+function renderResults() {
+  const grid    = document.getElementById('results-grid');
+  const numEl   = document.getElementById('results-num');
+  const countEl = document.getElementById('results-count');
+  if (!grid) return;
+
+  // Skeleton pendant 300ms au premier rendu
+  grid.innerHTML = Array(6).fill(`
+    <div class="skeleton-card">
+      <div class="skeleton skeleton-img"></div>
+      <div class="skeleton-body">
+        <div class="skeleton skeleton-line w80"></div>
+        <div class="skeleton skeleton-line w60"></div>
+        <div class="skeleton skeleton-line w40"></div>
+      </div>
+    </div>`).join('');
+
+  setTimeout(() => {
+    const filtered = getFiltered();
+    const total    = filtered.length;
+    const start    = (state.page - 1) * PER_PAGE;
+    const page     = filtered.slice(start, start + PER_PAGE);
+
+    if (numEl) numEl.textContent = total.toLocaleString('fr-FR');
+
+    // Vue liste ou grille
+    grid.className = 'results-grid' + (state.view === 'list' ? ' list-view' : '');
+
+    if (total === 0) {
+      grid.innerHTML = `
+        <div class="no-results">
+          <div class="no-results-icon">&#128270;</div>
+          <h3>Aucun résultat pour "${state.query || 'votre recherche'}"</h3>
+          <p>Vérifiez l'orthographe ou essayez des termes plus généraux.<br/>Nos 12 000 produits vous attendent !</p>
+          <div class="no-results-suggestions">
+            <span class="suggestion-tag" onclick="quickSearch('Smartphone')">Smartphone</span>
+            <span class="suggestion-tag" onclick="quickSearch('Wax')">Wax</span>
+            <span class="suggestion-tag" onclick="quickSearch('Karite')">Karite</span>
+            <span class="suggestion-tag" onclick="quickSearch('Ordinateur')">Ordinateur</span>
+            <span class="suggestion-tag" onclick="clearAllFilters()">Voir tout</span>
+          </div>
+        </div>`;
+      document.getElementById('results-pagination').innerHTML = '';
+      return;
+    }
+
+    grid.innerHTML = page.map(p => {
+      const stars = '&#9733;'.repeat(Math.floor(p.rating)) + '&#9734;'.repeat(5 - Math.floor(p.rating));
+      return `
+        <div class="prod-card reveal" onclick="window.location.href='${p.slug}'" style="cursor:pointer">
+          ${p.badge ? `<span class="prod-badge">${p.badge}</span>` : ''}
+          <button class="prod-wish" onclick="event.stopPropagation();toggleWish(${p.id},this)" title="Favoris">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </button>
+          <a href="${p.slug}" style="text-decoration:none">
+            <div class="prod-img" style="background:#f0f4f8;padding:0;overflow:hidden;position:relative">
+              <img src="${p.img}" style="width:100%;height:100%;object-fit:cover;transition:transform .4s"
+                alt="${p.name}" loading="lazy"
+                onmouseover="this.style.transform='scale(1.05)'"
+                onmouseout="this.style.transform='scale(1)'"/>
+              ${!p.stock ? '<div style="position:absolute;inset:0;background:rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:var(--red)">Rupture de stock</div>' : ''}
+              <div class="prod-overlay"><button class="prod-quick">Voir le produit</button></div>
+            </div>
+          </a>
+          <div class="prod-body">
+            <div class="prod-cat">${p.cat} &middot; ${p.vendeur}</div>
+            <div class="prod-name"><a href="${p.slug}" style="color:inherit;text-decoration:none">${p.name}</a></div>
+            <div class="prod-stars" style="color:#f59e0b;font-size:.75rem">
+              ${stars} <span style="color:var(--gray);font-size:.7rem">${p.rating} (${p.reviews})</span>
+            </div>
+            <div class="prod-foot">
+              <div>
+                <span class="prod-price">${p.price.toLocaleString('fr-FR')} FCFA</span>
+                ${p.oldPrice ? `<span class="prod-old" style="text-decoration:line-through;color:var(--gray);font-size:.75rem;margin-left:4px">${p.oldPrice.toLocaleString('fr-FR')}</span>` : ''}
+              </div>
+              <button class="btn-add" onclick="event.stopPropagation();addToCartResult(${p.id},'${p.name}',${p.price})" ${!p.stock?'disabled':''}>
+                ${p.stock?'Ajouter':'Indispo'}
+              </button>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+
+    renderPagination(total);
+  }, 250);
+}
+
+function renderPagination(total) {
+  const pages     = Math.ceil(total / PER_PAGE);
+  const container = document.getElementById('results-pagination');
+  if (!container || pages <= 1) { if(container) container.innerHTML=''; return; }
+
+  let html = `<button class="pag-btn" onclick="goPage(${state.page-1})" ${state.page<=1?'disabled':''}>&#8249;</button>`;
+  for (let i=1; i<=pages; i++) {
+    if (pages > 7 && i !== 1 && i !== pages && Math.abs(i - state.page) > 2) {
+      if (i === state.page - 3 || i === state.page + 3) html += `<span class="pag-btn" style="border:none;cursor:default">…</span>`;
+      continue;
+    }
+    html += `<button class="pag-btn ${i===state.page?'active':''}" onclick="goPage(${i})">${i}</button>`;
+  }
+  html += `<button class="pag-btn" onclick="goPage(${state.page+1})" ${state.page>=pages?'disabled':''}>&#8250;</button>`;
+  container.innerHTML = html;
+}
+
+function goPage(p) {
+  const total = getFiltered().length;
+  const max   = Math.ceil(total / PER_PAGE);
+  if (p < 1 || p > max) return;
+  state.page = p;
+  renderResults();
+  document.querySelector('.search-layout')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ════════════════════════════════════
+   TAGS FILTRES ACTIFS
+   ════════════════════════════════════ */
+function renderActiveTags() {
+  const container = document.getElementById('active-filters');
+  if (!container) return;
+  const tags = [];
+
+  if (state.query)    tags.push({ label: `"${state.query}"`, clear: () => { state.query=''; document.getElementById('main-search-input').value=''; state.page=1; applyFilters(); updateSearchTitle(); } });
+  if (state.cat)      tags.push({ label: state.cat, clear: () => clearFilter('cat') });
+  if (state.priceMin) tags.push({ label: `Min ${state.priceMin.toLocaleString('fr-FR')} FCFA`, clear: () => { state.priceMin=0; document.getElementById('price-min').value=''; state.page=1; applyFilters(); } });
+  if (state.priceMax < Infinity) tags.push({ label: `Max ${state.priceMax.toLocaleString('fr-FR')} FCFA`, clear: () => { state.priceMax=Infinity; document.getElementById('price-max').value=''; state.page=1; applyFilters(); } });
+  if (state.rating)   tags.push({ label: `${state.rating}★ et +`, clear: () => clearFilter('rating') });
+  if (state.stockOnly) tags.push({ label: 'En stock', clear: () => { document.getElementById('filter-stock').checked=false; state.stockOnly=false; state.page=1; applyFilters(); } });
+  if (state.promoOnly) tags.push({ label: 'En promo', clear: () => { document.getElementById('filter-promo').checked=false; state.promoOnly=false; state.page=1; applyFilters(); } });
+  state.vendors.forEach(v => tags.push({ label: v, clear: () => { state.vendors.delete(v); document.querySelectorAll('input[type="checkbox"]').forEach(cb => { if(cb.value===v) cb.checked=false; }); state.page=1; applyFilters(); } }));
+
+  container.style.display = tags.length ? 'flex' : 'none';
+  container.innerHTML = tags.map((t, i) => `
+    <span class="active-filter-tag">
+      ${t.label}
+      <button onclick="(${t.clear.toString()})()" title="Retirer">&#10005;</button>
+    </span>`).join('') + (tags.length > 1 ? `<button class="clear-all-btn" onclick="clearAllFilters()">Tout effacer</button>` : '');
+}
+
+function clearAllFilters() {
+  state = { query:'', cat:'', priceMin:0, priceMax:Infinity, rating:0, stockOnly:false, promoOnly:false, vendors:new Set(), sort:state.sort, page:1, view:state.view };
+  document.getElementById('main-search-input').value = '';
+  document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = r.value === '' || r.value === '0');
+  document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+  document.getElementById('price-min').value = '';
+  document.getElementById('price-max').value = '';
+  applyFilters();
+  updateSearchTitle();
+}
+
+/* ════════════════════════════════════
+   VUE GRILLE / LISTE
+   ════════════════════════════════════ */
+function setView(v) {
+  state.view = v;
+  document.getElementById('btn-grid').classList.toggle('active', v === 'grid');
+  document.getElementById('btn-list').classList.toggle('active', v === 'list');
+  renderResults();
+}
+
+/* ════════════════════════════════════
+   PANIER + FAVORIS
+   ════════════════════════════════════ */
+function addToCartResult(id, name, price) {
+  const items = JSON.parse(localStorage.getItem('mcp_cart') || '[]');
+  const found = items.find(i => i.id === id);
+  if (found) found.qty = (found.qty || 1) + 1;
+  else items.push({ id, name, price, qty: 1 });
+  localStorage.setItem('mcp_cart', JSON.stringify(items));
+  if (typeof mcpUpdateCart === 'function') mcpUpdateCart();
+  // Feedback
+  const btn = event?.target;
+  if (btn) { const orig = btn.textContent; btn.textContent = '✓ Ajouté !'; btn.style.background = '#16a34a'; setTimeout(() => { btn.textContent = orig; btn.style.background = ''; }, 1500); }
+}
+
+function toggleWish(id, btn) {
+  const wishes = JSON.parse(localStorage.getItem('mcp_wishes') || '[]');
+  const idx = wishes.indexOf(id);
+  if (idx >= 0) { wishes.splice(idx, 1); btn.style.color = ''; btn.title = 'Ajouter aux favoris'; }
+  else { wishes.push(id); btn.style.color = 'var(--red)'; btn.title = 'Retirer des favoris'; }
+  localStorage.setItem('mcp_wishes', JSON.stringify(wishes));
+}
+
+/* ════════════════════════════════════
+   INIT
+   ════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', async function() {
+  // Lire les paramètres URL
+  const params = new URLSearchParams(window.location.search);
+  const q      = params.get('q') || '';
+  const cat    = params.get('cat') || '';
+
+  if (q) { state.query = q; document.getElementById('main-search-input').value = q; }
+  if (cat) { state.cat = cat; const radio = document.querySelector(`input[name="cat"][value="${cat}"]`); if (radio) radio.checked = true; }
+
+  updateSearchTitle();
+
+  // Essayer de charger depuis l'API
+  try {
+    if (typeof MCP_API !== 'undefined') {
+      const apiParams = {};
+      if (q)   apiParams.q   = q;
+      if (cat) apiParams.cat = cat;
+      apiParams.limit = 50;
+      const res = await MCP_API.getProducts(apiParams);
+      if (res?.data?.length) {
+        ALL_PRODUCTS.length = 0;
+        res.data.forEach(p => ALL_PRODUCTS.push({
+          id:p.id, name:p.nom, cat:p.catégorie, price:+p.prix,
+          oldPrice:p.prix_barre?+p.prix_barre:null,
+          rating:+p.note_moyenne||4.5, reviews:p.nb_avis||0,
+          badge:p.prix_barre?'-'+Math.round((1-p.prix/p.prix_barre)*100)+'%':'',
+          img:p.image||'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80',
+          vendeur:p.vendeur, stock:p.stock>0, slug:'produit.html'
+        }));
+      }
+    }
+  } catch {}
+
+  applyFilters();
+
+  // Marquer les favoris déjà ajoutés
+  const wishes = JSON.parse(localStorage.getItem('mcp_wishes') || '[]');
+  if (wishes.length) {
+    setTimeout(() => {
+      document.querySelectorAll('.prod-wish').forEach(btn => {
+        const card = btn.closest('.prod-card');
+        if (!card) return;
+        const onclick = btn.getAttribute('onclick');
+        const match = onclick?.match(/toggleWish\((\d+)/);
+        if (match && wishes.includes(parseInt(match[1]))) btn.style.color = 'var(--red)';
+      });
+    }, 600);
+  }
+});
+</script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

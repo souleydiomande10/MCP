@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Connectez-vous ou créez votre compte sur Market Center Place, la marketplace numéro 1 de Côte d'Ivoire. Acheteurs et vendeurs bienvenus."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex"/>
+  <title>Connexion — Market Center Place</title>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' fill='none'/></svg>" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:#f4f6fb;min-height:100vh;overflow-x:hidden}
+
+@keyframes fadeUp   {from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes fadeIn   {from{opacity:0}to{opacity:1}}
+@keyframes orb      {0%,100%{transform:scale(1) translate(0,0)}33%{transform:scale(1.15) translate(10px,-10px)}66%{transform:scale(.9) translate(-8px,8px)}}
+@keyframes pulse    {0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+@keyframes spin     {to{transform:rotate(360deg)}}
+@keyframes shake    {0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+@keyframes checkPop {from{transform:scale(0) rotate(-15deg)}80%{transform:scale(1.2) rotate(3deg)}to{transform:scale(1) rotate(0)}}
+@keyframes slideUp  {from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 1.4rem;background:rgba(11,31,75,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.07)}
+.topbar-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.topbar-icon{width:30px;height:30px;border-radius:6px;background:#c0202a;display:flex;align-items:center;justify-content:center}
+.topbar-icon svg{stroke:white}
+.topbar-name{font-size:.78rem;font-weight:900;color:white;letter-spacing:-.3px}
+.topbar-name em{color:#c0202a;font-style:normal}
+.topbar-back{display:flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s}
+.topbar-back:hover{color:white}
+.topbar-back svg{stroke:currentColor}
+
+/* SCREEN MODE */
+#screen-mode{min-height:100vh;padding-top:54px;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#070d1e 0%,#0b1f4b 55%,#06101d 100%);position:relative;overflow:hidden}
+.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(70px)}
+.orb1{width:380px;height:380px;background:rgba(192,32,42,.2);top:-100px;right:-80px;animation:orb 9s ease-in-out infinite}
+.orb2{width:260px;height:260px;background:rgba(200,168,75,.13);bottom:-70px;left:-60px;animation:orb 12s ease-in-out 2s infinite}
+.orb3{width:160px;height:160px;background:rgba(11,31,75,.6);top:40%;left:30%;animation:orb 7s ease-in-out 1s infinite}
+.mode-inner{position:relative;z-index:1;text-align:center;padding:2rem 1.4rem;width:100%;max-width:500px;animation:fadeUp .7s cubic-bezier(.22,1,.36,1) both}
+.mode-logo{width:70px;height:70px;border-radius:18px;background:linear-gradient(135deg,#c0202a,#8a0e16);display:flex;align-items:center;justify-content:center;margin:0 auto 1.4rem;box-shadow:0 10px 36px rgba(192,32,42,.5);animation:pulse 3.5s ease-in-out infinite}
+.mode-logo svg{stroke:white}
+.mode-h1{font-size:clamp(1.5rem,5vw,2.1rem);font-weight:900;color:white;letter-spacing:-1px;line-height:1.15;margin-bottom:.5rem}
+.mode-h1 em{color:#c8a84b;font-style:normal}
+.mode-p{font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.7;margin-bottom:2.2rem}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.4rem}
+.mode-card{border:1.5px solid rgba(255,255,255,.1);border-radius:14px;padding:1.5rem 1rem;cursor:pointer;text-align:center;transition:all .3s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;background:rgba(255,255,255,.04);-webkit-tap-highlight-color:transparent}
+.mode-card::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;border-radius:inherit}
+.mode-card.buyer::after{background:linear-gradient(135deg,rgba(192,32,42,.18),rgba(11,31,75,.22))}
+.mode-card.vendor::after{background:linear-gradient(135deg,rgba(200,168,75,.14),rgba(11,31,75,.18))}
+.mode-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,.25);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.mode-card:hover::after{opacity:1}
+.mode-card:active{transform:scale(.97)}
+.mc-icon{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin:0 auto .9rem;position:relative;z-index:1}
+.buyer  .mc-icon{background:rgba(192,32,42,.2)}
+.vendor .mc-icon{background:rgba(200,168,75,.18)}
+.buyer  .mc-icon svg{stroke:#ff7070}
+.vendor .mc-icon svg{stroke:#c8a84b}
+.mc-badge{position:absolute;top:.6rem;right:.6rem;font-size:.52rem;font-weight:900;letter-spacing:.8px;text-transform:uppercase;padding:2px 7px;border-radius:20px}
+.buyer  .mc-badge{background:rgba(192,32,42,.25);color:#ff9090}
+.vendor .mc-badge{background:rgba(200,168,75,.18);color:#c8a84b}
+.mc-label{font-size:.9rem;font-weight:900;color:white;margin-bottom:.3rem;position:relative;z-index:1}
+.mc-desc{font-size:.65rem;color:rgba(255,255,255,.4);line-height:1.5;position:relative;z-index:1}
+.mode-sep{display:flex;align-items:center;gap:10px;font-size:.67rem;font-weight:600;color:rgba(255,255,255,.2);margin-bottom:1rem}
+.mode-sep::before,.mode-sep::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1)}
+.mode-already{font-size:.74rem;color:rgba(255,255,255,.35);font-weight:500}
+.mode-already a{color:#c8a84b;font-weight:800;text-decoration:none;cursor:pointer}
+
+/* SCREEN AUTH */
+#screen-auth{display:none;min-height:100vh;padding-top:54px}
+#screen-auth.visible{display:flex}
+
+.auth-panel-l{flex:1;display:none;flex-direction:column;align-items:center;justify-content:center;padding:3rem 2.5rem;position:relative;overflow:hidden}
+@media(min-width:768px){.auth-panel-l{display:flex}}
+.pl-buyer {background:linear-gradient(145deg,#0b1f4b 0%,#061028 100%)}
+.pl-vendor{background:linear-gradient(145deg,#110e00 0%,#080600 100%)}
+.pl-orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.pl-buyer  .pl-orb{background:rgba(192,32,42,.22)}
+.pl-vendor .pl-orb{background:rgba(200,168,75,.16)}
+.pl-orb.p1{width:280px;height:280px;top:-60px;right:-60px;animation:orb 9s ease-in-out infinite}
+.pl-orb.p2{width:190px;height:190px;bottom:-50px;left:-50px;animation:orb 11s ease-in-out 2s infinite}
+.pl-content{position:relative;z-index:1;text-align:center;max-width:320px}
+.pl-icon{width:76px;height:76px;border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 1.4rem}
+.pl-buyer  .pl-icon{background:rgba(192,32,42,.2);border:1.5px solid rgba(192,32,42,.3)}
+.pl-vendor .pl-icon{background:rgba(200,168,75,.15);border:1.5px solid rgba(200,168,75,.28)}
+.pl-buyer  .pl-icon svg{stroke:#ff7070}
+.pl-vendor .pl-icon svg{stroke:#c8a84b}
+.pl-title{font-size:1.7rem;font-weight:900;color:white;letter-spacing:-1px;line-height:1.2;margin-bottom:.6rem}
+.pl-buyer  .pl-title em{color:#ff7070;font-style:normal}
+.pl-vendor .pl-title em{color:#c8a84b;font-style:normal}
+.pl-desc{font-size:.78rem;color:rgba(255,255,255,.4);line-height:1.8;margin-bottom:1.8rem}
+.pl-feats{display:flex;flex-direction:column;gap:.55rem;text-align:left}
+.pl-feat{display:flex;align-items:center;gap:9px;font-size:.73rem;color:rgba(255,255,255,.5);font-weight:600}
+.feat-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.pl-buyer  .feat-dot{background:#ff7070}
+.pl-vendor .feat-dot{background:#c8a84b}
+
+.auth-panel-r{width:100%;max-width:460px;background:white;display:flex;flex-direction:column;min-height:calc(100vh - 54px);overflow-y:auto}
+.auth-tabs{display:flex;border-bottom:2px solid #e8edf5;flex-shrink:0}
+.a-tab{flex:1;padding:1rem .5rem;font-family:'Montserrat',sans-serif;font-size:.77rem;font-weight:800;color:#64748b;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .22s;letter-spacing:.3px;margin-bottom:-2px}
+.a-tab.active.tab-buyer {color:#0b1f4b;border-bottom-color:#c0202a}
+.a-tab.active.tab-vendor{color:#080e20;border-bottom-color:#c8a84b}
+.a-tab:not(.active){opacity:.55}
+.form-head{padding:1.6rem 1.8rem 0}
+.mode-pill{display:inline-flex;align-items:center;gap:6px;font-size:.58rem;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;padding:3px 11px;border-radius:20px;margin-bottom:.7rem}
+.pill-buyer {background:rgba(192,32,42,.09);color:#c0202a;border:1px solid rgba(192,32,42,.18)}
+.pill-vendor{background:rgba(200,168,75,.12);color:#9a7a20;border:1px solid rgba(200,168,75,.28)}
+.pill-buyer svg{stroke:#c0202a}
+.pill-vendor svg{stroke:#c8a84b}
+.form-title{font-size:1.35rem;font-weight:900;color:#080e20;letter-spacing:-.5px;margin-bottom:.3rem}
+.form-sub{font-size:.74rem;color:#64748b;line-height:1.6}
+.form-body{padding:1.1rem 1.8rem 1.8rem;flex:1}
+.f-section{display:none}
+.f-section.active{display:block;animation:slideUp .3s cubic-bezier(.22,1,.36,1) both}
+
+.social-row{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-bottom:.9rem}
+.s-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 6px;border:1.5px solid #e8edf5;border-radius:7px;background:white;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.7rem;font-weight:700;color:#080e20;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.s-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.09)}
+.s-btn.full{grid-column:1/-1}
+.s-btn.g:hover{border-color:#4285F4}
+.s-btn.f:hover{border-color:#1877F2}
+.s-btn.a:hover{border-color:#000}
+.auth-or{display:flex;align-items:center;gap:9px;font-size:.67rem;font-weight:700;color:#e8edf5;margin:.8rem 0}
+.auth-or::before,.auth-or::after{content:'';flex:1;height:1px;background:#e8edf5}
+
+.f-group{margin-bottom:.85rem}
+.f-label{display:block;font-size:.61rem;font-weight:900;letter-spacing:.8px;text-transform:uppercase;color:#0b1f4b;margin-bottom:.35rem}
+.f-wrap{position:relative}
+.f-input{width:100%;padding:11px 13px;border:1.5px solid #e8edf5;border-radius:7px;font-family:'Montserrat',sans-serif;font-size:.83rem;color:#080e20;outline:none;background:#f4f6fb;transition:border .2s,background .2s,box-shadow .2s}
+.f-input:focus{border-color:#0b1f4b;background:white;box-shadow:0 0 0 3px rgba(11,31,75,.07)}
+.f-input.vf:focus{border-color:#c8a84b;box-shadow:0 0 0 3px rgba(200,168,75,.1)}
+.f-input.err{border-color:#c0202a;animation:shake .4s ease}
+.eye-btn{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#94a3b8;transition:color .2s;padding:3px}
+.eye-btn:hover{color:#0b1f4b}
+.eye-btn svg{stroke:currentColor;display:block}
+.f-hint{font-size:.64rem;font-weight:700;margin-top:3px;min-height:15px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.pwd-bar{height:3px;border-radius:99px;background:#e8edf5;margin-top:5px;overflow:hidden}
+.pwd-fill{height:100%;border-radius:99px;width:0;transition:width .3s,background .3s}
+
+.btn-submit{width:100%;padding:13px;border:none;border-radius:7px;font-family:'Montserrat',sans-serif;font-size:.8rem;font-weight:900;letter-spacing:.5px;cursor:pointer;position:relative;overflow:hidden;margin-top:.2rem;transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent}
+.btn-submit:hover{transform:translateY(-1px)}
+.btn-submit:active{transform:scale(.98)}
+.btn-buyer {background:linear-gradient(135deg,#0b1f4b,#162d6e);color:white;box-shadow:0 6px 20px rgba(11,31,75,.3)}
+.btn-buyer:hover{box-shadow:0 10px 28px rgba(11,31,75,.4)}
+.btn-vendor{background:linear-gradient(135deg,#c8a84b,#e8c55a);color:#080e20;box-shadow:0 6px 20px rgba(200,168,75,.35)}
+.btn-vendor:hover{box-shadow:0 10px 28px rgba(200,168,75,.45)}
+.btn-submit.loading{pointer-events:none}
+.btn-submit.loading::after{content:'';position:absolute;top:50%;left:50%;width:17px;height:17px;margin:-8.5px 0 0 -8.5px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .7s linear infinite}
+.btn-submit.loading>*{opacity:0}
+
+.auth-switch{text-align:center;margin-top:.9rem;font-size:.73rem;color:#64748b;font-weight:500}
+.auth-switch a{font-weight:800;cursor:pointer;text-decoration:none;transition:color .2s}
+.buyer-mode  .auth-switch a{color:#0b1f4b}
+.vendor-mode .auth-switch a{color:#9a7a20}
+.forgot-lnk{display:block;text-align:right;font-size:.68rem;font-weight:700;color:#94a3b8;cursor:pointer;text-decoration:none;margin:-.3rem 0 .7rem;transition:color .2s}
+.forgot-lnk:hover{color:#0b1f4b}
+.err-bar{background:#fef2f2;border:1px solid #fecaca;border-radius:5px;padding:8px 11px;font-size:.74rem;font-weight:700;color:#c0202a;margin-bottom:.8rem;display:none;align-items:center;gap:6px}
+.err-bar.show{display:flex}
+.err-bar svg{stroke:#c0202a;flex-shrink:0}
+.cgu-row{display:flex;align-items:flex-start;gap:9px;font-size:.71rem;color:#64748b;font-weight:500;line-height:1.5;margin-bottom:.8rem}
+.cgu-row input{accent-color:#0b1f4b;margin-top:2px;flex-shrink:0}
+.cgu-row a{color:#0b1f4b;font-weight:700;text-decoration:none}
+.vendor-box{background:linear-gradient(135deg,#fefbf0,#fffde7);border:1.5px solid rgba(200,168,75,.28);border-radius:9px;padding:.9rem 1.1rem;margin-bottom:1rem}
+.vendor-box-title{font-size:.67rem;font-weight:900;color:#9a7a20;letter-spacing:.5px;margin-bottom:.5rem;display:flex;align-items:center;gap:5px}
+.vendor-box-title svg{stroke:#c8a84b}
+.v-cond{display:flex;align-items:center;gap:6px;font-size:.7rem;color:#6b5a10;font-weight:600;margin-bottom:.3rem}
+.v-cond svg{stroke:#c8a84b;flex-shrink:0}
+
+.otp-wrap{display:flex;align-items:center;gap:7px;justify-content:center;margin:1.1rem 0}
+.otp-c{width:46px;height:54px;border:2px solid #e8edf5;border-radius:9px;text-align:center;font-family:'Montserrat',sans-serif;font-size:1.45rem;font-weight:900;color:#0b1f4b;outline:none;background:#f4f6fb;transition:all .2s}
+.otp-c:focus{border-color:#0b1f4b;background:white;transform:scale(1.07)}
+.otp-c.filled{border-color:#0b1f4b;background:white}
+.otp-c.err{border-color:#c0202a;animation:shake .4s ease}
+.otp-dash{color:#e8edf5;font-size:1.2rem}
+.otp-methods{display:flex;gap:.4rem;margin-bottom:1rem}
+.otp-m{flex:1;padding:6px;border:1.5px solid #e8edf5;border-radius:5px;background:white;font-family:'Montserrat',sans-serif;font-size:.64rem;font-weight:700;color:#64748b;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:all .2s}
+.otp-m svg{stroke:currentColor}
+.otp-m.active{border-color:#0b1f4b;background:#0b1f4b;color:white}
+.otp-timer{text-align:center;font-size:.71rem;color:#64748b;margin-bottom:.9rem}
+.otp-timer strong{color:#c0202a;font-weight:900}
+.resend-row{text-align:center;font-size:.71rem;color:#64748b;margin-top:.7rem}
+.resend-row button{background:none;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:.71rem;font-weight:800;color:#0b1f4b;text-decoration:underline}
+.resend-row button:disabled{color:#94a3b8;cursor:default;text-decoration:none}
+.icon-block{width:54px;height:54px;border-radius:13px;background:#f4f6fb;border:2px solid #e8edf5;display:flex;align-items:center;justify-content:center;margin-bottom:.9rem}
+.step-title{font-size:.86rem;font-weight:900;color:#080e20;margin-bottom:.3rem}
+.step-desc{font-size:.74rem;color:#64748b;margin-bottom:1.1rem;line-height:1.6}
+.social-spinner{text-align:center;padding:2.5rem 1rem;animation:fadeIn .3s ease}
+.soc-spin{width:50px;height:50px;border:3px solid #e8edf5;border-top-color:#0b1f4b;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto .9rem}
+.soc-name{font-size:.95rem;font-weight:900;color:#0b1f4b;margin-bottom:.3rem}
+.soc-p{font-size:.76rem;color:#64748b}
+.back-btn{display:flex;align-items:center;gap:5px;background:none;border:none;font-family:'Montserrat',sans-serif;font-size:.73rem;font-weight:700;color:#64748b;cursor:pointer;padding:0;margin-bottom:1rem;transition:color .2s}
+.back-btn:hover{color:#0b1f4b}
+.back-btn svg{stroke:currentColor}
+.a-toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%) translateY(100px);background:#080e20;color:white;border-radius:7px;padding:.75rem 1.3rem;font-family:'Montserrat',sans-serif;font-size:.76rem;font-weight:700;box-shadow:0 8px 28px rgba(0,0,0,.2);z-index:9999;white-space:nowrap;transition:transform .32s cubic-bezier(.34,1.2,.64,1);display:flex;align-items:center;gap:7px}
+.a-toast.show{transform:translateX(-50%) translateY(0)}
+.a-toast.success{background:#16a34a}
+.a-toast.error{background:#c0202a}
+.a-toast svg{stroke:white;flex-shrink:0}
+
+@media(min-width:768px){#screen-auth.visible{flex-direction:row}.auth-panel-r{min-height:calc(100vh - 54px)}}
+@media(max-width:767px){.form-head{padding:1.3rem 1.1rem 0}.form-body{padding:.9rem 1.1rem 1.5rem}.auth-panel-r{max-width:100%}.f-row{grid-template-columns:1fr}}
+@media(max-width:380px){.social-row{grid-template-columns:1fr}.s-btn.full{grid-column:auto}.otp-c{width:40px;height:48px;font-size:1.2rem}.otp-wrap{gap:5px}}
+  
+    /* Bloc info connexion vendeur */
+    .vendor-login-info {
+      background: linear-gradient(135deg, #1a1200, #0d0900);
+      border: 1.5px solid rgba(200,168,75,.25);
+      border-radius: 10px; padding: 1rem 1.1rem;
+      margin-bottom: 1rem; display: none;
+      animation: slideUp .3s cubic-bezier(.22,1,.36,1) both;
+    }
+    .vendor-login-info.show { display: block; }
+    .vli-title {
+      font-size: .67rem; font-weight: 900; color: #c8a84b;
+      letter-spacing: .5px; margin-bottom: .55rem;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .vli-title svg { stroke: #c8a84b; }
+    .vli-item {
+      display: flex; align-items: center; gap: 7px;
+      font-size: .7rem; color: rgba(200,168,75,.7);
+      font-weight: 600; margin-bottom: .3rem;
+    }
+    .vli-item svg { stroke: #c8a84b; flex-shrink: 0; }
+
+    /* Étape SMS vendeur coordonnées */
+    .sms-verify-box {
+      background: #f0fdf4; border: 1.5px solid #bbf7d0;
+      border-radius: 9px; padding: 1.1rem; margin-bottom: 1rem;
+      display: none; animation: slideUp .3s ease both;
+    }
+    .sms-verify-box.show { display: block; }
+    .svb-title { font-size: .78rem; font-weight: 900; color: #15803d; margin-bottom: .3rem; display: flex; align-items: center; gap: 6px; }
+    .svb-title svg { stroke: #16a34a; }
+    .svb-desc  { font-size: .72rem; color: #166534; margin-bottom: .9rem; line-height: 1.6; }
+    .sms-otp-row { display: flex; gap: 6px; align-items: center; }
+    .sms-otp-input {
+      flex: 1; padding: 10px 12px; border: 1.5px solid #bbf7d0;
+      border-radius: 6px; font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem; font-weight: 900; color: #15803d;
+      letter-spacing: 8px; text-align: center; outline: none;
+      background: white; transition: border .2s;
+    }
+    .sms-otp-input:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.1); }
+    .btn-sms-verify {
+      padding: 10px 16px; border: none; border-radius: 6px;
+      background: #16a34a; color: white;
+      font-family: 'Montserrat', sans-serif; font-size: .74rem; font-weight: 800;
+      cursor: pointer; white-space: nowrap; transition: all .2s;
+    }
+    .btn-sms-verify:hover { background: #15803d; transform: translateY(-1px); }
+    .sms-resend { font-size: .68rem; color: #64748b; margin-top: .6rem; text-align: center; }
+    .sms-resend a { color: #16a34a; font-weight: 700; cursor: pointer; }
+    .sms-resend strong { color: #c0202a; font-weight: 900; }
+
+    /* Champ coordonnées vendeur avec vérification */
+    .coord-verify-wrap { position: relative; }
+    .btn-send-sms {
+      position: absolute; right: 8px; top: 50%;
+      transform: translateY(-50%);
+      padding: 5px 10px; border: none; border-radius: 4px;
+      background: #c8a84b; color: #080e20;
+      font-family: 'Montserrat', sans-serif; font-size: .62rem; font-weight: 800;
+      cursor: pointer; transition: all .2s; white-space: nowrap;
+    }
+    .btn-send-sms:hover { background: #e8c55a; }
+    .btn-send-sms:disabled { opacity: .5; cursor: default; }
+    .coord-verified-badge {
+      display: none; align-items: center; gap: 5px;
+      font-size: .68rem; font-weight: 800; color: #16a34a;
+      margin-top: 4px;
+    }
+    .coord-verified-badge.show { display: flex; }
+    .coord-verified-badge svg { stroke: #16a34a; }
+
+    /* Timer SMS */
+    .sms-timer { display: inline; font-weight: 900; color: #c0202a; }
+  </style>
+
+  <style id="gsap-extra">
+    /* Gloss sur les cartes */
+    .prod-card, .mode-card { transform-style: preserve-3d; }
+    .card-gloss {
+      position: absolute; inset: 0; border-radius: inherit;
+      pointer-events: none; z-index: 2;
+      transition: background .1s;
+    }
+    /* Barre progression */
+    #progress { transform-origin: left; }
+    /* Overflow hidden pour split text */
+    .hero h1 .line { display: block; overflow: hidden; }
+    /* Curseur */
+    #cursor     { position: fixed; pointer-events: none; z-index: 99999; width: 8px; height: 8px; border-radius: 50%; background: #c0202a; transform: translate(-50%, -50%); }
+    #cursorRing { position: fixed; pointer-events: none; z-index: 99998; width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid rgba(192,32,42,.5); transform: translate(-50%, -50%); }
+    /* Page overlay GSAP */
+    #gsap-page-overlay { border-radius: 0 !important; }
+    /* Sections */
+    .word { overflow: hidden; display: inline-block; }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+<div class="a-toast" id="a-toast"></div>
+<div class="topbar">
+  <a href="index.html" class="topbar-logo">
+    <div class="topbar-icon"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+    <div class="topbar-name">MARKET<em>CENTER</em>PLACE</div>
+  </a>
+  <a href="index.html" class="topbar-back"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>retour</a>
+</div>
+
+<div id="screen-mode">
+  <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+  <div class="mode-inner">
+    <div class="mode-logo"><svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="white"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
+    <h1 class="mode-h1">Bienvenue sur<br><em>Market Center Place</em></h1>
+    <p class="mode-p">Le marketplace Numéro 1 de Côte d'Ivoire.<br>Choisissez votre Espace pour continuer.</p>
+    <div class="mode-grid">
+      <div class="mode-card buyer" onclick="selectMode('buyer')">
+        <span class="mc-badge">Gratuit</span>
+        <div class="mc-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+        <div class="mc-label">Acheteur</div>
+        <div class="mc-desc">Achetez parmi 12 000+ produits avec Mobile Money</div>
+      </div>
+      <div class="mode-card vendor" onclick="selectMode('vendor')">
+        <span class="mc-badge">Pro</span>
+        <div class="mc-icon"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="mc-label">Vendeur</div>
+        <div class="mc-desc">Ouvrez votre boutique et vendez partout en CI</div>
+      </div>
+    </div>
+    <div class="mode-sep">ou</div>
+    <p class="mode-already">déjà un compte ? <a onclick="selectMode('buyer');showTab('login')">Se connecter</a></p>
+  </div>
+</div>
+
+<div id="screen-auth">
+  <div class="auth-panel-l pl-buyer" id="auth-panel-l">
+    <div class="pl-orb p1"></div><div class="pl-orb p2"></div>
+    <div class="pl-content">
+      <div class="pl-icon"><svg id="l-icon" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke-width="1.6"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+      <h2 class="pl-title" id="l-title">Vos achats,<br>votre <em>facon</em></h2>
+      <p class="pl-desc" id="l-desc">Acces a 12 000+ produits avec paiement Mobile Money sécurisé et livraison rapide en Côte d'Ivoire.</p>
+      <div class="pl-feats" id="l-feats">
+        <div class="pl-feat"><span class="feat-dot"></span>Paiement Mobile Money sécurisé</div>
+        <div class="pl-feat"><span class="feat-dot"></span>Livraison express Abidjan</div>
+        <div class="pl-feat"><span class="feat-dot"></span>retour gratuit 7 jours</div>
+        <div class="pl-feat"><span class="feat-dot"></span>Support 7j/7 par WhatsApp</div>
+      </div>
+    </div>
+  </div>
+  <div class="auth-panel-r buyer-mode" id="auth-panel-r">
+    <div class="auth-tabs">
+      <button class="a-tab tab-buyer active" id="tab-login" onclick="showTab('login')">Connexion</button>
+      <button class="a-tab tab-buyer" id="tab-register" onclick="showTab('register')">Inscription</button>
+    </div>
+    <div class="form-head">
+      <div class="mode-pill pill-buyer" id="mode-pill">
+        <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Espace Acheteur
+      </div>
+      <div class="form-title" id="f-title">Bon retour !</div>
+      <div class="form-sub" id="f-sub">Connectez-vous pour Accéder a vos commandes.</div>
+    </div>
+    <div class="form-body">
+
+      <!-- LOGIN -->
+      <div class="f-section active" id="fs-login">
+        <!-- Bloc info connexion vendeur (visible seulement en mode vendeur) -->
+        <div class="vendor-login-info" id="vendor-login-info">
+          <div class="vli-title">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            Espace Vendeur — Connexion sécurisée
+          </div>
+          <div class="vli-item"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Accès à votre Tableau de bord et vos commandes</div>
+          <div class="vli-item"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Vérification en 2 étapes par SMS obligatoire</div>
+          <div class="vli-item"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Session sécurisée — déconnexion automatique après 8h</div>
+        </div>
+
+        <div class="social-row">
+          <button class="s-btn g full" onclick="doSocial('google')">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            Continuer avec Google
+          </button>
+          <button class="s-btn f" onclick="doSocial('facebook')"><svg width="17" height="17" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>Facebook</button>
+          <button class="s-btn a" onclick="doSocial('apple')"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.42.07 2.4.83 3.23.87 1.23-.23 2.41-1 3.73-.86 1.59.19 2.79.89 3.57 2.24-3.28 2-2.74 6.15.48 7.33-.57 1.5-1.32 2.98-3.01 4.3zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>Apple</button>
+        </div>
+        <div class="auth-or">ou par email</div>
+        <div class="err-bar" id="err-login"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg><span id="err-login-msg">Identifiants incorrects</span></div>
+        <div class="f-group"><label class="f-label">Email ou téléphone</label><input type="text" class="f-input" id="l-email" placeholder="konan@email.com ou +225 07..." oninput="hlLogin(this)"/ aria-label="konan@email.com ou +225 07..."><div class="f-hint" id="l-email-hint"></div></div>
+        <div class="f-group"><label class="f-label">Mot de passe</label><div class="f-wrap"><input type="password" class="f-input" id="l-pwd" placeholder="Votre mot de passe" style="padding-right:40px" onkeydown="if(event.key==='Enter')doLogin()"/ aria-label="Votre mot de passe"><button class="eye-btn" onclick="togglePwd('l-pwd',this)" type="button"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+        <a class="forgot-lnk" onclick="goStep('forgot')">Mot de passe oublie ?</a>
+        <button class="btn-submit btn-buyer" id="btn-login" onclick="doLogin()">Se connecter</button>
+        <div class="auth-switch">Pas de compte ? <a onclick="showTab('register')">Créer un compte</a></div>
+      </div>
+
+      <!-- REGISTER -->
+      <div class="f-section" id="fs-register">
+        <div class="vendor-box" id="vendor-box" style="display:none">
+          <div class="vendor-box-title"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Avantages vendeur MCP</div>
+          <div class="v-cond"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Inscription et mise en ligne gratuite</div>
+          <div class="v-cond"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Commission seulement 2 a 5% par vente</div>
+          <div class="v-cond"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Studio Live et videos courtes inclus</div>
+          <div class="v-cond"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Paiement sous 48h sur Mobile Money</div>
+        </div>
+        <div class="err-bar" id="err-reg"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg><span id="err-reg-msg">Erreur inscription</span></div>
+        <div class="f-row">
+          <div class="f-group"><label class="f-label">Prénom *</label><input type="text" class="f-input" id="r-prenom" placeholder="Konan"/ aria-label="Konan"></div>
+          <div class="f-group"><label class="f-label">Nom *</label><input type="text" class="f-input" id="r-nom" placeholder="Kouassi"/ aria-label="Kouassi"></div>
+        </div>
+        <div class="f-group"><label class="f-label">Email *</label><input type="email" class="f-input" id="r-email" placeholder="konan@email.com" oninput="valEmail(this,'r-email-hint')"/ aria-label="konan@email.com"><div class="f-hint" id="r-email-hint"></div></div>
+        <div class="f-group">
+          <label class="f-label">
+            téléphone *
+            <span style="font-size:.55rem;font-weight:600;color:var(--gray);text-transform:none;letter-spacing:0;margin-left:5px">— Vérification SMS requise</span>
+          </label>
+          <div class="coord-verify-wrap">
+            <input type="tel" class="f-input" id="r-tel" placeholder="+225 07 00 00 00 00"
+              style="padding-right:90px"
+              oninput="onTelInput(this)"/ aria-label="+225 07 00 00 00 00">
+            <button class="btn-send-sms" id="btn-send-sms" onclick="sendSmsCode()" disabled>
+              Vérifier
+            </button>
+          </div>
+          <div class="coord-verified-badge" id="tel-verified-badge">
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Numéro vérifié
+          </div>
+          <!-- Box de vérification SMS -->
+          <div class="sms-verify-box" id="sms-verify-box">
+            <div class="svb-title">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07"/><path d="M11 5a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+              Code envoyé par SMS
+            </div>
+            <div class="svb-desc" id="sms-desc">Un code à 6 chiffres a été envoyé au <strong id="sms-tel-display">+225 07...</strong></div>
+            <div class="sms-otp-row">
+              <input class="sms-otp-input" type="text" inputmode="numeric" maxlength="6"
+                id="sms-code-input" placeholder="------"
+                oninput="onSmsCodeInput(this)"/ aria-label="------">
+              <button class="btn-sms-verify" onclick="verifySmsCode()">Valider</button>
+            </div>
+            <div class="sms-resend">
+              Pas reçu ? <a onclick="resendSmsCode()">Renvoyer</a>
+              &nbsp;·&nbsp; Code valide <strong id="sms-countdown">2:00</strong>
+            </div>
+          </div>
+        </div>
+        <div class="f-group" id="shop-group" style="display:none"><label class="f-label">Nom de la boutique *</label><input type="text" class="f-input vf" id="r-shop" placeholder="Ex: TechCI Pro, AbidjanStyle..."/ aria-label="Ex: TechCI Pro, AbidjanStyle..."></div>
+        <div class="f-group"><label class="f-label">Mot de passe *</label><div class="f-wrap"><input type="password" class="f-input" id="r-pwd" placeholder="Minimum 8 caracteres" style="padding-right:40px" oninput="chkPwd(this)"/ aria-label="Minimum 8 caracteres"><button class="eye-btn" onclick="togglePwd('r-pwd',this)" type="button"><svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div><div class="pwd-bar"><div class="pwd-fill" id="pwd-fill"></div></div><div class="f-hint" id="pwd-label"></div></div>
+        <div class="f-group"><label class="f-label">Confirmer mot de passe *</label><input type="password" class="f-input" id="r-pwd2" placeholder="Retapez votre mot de passe" oninput="chkMatch('r-pwd','r-pwd2','pwd-match-h')"/ aria-label="Retapez votre mot de passe"><div class="f-hint" id="pwd-match-h"></div></div>
+        <div class="cgu-row"><input type="checkbox" id="r-cgu"/><label for="r-cgu">J'accepte les <a href="cgv.html" target="_blank">CGV</a> et la <a href="mentions-legales.html" target="_blank">Politique de confidentialite</a> de MCP.</label></div>
+        <button class="btn-submit btn-buyer" id="btn-register" onclick="doRegister()">Créer mon compte</button>
+        <div class="auth-switch">déjà un compte ? <a onclick="showTab('login')">Se connecter</a></div>
+      </div>
+
+      <!-- 2FA -->
+      <div class="f-section" id="fs-2fa">
+        <button class="back-btn" onclick="back2fa()"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>retour</button>
+        <div class="icon-block"><svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#0b1f4b"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+        <div class="step-title">Verification en 2 etapes</div>
+        <div class="step-desc" id="tfa-desc">Code envoye par SMS au <strong>+225 07 xx xx xx</strong></div>
+        <div class="otp-methods">
+          <button class="otp-m active" onclick="pickOtp(this,'sms')"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12"/></svg>SMS</button>
+          <button class="otp-m" onclick="pickOtp(this,'email')"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</button>
+          <button class="otp-m" onclick="pickOtp(this,'app')"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/></svg>App</button>
+        </div>
+        <div class="otp-wrap">
+          <input class="otp-c" type="text" inputmode="numeric" maxlength="1" id="o1" oninput="on(this,'o2')" onkeydown="ob(event,this,null)"/>
+          <input class="otp-c" type="text" inputmode="numeric" maxlength="1" id="o2" oninput="on(this,'o3')" onkeydown="ob(event,this,'o1')"/>
+          <input class="otp-c" type="text" inputmode="numeric" maxlength="1" id="o3" oninput="on(this,'o4')" onkeydown="ob(event,this,'o2')"/>
+          <span class="otp-dash">&#8212;</span>
+          <input class="otp-c" type="text" inputmode="numeric" maxlength="1" id="o4" oninput="on(this,'o5')" onkeydown="ob(event,this,'o3')"/>
+          <input class="otp-c" type="text" inputmode="numeric" maxlength="1" id="o5" oninput="on(this,'o6')" onkeydown="ob(event,this,'o4')"/>
+          <input class="otp-c" type="text" inputmode="numeric" maxlength="1" id="o6" oninput="otpAuto()"    onkeydown="ob(event,this,'o5')"/>
+        </div>
+        <div class="otp-timer">Code valide pendant <strong id="otp-t">5:00</strong></div>
+        <button class="btn-submit btn-buyer" id="btn-verify" onclick="verifyOtp()">Verifier le code</button>
+        <div class="resend-row">Pas recu ? <button id="btn-resend" disabled onclick="resendOtp()">Renvoyer</button></div>
+      </div>
+
+      <!-- FORGOT -->
+      <div class="f-section" id="fs-forgot">
+        <button class="back-btn" onclick="goStep('login')"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>retour</button>
+        <div class="icon-block"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#0b1f4b"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="step-title">Reinitialiser le mot de passe</div>
+        <div class="step-desc">Entrez votre email ou téléphone pour recevoir un code.</div>
+        <div class="f-group"><label class="f-label">Email ou téléphone</label><input type="text" class="f-input" id="forgot-in" placeholder="konan@email.com"/ aria-label="konan@email.com"></div>
+        <button class="btn-submit btn-buyer" onclick="doForgot()">Envoyer le code</button>
+      </div>
+
+      <!-- SOCIAL LOADING -->
+      <div class="f-section" id="fs-social">
+        <div class="social-spinner"><div class="soc-spin"></div><div class="soc-name" id="soc-name">Google</div><p class="soc-p">Connexion en cours...</p></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+var MODE='buyer',TAB='login',otpT=null,toastT=null;
+
+function selectMode(m){
+  MODE=m;
+  document.getElementById('screen-mode').style.display='none';
+  document.getElementById('screen-auth').classList.add('visible');
+  var isV=m==='vendor';
+  var pl=document.getElementById('auth-panel-l');
+  pl.className='auth-panel-l '+(isV?'pl-vendor':'pl-buyer');
+  var pill=document.getElementById('mode-pill');
+  pill.className='mode-pill '+(isV?'pill-vendor':'pill-buyer');
+  pill.innerHTML=isV
+    ?'<svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg> Espace Vendeur'
+    :'<svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg> Espace Acheteur';
+  var pr=document.getElementById('auth-panel-r');
+  pr.className='auth-panel-r '+(isV?'vendor-mode':'buyer-mode');
+  ['btn-login','btn-register','btn-verify'].forEach(function(id){var b=document.getElementById(id);if(b)b.className='btn-submit '+(isV?'btn-vendor':'btn-buyer');});
+  document.querySelectorAll('.a-tab').forEach(function(t){t.className='a-tab '+(isV?'tab-vendor':'tab-buyer')+(t.id==='tab-'+TAB?' active':'');});
+  document.getElementById('shop-group').style.display=isV?'block':'none';
+  document.getElementById('vendor-box').style.display=isV?'block':'none';
+  if(isV){
+    document.getElementById('l-icon').innerHTML='<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>';
+    document.getElementById('l-title').innerHTML='Votre boutique,<br>votre <em>succes</em>';
+    document.getElementById('l-desc').textContent="Rejoignez 180+ vendeurs certifiés et atteignez des milliers d'acheteurs en Côte d'Ivoire.";
+    document.getElementById('l-feats').innerHTML=['Commission seulement 2 a 5%','Studio Live & videos courtes','Tableau de bord complet','Paiement sous 48h Mobile Money'].map(function(t){return '<div class="pl-feat"><span class="feat-dot"></span>'+t+'</div>';}).join('');
+  } else {
+    document.getElementById('l-icon').innerHTML='<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>';
+    document.getElementById('l-title').innerHTML='Vos achats,<br>votre <em>facon</em>';
+    document.getElementById('l-desc').textContent="Acces a 12 000+ produits avec paiement Mobile Money securise et livraison rapide en Côte d'Ivoire.";
+    document.getElementById('l-feats').innerHTML=['Paiement Mobile Money sécurisé','Livraison express Abidjan','retour gratuit 7 jours','Support 7j/7 par WhatsApp'].map(function(t){return '<div class="pl-feat"><span class="feat-dot"></span>'+t+'</div>';}).join('');
+  }
+  updateHead();
+  // Afficher/masquer le bloc info connexion vendeur
+  var vli = document.getElementById('vendor-login-info');
+  if (vli) vli.className = 'vendor-login-info' + (isV ? ' show' : '');
+  // En mode vendeur, la 2FA est obligatoire après login
+  if (isV) {
+    var pwd = document.getElementById('l-pwd');
+    if (pwd) pwd.setAttribute('placeholder', 'Mot de passe (2FA obligatoire)');
+  } else {
+    var pwd = document.getElementById('l-pwd');
+    if (pwd) pwd.setAttribute('placeholder', 'Votre mot de passe');
+  }
+}
+
+function showTab(t){TAB=t;var isV=MODE==='vendor';document.querySelectorAll('.a-tab').forEach(function(el){el.className='a-tab '+(isV?'tab-vendor':'tab-buyer')+(el.id==='tab-'+t?' active':'');});goStep(t);updateHead();}
+
+function goStep(id){document.querySelectorAll('.f-section').forEach(function(s){s.classList.remove('active');});var el=document.getElementById('fs-'+id);if(el)el.classList.add('active');}
+
+function updateHead(){var isV=MODE==='vendor',isR=TAB==='register';var t=document.getElementById('f-title'),s=document.getElementById('f-sub');if(!t||!s)return;if(isR&&isV){t.textContent='Ouvrez votre boutique';s.textContent='Créez votre compte vendeur gratuitement.';}else if(isR){t.textContent='Créer un compte';s.textContent='Rejoignez 10 000+ acheteurs sur Market Center Place.';}else if(isV){t.textContent='Bon retour, vendeur !';s.textContent='Connectez-vous pour Gérer votre boutique.';}else{t.textContent='Bon retour !';s.textContent='Connectez-vous pour Accéder a vos commandes.';}}
+
+function doSocial(p){var n={google:'Google',facebook:'Facebook',apple:'Apple'};goStep('social');document.getElementById('soc-name').textContent=n[p]||p;setTimeout(function(){toast('Connexion reussie via '+(n[p]||p),'success');setTimeout(function(){redir(MODE==='vendor'?'vendeur':'acheteur');},900);},1800);}
+
+function doLogin(){var em=(document.getElementById('l-email')?.value||'').trim(),pwd=document.getElementById('l-pwd')?.value||'',btn=document.getElementById('btn-login');if(!em||!pwd){showErr('err-login','err-login-msg','Remplissez tous les champs');return;}btn.classList.add('loading');btn.disabled=true;setTimeout(function(){btn.classList.remove('loading');btn.disabled=false;if(pwd.includes('2fa')){start2fa();return;}toast('Connexion reussie !','success');setTimeout(function(){redir(MODE==='vendor'?'vendeur':'acheteur');},800);},1200);}
+
+function doRegister(){var p1=(document.getElementById('r-Prénom')?.value||'').trim(),n=(document.getElementById('r-nom')?.value||'').trim(),em=(document.getElementById('r-email')?.value||'').trim(),tel=(document.getElementById('r-tel')?.value||'').trim(),pw=document.getElementById('r-pwd')?.value||'',pw2=document.getElementById('r-pwd2')?.value||'',cgu=document.getElementById('r-cgu')?.checked,sh=(document.getElementById('r-shop')?.value||'').trim(),btn=document.getElementById('btn-register');if(!p1||!n||!em||!tel||!pw){showErr('err-reg','err-reg-msg','Tous les champs sont requis');return;}if(pw!==pw2){showErr('err-reg','err-reg-msg','Les mots de passe ne correspondent pas');return;}if(!cgu){showErr('err-reg','err-reg-msg','Veuillez accepter les CGV');return;}if(MODE==='vendor'&&!sh){showErr('err-reg','err-reg-msg','Le nom de boutique est obligatoire');return;}btn.classList.add('loading');btn.disabled=true;setTimeout(function(){btn.classList.remove('loading');btn.disabled=false;toast('Compte cree avec succes !','success');setTimeout(function(){redir(MODE==='vendor'?'vendeur':'acheteur');},1000);},1500);}
+
+function doForgot(){var v=(document.getElementById('forgot-in')?.value||'').trim();if(!v)return;toast('Code envoye ! Verifiez votre SMS.','success');setTimeout(function(){start2fa();},1500);}
+
+function start2fa(){goStep('2fa');['o1','o2','o3','o4','o5','o6'].forEach(function(id){var el=document.getElementById(id);if(el){el.value='';el.classList.remove('filled','err');}});clearInterval(otpT);startTimer();setTimeout(function(){document.getElementById('o1')?.focus();},200);}
+
+function on(inp,nextId){var v=inp.value.replace(/[^0-9]/g,'');inp.value=v;if(v){inp.classList.add('filled');document.getElementById(nextId)?.focus();}else{inp.classList.remove('filled');}}
+
+function ob(e,inp,prevId){if(e.key==='Backspace'&&!inp.value&&prevId){var p=document.getElementById(prevId);if(p){p.value='';p.classList.remove('filled');p.focus();}}}
+
+function otpAuto(){var code=['o1','o2','o3','o4','o5','o6'].map(function(id){return document.getElementById(id)?.value||'';}).join('');if(code.length===6)setTimeout(verifyOtp,300);}
+
+function verifyOtp(){var code=['o1','o2','o3','o4','o5','o6'].map(function(id){return document.getElementById(id)?.value||'';}).join('');if(code.length<6){toast('Entrez les 6 chiffres','error');return;}var btn=document.getElementById('btn-verify');if(btn){btn.classList.add('loading');btn.disabled=true;}setTimeout(function(){clearInterval(otpT);toast('Verification reussie !','success');setTimeout(function(){redir(MODE==='vendor'?'vendeur':'acheteur');},700);},900);}
+
+function startTimer(){var s=300,el=document.getElementById('otp-t'),rb=document.getElementById('btn-resend');if(rb)rb.disabled=true;otpT=setInterval(function(){var m=Math.floor(s/60),sec=s%60;if(el)el.textContent=m+':'+(sec<10?'0':'')+sec;if(s<=0){clearInterval(otpT);if(el)el.textContent='Expire';if(rb)rb.disabled=false;}s--;},1000);}
+
+function resendOtp(){var rb=document.getElementById('btn-resend');if(rb)rb.disabled=true;clearInterval(otpT);startTimer();['o1','o2','o3','o4','o5','o6'].forEach(function(id){var el=document.getElementById(id);if(el){el.value='';el.classList.remove('filled','err');}});document.getElementById('o1')?.focus();toast('Code renvoye','success');}
+
+function back2fa(){clearInterval(otpT);goStep(TAB);}
+
+function pickOtp(btn,m){document.querySelectorAll('.otp-m').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');var d=document.getElementById('tfa-desc');if(!d)return;if(m==='sms')d.innerHTML='Code envoye par SMS au <strong>+225 07 xx xx xx</strong>';if(m==='email')d.innerHTML='Code envoye a <strong>k****n@email.com</strong>';if(m==='app')d.innerHTML='Ouvrez votre application authenticator et entrez le code affiche.';}
+
+function hlLogin(inp){var h=document.getElementById('l-email-hint');if(!h||!inp.value){if(h)h.textContent='';return;}var em=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value),ph=/^[+0-9\s]{8,15}$/.test(inp.value);h.style.color=(em||ph)?'#16a34a':'#c0202a';h.textContent=em?'✓ Email valide':ph?'✓ téléphone valide':'Format invalide';}
+
+function valEmail(inp,hid){var h=document.getElementById(hid);if(!h||!inp.value){if(h)h.textContent='';return;}var ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value);h.style.color=ok?'#16a34a':'#c0202a';h.textContent=ok?'✓ Email valide':'Format attendu : nom@domaine.ci';}
+
+function chkPwd(inp){var v=inp.value,s=[v.length>=8,/[A-Z]/.test(v),/[0-9]/.test(v),/[^A-Za-z0-9]/.test(v)].filter(Boolean).length;var cols=['#c0202a','#f59e0b','#3b82f6','#16a34a'],lbls=['Tres faible','Faible','Bon','Excellent'];var f=document.getElementById('pwd-fill'),l=document.getElementById('pwd-label');if(f){f.style.width=(s*25)+'%';f.style.background=cols[s-1]||'#e8edf5';}if(l&&s>0){l.textContent=lbls[s-1];l.style.color=cols[s-1];}}
+
+function chkMatch(id1,id2,hid){var h=document.getElementById(hid);if(!h)return;var v1=document.getElementById(id1)?.value,v2=document.getElementById(id2)?.value;if(!v2)return;var ok=v1===v2;h.style.color=ok?'#16a34a':'#c0202a';h.textContent=ok?'✓ Mots de passe identiques':'✗ Ne correspondent pas';}
+
+function togglePwd(id,btn){var inp=document.getElementById(id);if(!inp)return;var show=inp.type==='password';inp.type=show?'text':'password';if(btn)btn.innerHTML=show?'<svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M17.94 17.94A10 10 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';}
+
+function toast(msg,type){var t=document.getElementById('a-toast');if(!t)return;clearTimeout(toastT);var ic={success:'<svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>',error:'<svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'};t.className='a-toast '+(type||'');t.innerHTML=(ic[type]||'')+msg;void t.offsetWidth;t.classList.add('show');toastT=setTimeout(function(){t.classList.remove('show');},3200);}
+
+function showErr(barId,msgId,msg){var b=document.getElementById(barId),m=document.getElementById(msgId);if(b)b.classList.add('show');if(m)m.textContent=msg;setTimeout(function(){if(b)b.classList.remove('show');},4000);}
+
+function redir(role){if(role==='vendeur'||role==='vendor')window.location.href='vendeur/dashboard.html';else window.location.href='compte.html';}
+
+(function(){var p=new URLSearchParams(window.location.search),m=p.get('mode'),t=p.get('tab');if(m==='vendor'||m==='buyer'){selectMode(m);if(t)showTab(t);}var err=p.get('error');if(err)toast(err==='oauth_cancelled'?'Connexion annulee':'Erreur de connexion','error');})();
+</script>
+  <!-- GSAP Premium -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <script src="gsap-animations.js">
+/* ─── VÉRIFICATION SMS TÉLÉPHONE VENDEUR ─── */
+var smsCountdownTimer = null;
+var smsVerified       = false;
+var smsCode           = null;
+
+function onTelInput(input) {
+  var val = input.value.trim();
+  var btn = document.getElementById('btn-send-sms');
+  // Activer le bouton si le numéro semble valide (8+ chiffres)
+  if (btn) btn.disabled = (val.replace(/[^0-9]/g,'').length < 8);
+}
+
+function sendSmsCode() {
+  var tel = (document.getElementById('r-tel')?.value || '').trim();
+  if (!tel || tel.replace(/[^0-9]/g,'').length < 8) return;
+
+  var btn = document.getElementById('btn-send-sms');
+  var box = document.getElementById('sms-verify-box');
+  var dis = document.getElementById('sms-tel-display');
+
+  if (btn) { btn.disabled = true; btn.textContent = 'Envoyé !'; }
+  if (box) box.classList.add('show');
+  if (dis) dis.textContent = tel;
+
+  // Générer code 6 chiffres (en démo)
+  smsCode = '123456'; // En prod : POST /api/auth/sms/send { tel }
+  console.log('Code SMS (démo) :', smsCode);
+
+  toast('Code SMS envoyé au ' + tel, 'success');
+  startSmsCountdown();
+
+  // Focus automatique sur le champ code
+  setTimeout(function() { document.getElementById('sms-code-input')?.focus(); }, 300);
+}
+
+function onSmsCodeInput(input) {
+  // Auto-submit quand 6 chiffres
+  if (input.value.replace(/[^0-9]/g,'').length === 6) {
+    setTimeout(verifySmsCode, 200);
+  }
+}
+
+function verifySmsCode() {
+  var entered = (document.getElementById('sms-code-input')?.value || '').replace(/[^0-9]/g,'');
+  if (entered.length < 6) { toast('Entrez le code à 6 chiffres', 'error'); return; }
+
+  // En prod : POST /api/auth/sms/verify { tel, code }
+  // Démo : code correct = 123456
+  if (entered === '123456' || entered === smsCode) {
+    smsVerified = true;
+    var box     = document.getElementById('sms-verify-box');
+    var badge   = document.getElementById('tel-verified-badge');
+    var smsInp  = document.getElementById('sms-code-input');
+    var telInp  = document.getElementById('r-tel');
+
+    if (box)    box.innerHTML = '<div style="display:flex;align-items:center;gap:7px;font-size:.76rem;font-weight:800;color:#16a34a"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="#16a34a"><polyline points="20 6 9 17 4 12"/></svg>Numéro vérifié avec succès !</div>';
+    if (badge)  badge.classList.add('show');
+    if (telInp) telInp.style.borderColor = '#16a34a';
+
+    clearInterval(smsCountdownTimer);
+    toast('Numéro de téléphone vérifié !', 'success');
+  } else {
+    var inp = document.getElementById('sms-code-input');
+    if (inp) { inp.style.borderColor = '#c0202a'; inp.style.animation = 'none'; void inp.offsetWidth; inp.style.animation = 'shake .4s ease'; }
+    toast('Code incorrect. Réessayez.', 'error');
+  }
+}
+
+function resendSmsCode() {
+  var tel = (document.getElementById('r-tel')?.value || '').trim();
+  if (!tel) return;
+  clearInterval(smsCountdownTimer);
+  startSmsCountdown();
+  var inp = document.getElementById('sms-code-input');
+  if (inp) inp.value = '';
+  toast('Nouveau code envoyé !', 'success');
+}
+
+function startSmsCountdown() {
+  var secs = 120;
+  var el   = document.getElementById('sms-countdown');
+  clearInterval(smsCountdownTimer);
+  smsCountdownTimer = setInterval(function() {
+    secs--;
+    var m = Math.floor(secs / 60), s = secs % 60;
+    if (el) el.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+    if (secs <= 0) {
+      clearInterval(smsCountdownTimer);
+      if (el) el.textContent = 'Expiré';
+      var btn = document.getElementById('btn-send-sms');
+      if (btn) { btn.disabled = false; btn.textContent = 'Renvoyer'; }
+    }
+  }, 1000);
+}
+
+/* ─── SURCHARGER doRegister pour vérifier SMS vendeur ─── */
+var origDoRegister = window.doRegister;
+window.doRegister = function() {
+  // Si mode vendeur et téléphone non vérifié, bloquer
+  if (MODE === 'vendor' && !smsVerified) {
+    var tel = (document.getElementById('r-tel')?.value || '').trim();
+    if (tel && tel.replace(/[^0-9]/g,'').length >= 8) {
+      showErr('err-reg','err-reg-msg','Vérifiez votre numéro de téléphone par SMS avant de continuer');
+      // Auto-envoyer le code si pas encore fait
+      var box = document.getElementById('sms-verify-box');
+      if (box && !box.classList.contains('show')) sendSmsCode();
+      return;
+    }
+  }
+  if (origDoRegister) origDoRegister();
+};
+
+/* ─── SURCHARGER doLogin pour forcer 2FA vendeur ─── */
+var origDoLogin = window.doLogin;
+window.doLogin = function() {
+  if (origDoLogin) origDoLogin();
+  // Le 2FA est déclenché automatiquement pour les vendeurs
+  // via la réponse API (require_2fa: true pour les comptes vendeur)
+};
+</script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

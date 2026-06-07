@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Cette page n'existe pas. Retournez a l'accueil ou parcourez notre catalogue de produits."/>
+  <meta property="og:title" content="Page introuvable — Market Center Place"/>
+  <meta property="og:description" content="Cette page n'existe pas. Retournez a l'accueil ou parcourez notre catalogue de produits."/>
+  <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Page introuvable — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <style>
+    .error-page { min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 3rem 2rem; }
+    .error-code { font-size: clamp(6rem,15vw,12rem); font-weight: 900; color: var(--lgray); letter-spacing: -8px; line-height: 1; display: block; margin-bottom: 1rem; position: relative; }
+    .error-code::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 5px; background: var(--red); border-radius: 99px; }
+    .error-title { font-size: 1.6rem; font-weight: 900; color: var(--navy); margin: 1.5rem 0 0.6rem; }
+    .error-sub { color: var(--gray); font-size: 0.92rem; max-width: 420px; margin: 0 auto 2.5rem; line-height: 1.7; }
+    .error-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-home { background: var(--navy); color: #fff; border: none; border-radius: 4px; padding: 13px 28px; font-family: 'Montserrat',sans-serif; font-weight: 800; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; transition: background .2s; }
+    .btn-home:hover { background: var(--red); }
+    .btn-catalogue { background: transparent; color: var(--navy); border: 2px solid var(--lgray); border-radius: 4px; padding: 13px 28px; font-family: 'Montserrat',sans-serif; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; text-decoration: none; transition: border-color .2s; }
+    .btn-catalogue:hover { border-color: var(--navy); }
+    .error-search { margin-top: 2.5rem; }
+    .error-search-box { display: flex; max-width: 400px; margin: 0.8rem auto 0; border: 2px solid var(--lgray); border-radius: 5px; overflow: hidden; }
+    .error-search-box input { flex:1; padding: 11px 14px; border: none; outline: none; font-family: 'Montserrat',sans-serif; font-size: 0.85rem; }
+    .error-search-box button { background: var(--navy); color: #fff; border: none; padding: 11px 18px; font-family: 'Montserrat',sans-serif; font-weight: 800; font-size: 0.75rem; cursor: pointer; transition: background .2s; }
+    .error-search-box button:hover { background: var(--red); }
+    .error-icon { font-size: 4rem; display: block; margin-bottom: 0.5rem; animation: bounce 2s ease-in-out infinite; }
+    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div id="header-slot" data-page=""></div>
+
+<div class="error-page">
+  <div>
+    <span class="error-icon">&#128269;</span>
+    <span class="error-code">404</span>
+    <h1 class="error-title">Page introuvable</h1>
+    <p class="error-sub">La page que vous recherchez n'existe pas ou a ete deplacee. Verifiez l'adresse ou retournez a l'accueil.</p>
+    <div class="error-actions">
+      <a href="index.html" class="btn-home">retour a l'accueil</a>
+      <a href="catalogue.html" class="btn-catalogue">Voir le catalogue</a>
+    </div>
+    <div class="error-search">
+      <p style="font-size:0.8rem;color:var(--gray);font-weight:600">Ou recherchez un produit</p>
+      <div class="error-search-box">
+        <input type="text" placeholder="Ex: Smartphone, Wax, Karite..." id="err-search"/>
+        <button onclick="window.location.href='catalogue.html'">Rechercher</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer-slot"></div>
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

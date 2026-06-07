@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Recapitulatif de votre panier. Validez votre commande et choisissez votre mode de paiement."/>
+  <meta property="og:title" content="Mon panier — Market Center Place"/>
+  <meta property="og:description" content="Recapitulatif de votre panier. Validez votre commande et choisissez votre mode de paiement."/>
+  <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mon Panier — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <style>
+    /* ── PAGE PANIER ── */
+    .panier-hero {
+      background: var(--navy);
+      padding: 2.5rem;
+      border-bottom: 3px solid var(--red);
+      position: relative; overflow: hidden;
+    }
+    .panier-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 500px 200px at 80% 50%, rgba(192,32,42,0.12) 0%, transparent 70%);
+    }
+    .panier-hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 1;
+    }
+    .panier-hero h1 {
+      font-size: 1.8rem; font-weight: 900; color: var(--white); letter-spacing: -0.5px;
+    }
+    .panier-hero h1 em { color: var(--red2); font-style: normal; }
+    .panier-hero p { color: rgba(255,255,255,0.45); font-size: 0.82rem; margin-top: 4px; }
+
+    /* Etapes du tunnel */
+    .tunnel-steps {
+      display: flex; align-items: center; gap: 0;
+    }
+    .tunnel-step {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 16px;
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.8px;
+      text-transform: uppercase; color: rgba(255,255,255,0.35);
+      position: relative;
+    }
+    .tunnel-step.active { color: var(--white); }
+    .tunnel-step.done   { color: var(--gold); }
+    .tunnel-step-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 900;
+      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      transition: all 0.3s;
+    }
+    .tunnel-step.active .tunnel-step-num { background: var(--red); color: var(--white); border-color: var(--red); }
+    .tunnel-step.done   .tunnel-step-num { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+    .tunnel-sep { width: 30px; height: 1px; background: rgba(255,255,255,0.15); }
+
+    /* ── LAYOUT ── */
+    .panier-layout {
+      max-width: 1200px; margin: 0 auto; padding: 2.5rem;
+      display: grid; grid-template-columns: 1fr 380px; gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── LISTE DES ARTICLES ── */
+    .cart-section-title {
+      font-size: 0.7rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--navy);
+      margin-bottom: 1.2rem; padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--lgray);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cart-clear {
+      font-size: 0.68rem; color: var(--red); cursor: none; background: none;
+      border: none; font-family: 'Montserrat', sans-serif;
+      font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+      transition: opacity 0.2s;
+    }
+    .cart-clear:hover { opacity: 0.7; }
+
+    .cart-item {
+      background: var(--white); border-radius: 8px;
+      padding: 1.2rem; margin-bottom: 1rem;
+      display: grid; grid-template-columns: 80px 1fr auto;
+      gap: 1.2rem; align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: transform 0.25s, box-shadow 0.25s;
+      animation: itemIn 0.4s ease;
+    }
+    @keyframes itemIn { from{opacity:0;transform:translateX(-20px)} to{opacity:1;transform:translateX(0)} }
+    .cart-item:hover { transform: translateX(4px); box-shadow: 0 4px 20px rgba(0,0,0,0.09); }
+    .cart-item.removing {
+      animation: itemOut 0.35s ease forwards;
+    }
+    @keyframes itemOut { to{opacity:0;transform:translateX(30px);height:0;margin:0;padding:0} }
+
+    .cart-item-img {
+      width: 80px; height: 80px; border-radius: 6px;
+      background: var(--lgray); display: flex; align-items: center;
+      justify-content: center; font-size: 2.5rem; flex-shrink: 0;
+    }
+    .cart-item-info {}
+    .cart-item-cat {
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 3px;
+    }
+    .cart-item-name {
+      font-size: 0.88rem; font-weight: 700; color: var(--navy);
+      margin-bottom: 5px; line-height: 1.3;
+    }
+    .cart-item-variant {
+      font-size: 0.72rem; color: var(--gray); font-weight: 500; margin-bottom: 8px;
+    }
+    .cart-item-actions { display: flex; align-items: center; gap: 1rem; }
+    .qty-ctrl-small {
+      display: flex; align-items: center;
+      border: 1.5px solid var(--lgray); border-radius: 4px; overflow: hidden;
+    }
+    .qty-btn-sm {
+      width: 28px; height: 28px; background: var(--off); border: none;
+      font-size: 0.9rem; font-weight: 700; color: var(--navy);
+      cursor: none; transition: background 0.2s; display: flex;
+      align-items: center; justify-content: center;
+    }
+    .qty-btn-sm:hover { background: var(--lgray); }
+    .qty-val-sm {
+      width: 36px; text-align: center; font-size: 0.82rem;
+      font-weight: 800; color: var(--navy); border: none; outline: none;
+      background: var(--white); font-family: 'Montserrat', sans-serif;
+    }
+    .btn-remove {
+      background: none; border: none; cursor: none; padding: 4px;
+      color: var(--gray); transition: color 0.2s;
+    }
+    .btn-remove:hover { color: var(--red); }
+    .btn-remove svg { stroke: currentColor; display: block; }
+
+    .cart-item-price { text-align: right; }
+    .cart-price-unit { font-size: 0.72rem; color: var(--gray); font-weight: 500; margin-bottom: 2px; }
+    .cart-price-total { font-size: 1.1rem; font-weight: 900; color: var(--navy); letter-spacing: -0.3px; }
+    .cart-price-old { font-size: 0.72rem; color: var(--gray); text-decoration: line-through; }
+
+    /* Panier vide */
+    .cart-empty {
+      background: var(--white); border-radius: 8px; padding: 4rem;
+      text-align: center; display: none;
+    }
+    .cart-empty-icon { font-size: 4rem; margin-bottom: 1.2rem; display: block; }
+    .cart-empty h3 { font-size: 1.2rem; font-weight: 900; color: var(--navy); margin-bottom: 0.5rem; }
+    .cart-empty p  { font-size: 0.88rem; color: var(--gray); margin-bottom: 1.5rem; }
+    .btn-continue {
+      display: inline-block; background: var(--navy); color: var(--white);
+      padding: 12px 28px; border-radius: 4px; text-decoration: none;
+      font-weight: 800; font-size: 0.78rem; letter-spacing: 1px;
+      text-transform: uppercase; transition: background 0.2s;
+    }
+    .btn-continue:hover { background: var(--red); }
+
+    /* Promo code */
+    .promo-block {
+      background: var(--white); border-radius: 8px; padding: 1.2rem;
+      margin-top: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .promo-title {
+      font-size: 0.7rem; font-weight: 900; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--navy); margin-bottom: 0.8rem;
+    }
+    .promo-form { display: flex; gap: 0.6rem; }
+    .promo-input {
+      flex: 1; padding: 10px 14px; border: 1.5px solid var(--lgray);
+      border-radius: 4px; font-family: 'Montserrat', sans-serif;
+      font-size: 0.82rem; font-weight: 600; color: var(--dark);
+      outline: none; text-transform: uppercase; letter-spacing: 1px;
+      transition: border-color 0.2s;
+    }
+    .promo-input:focus { border-color: var(--blue); }
+    .btn-promo {
+      background: var(--navy); color: var(--white); border: none;
+      border-radius: 4px; padding: 10px 18px; cursor: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.75rem; font-weight: 800; letter-spacing: 0.8px;
+      text-transform: uppercase; transition: background 0.2s;
+    }
+    .btn-promo:hover { background: var(--red); }
+    .promo-success {
+      display: none; margin-top: 0.6rem;
+      font-size: 0.75rem; font-weight: 700; color: #16a34a;
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    /* ── RECAPITULATIF ── */
+    .cart-summary {
+      background: var(--white); border-radius: 8px; padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      position: sticky; top: 90px;
+    }
+    .summary-title {
+      font-size: 0.7rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--navy);
+      margin-bottom: 1.5rem; padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--lgray);
+    }
+    .summary-line {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 0.8rem; font-size: 0.85rem;
+    }
+    .summary-line-label { color: var(--gray); font-weight: 500; }
+    .summary-line-val   { font-weight: 700; color: var(--navy); }
+    .summary-line.discount .summary-line-val { color: #16a34a; }
+    .summary-line.total {
+      margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--lgray);
+      font-size: 1rem;
+    }
+    .summary-line.total .summary-line-label { font-weight: 800; color: var(--navy); }
+    .summary-line.total .summary-line-val { font-size: 1.3rem; font-weight: 900; color: var(--navy); }
+
+    /* Mode de paiement preview */
+    .summary-payment {
+      background: var(--off); border-radius: 6px; padding: 1rem;
+      margin: 1.2rem 0;
+    }
+    .summary-payment-title {
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--navy); margin-bottom: 0.7rem;
+    }
+    .summary-payment-icons { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .summary-pay-pill {
+      background: var(--white); border: 1px solid var(--lgray);
+      border-radius: 3px; padding: 3px 8px;
+      font-size: 0.62rem; font-weight: 800; color: var(--navy);
+    }
+    .summary-pay-pill.orange { border-color: #ff6b00; color: #ff6b00; }
+    .summary-pay-pill.mtn    { border-color: #d4a000; color: #a07800; }
+    .summary-pay-pill.moov   { border-color: #0057b7; color: #0057b7; }
+    .summary-pay-pill.wave   { border-color: #0070ba; color: #0070ba; }
+
+    .btn-checkout {
+      width: 100%; padding: 16px; background: var(--red); color: var(--white);
+      border: none; border-radius: 5px; cursor: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900; font-size: 0.88rem; letter-spacing: 1px;
+      text-transform: uppercase; position: relative; overflow: hidden;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 6px 24px rgba(192,32,42,0.35);
+    }
+    .btn-checkout:hover { background: var(--red2); transform: translateY(-2px); }
+    .btn-checkout::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
+      transform: translateX(-100%); transition: transform 0.5s ease;
+    }
+    .btn-checkout:hover::before { transform: translateX(100%); }
+
+    .summary-secure {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      margin-top: 0.8rem; font-size: 0.7rem; color: var(--gray); font-weight: 600;
+    }
+    .summary-secure svg { stroke: var(--gray); }
+
+    .btn-back {
+      display: flex; align-items: center; gap: 6px; justify-content: center;
+      margin-top: 0.8rem; color: var(--blue); font-size: 0.75rem;
+      font-weight: 700; text-decoration: none; cursor: none;
+      transition: color 0.2s;
+    }
+    .btn-back:hover { color: var(--navy); }
+
+    /* Produits suggeres */
+    .suggested-section { margin-top: 3rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .panier-layout { grid-template-columns: 1fr; }
+      .cart-summary  { position: static; }
+      .tunnel-steps  { display: none; }
+      .cart-item     { grid-template-columns: 60px 1fr; }
+      .cart-item-price { grid-column: 2; }
+    }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<div id="header-slot" data-page=""></div>
+
+<!-- HERO PANIER -->
+<div class="panier-hero">
+  <div class="panier-hero-inner">
+    <div>
+      <h1>Mon <em>Panier</em></h1>
+      <p id="panier-count">3 articles selectionnes</p>
+    </div>
+    <div class="tunnel-steps">
+      <div class="tunnel-step active">
+        <span class="tunnel-step-num">1</span> Panier
+      </div>
+      <div class="tunnel-sep"></div>
+      <div class="tunnel-step">
+        <span class="tunnel-step-num">2</span> Livraison
+      </div>
+      <div class="tunnel-sep"></div>
+      <div class="tunnel-step">
+        <span class="tunnel-step-num">3</span> Paiement
+      </div>
+      <div class="tunnel-sep"></div>
+      <div class="tunnel-step">
+        <span class="tunnel-step-num">4</span> Confirmation
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>Mon Panier</span>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="panier-layout">
+
+  <!-- LISTE ARTICLES -->
+  <div>
+    <div class="cart-section-title">
+      Articles
+      <button class="cart-clear" onclick="clearCart()">Vider le panier</button>
+    </div>
+
+    <div id="cart-items-list">
+      <!-- Articles injectes par JS -->
+    </div>
+
+    <!-- Panier vide -->
+    <div class="cart-empty" id="cart-empty">
+      <span class="cart-empty-icon">&#128722;</span>
+      <h3>Votre panier est vide</h3>
+      <p>Parcourez notre catalogue pour trouver des produits qui vous conviennent.</p>
+      <a href="catalogue.html" class="btn-continue">Découvrir le catalogue</a>
+    </div>
+
+    <!-- Code promo -->
+    <div class="promo-block" id="promo-block">
+      <div class="promo-title">Code promotionnel</div>
+      <div class="promo-form">
+        <input type="text" class="promo-input" placeholder="Ex: MCP2025" id="promo-input"/>
+        <button class="btn-promo" onclick="applyPromo()">Appliquer</button>
+      </div>
+      <div id="promo-msg" style="margin-top:0.6rem;font-size:0.75rem;font-weight:700;display:none"></div>
+    </div>
+  </div>
+
+  <!-- RECAPITULATIF -->
+  <div class="cart-summary reveal-right">
+    <div class="summary-title">Recapitulatif</div>
+
+    <div class="summary-line">
+      <span class="summary-line-label">Sous-total (<span id="item-count">0</span> articles)</span>
+      <span class="summary-line-val" id="subtotal">0 FCFA</span>
+    </div>
+    <div class="summary-line discount" id="discount-line" style="display:none">
+      <span class="summary-line-label">Reduction promo</span>
+      <span class="summary-line-val" id="discount-val">-0 FCFA</span>
+    </div>
+    <div class="summary-line">
+      <span class="summary-line-label">Livraison</span>
+      <span class="summary-line-val" id="shipping-val">Calculee a l'etape suivante</span>
+    </div>
+    <div class="summary-line total">
+      <span class="summary-line-label">Total</span>
+      <span class="summary-line-val" id="total-val">0 FCFA</span>
+    </div>
+
+    <div class="summary-payment">
+      <div class="summary-payment-title">Paiements acceptes</div>
+      <div class="summary-payment-icons">
+        <span class="summary-pay-pill orange">Orange Money</span>
+        <span class="summary-pay-pill mtn">MTN Money</span>
+        <span class="summary-pay-pill moov">Moov Money</span>
+        <span class="summary-pay-pill wave">Wave</span>
+        <span class="summary-pay-pill">Visa</span>
+        <span class="summary-pay-pill">Livraison</span>
+      </div>
+    </div>
+
+    <button class="btn-checkout" onclick="window.location='checkout.html'">
+      Passer la commande &rarr;
+    </button>
+    <div class="summary-secure">
+      <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Paiement 100% sécurisé
+    </div>
+    <a href="catalogue.html" class="btn-back">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor"><polyline points="15 18 9 12 15 6"/></svg>
+      Continuer mes achats
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div id="footer-slot"></div>
+
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script>
+  /* ── PRODUITS PAR DEFAUT (si panier vide) ── */
+  const DEFAULT_ITEMS = [
+    { id: 1, name: 'Smartphone Android 128 Go', cat: 'électronique', icon: '&#128241;', img: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=120&q=80', price: 89000, oldPrice: 119000, variant: 'Noir Minuit / 128 Go', qty: 1 },
+    { id: 3, name: 'Huile de karite pur 500 ml', cat: 'beauté naturelle', icon: '&#127807;', price: 7200, oldPrice: null, variant: 'Production locale', qty: 2 },
+    { id: 5, name: 'Sac artisanal Bogolan', cat: 'Accessoires', icon: '&#127890;', price: 22500, oldPrice: null, variant: 'Marron / Taille unique', qty: 1 },
+  ];
+
+  let cartItems = [];
+  let promoApplied = false;
+  let promoDiscount = 0;
+
+  /* ── INITIALISATION ── */
+  function initCart() {
+    const stored = localStorage.getItem('mcp_cart');
+    cartItems = stored ? JSON.parse(stored) : DEFAULT_ITEMS;
+    // Fusionner avec les data par defaut si necessaire
+    if (cartItems.length > 0 && !cartItems[0].icon) {
+      cartItems = cartItems.map(item => {
+        const def = DEFAULT_ITEMS.find(d => d.id === item.id);
+        return def ? { ...def, qty: item.qty } : { ...item, icon: '&#128722;', cat: 'Produit', variant: '' };
+      });
+    }
+    if (!cartItems.length) cartItems = DEFAULT_ITEMS;
+    renderCart();
+  }
+
+  /* ── RENDU PANIER ── */
+  function renderCart() {
+  var emptyState = document.getElementById('cart-empty-state');
+  var items = JSON.parse(localStorage.getItem('mcp_cart') || '[]');
+  if (emptyState) emptyState.style.display = items.length === 0 ? 'block' : 'none';
+  if (items.length === 0) return;
+
+    const list = document.getElementById('cart-items-list');
+    const empty = document.getElementById('cart-empty');
+    const promo = document.getElementById('promo-block');
+
+    if (!cartItems.length) {
+      list.innerHTML = '';
+      empty.style.display = 'block';
+      promo.style.display = 'none';
+      updateSummary();
+      return;
+    }
+
+    empty.style.display = 'none';
+    promo.style.display = 'block';
+
+    list.innerHTML = cartItems.map((item, idx) => `
+      <div class="cart-item" id="item-${idx}">
+        <div class="cart-item-img">${item.img ? '<img loading="lazy" src="'+item.img+'" style="width:100%;height:100%;object-fit:cover;border-radius:6px" alt=""/>' : (item.icon || '&#128722;')}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-cat">${item.cat || ''}</div>
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-variant">${item.variant || ''}</div>
+          <div class="cart-item-actions">
+            <div class="qty-ctrl-small">
+              <button class="qty-btn-sm" onclick="changeItemQty(${idx}, -1)">&#8722;</button>
+              <input class="qty-val-sm" type="number" value="${item.qty}" min="1" max="99" readonly/>
+              <button class="qty-btn-sm" onclick="changeItemQty(${idx}, 1)">+</button>
+            </div>
+            <button class="btn-remove" onclick="removeItem(${idx})" title="Supprimer">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="cart-item-price">
+          ${item.oldPrice ? `<div class="cart-price-old">${item.oldPrice.toLocaleString('fr-FR')} FCFA</div>` : ''}
+          <div class="cart-price-unit">${item.price.toLocaleString('fr-FR')} FCFA / unite</div>
+          <div class="cart-price-total">${(item.price * item.qty).toLocaleString('fr-FR')} FCFA</div>
+        </div>
+      </div>
+    `).join('');
+
+    updateSummary();
+    updateCount();
+    saveCart();
+  }
+
+  /* ── MODIFIER QUANTITE ── */
+  function changeItemQty(idx, delta) {
+    cartItems[idx].qty = Math.max(1, Math.min(99, cartItems[idx].qty + delta));
+    renderCart();
+  }
+
+  /* ── SUPPRIMER ARTICLE ── */
+  function removeItem(idx) {
+    const el = document.getElementById('item-' + idx);
+    el.classList.add('removing');
+    setTimeout(() => {
+      cartItems.splice(idx, 1);
+      renderCart();
+    }, 350);
+  }
+
+  function updateQty(id, delta) {
+    const items = JSON.parse(localStorage.getItem('mcp_cart') || '[]');
+    const item = items.find(i => String(i.id) === String(id));
+    if (!item) return;
+    item.qty = Math.max(1, (item.qty || 1) + delta);
+    localStorage.setItem('mcp_cart', JSON.stringify(items));
+    renderCart();
+    if (typeof mcpUpdateCart === 'function') mcpUpdateCart();
+  }
+
+  /* ── VIDER PANIER ── */
+  function clearCart() {
+    if (!confirm('Vider le panier ?')) return;
+    cartItems = [];
+    renderCart();
+  }
+
+  /* ── CODE PROMO ── */
+  function applyPromo() {
+    const code  = document.getElementById('promo-input').value.trim().toUpperCase();
+    const msg   = document.getElementById('promo-msg');
+    const codes = { 'MCP2025': 10, 'COTEIVOIRE': 15, 'ABIDJAN': 5 };
+
+    msg.style.display = 'flex';
+    if (codes[code]) {
+      promoApplied  = true;
+      promoDiscount = codes[code];
+      msg.style.color = '#16a34a';
+      msg.innerHTML   = '&#10003; Code valide ! ' + promoDiscount + '% de reduction appliquee.';
+      document.getElementById('discount-line').style.display = 'flex';
+    } else {
+      msg.style.color = 'var(--red)';
+      msg.innerHTML   = '&#10005; Code invalide ou expire.';
+    }
+    updateSummary();
+  }
+
+  /* ── RECAPITULATIF ── */
+  function updateSummary() {
+    const subtotal = cartItems.reduce((acc, i) => acc + i.price * i.qty, 0);
+    const discount = promoApplied ? Math.round(subtotal * promoDiscount / 100) : 0;
+    const total    = subtotal - discount;
+    const shipping = subtotal >= 15000 ? 'Gratuite' : 'A calculer';
+
+    document.getElementById('subtotal').textContent     = subtotal.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('discount-val').textContent = '-' + discount.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('total-val').textContent    = total.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('shipping-val').textContent = shipping;
+
+    localStorage.setItem('mcp_total', total);
+    // Barre de progression livraison gratuite
+    const SEUIL = 15000;
+    const remaining = Math.max(0, SEUIL - subtotal);
+    const pct = Math.min((subtotal / SEUIL) * 100, 100);
+    const barEl = document.getElementById('shipping-progress-bar');
+    const msgEl = document.getElementById('shipping-progress-msg');
+    if (barEl) barEl.style.width = pct + '%';
+    if (msgEl) {
+      if (remaining <= 0) {
+        msgEl.innerHTML = '<svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="#16a34a"><polyline points="20 6 9 17 4 12"/></svg> Livraison gratuite appliquée !';
+        msgEl.style.color = '#16a34a';
+      } else {
+        msgEl.textContent = 'Encore ' + remaining.toLocaleString('fr-FR') + ' FCFA pour la livraison gratuite';
+        msgEl.style.color = '#64748b';
+      }
+    }
+  }
+
+  /* ── COMPTEUR ── */
+  function updateCount() {
+    const total = cartItems.reduce((acc, i) => acc + i.qty, 0);
+    const badge = document.getElementById('cart-count');
+    if (badge) badge.textContent = total;
+    document.getElementById('item-count').textContent  = total;
+    document.getElementById('panier-count').textContent = total + ' article' + (total > 1 ? 's' : '') + ' selectionne' + (total > 1 ? 's' : '');
+  }
+
+  /* ── SAUVEGARDE ── */
+  function saveCart() {
+    localStorage.setItem('mcp_cart', JSON.stringify(cartItems));
+  }
+
+  window.addEventListener('DOMContentLoaded', initCart);
+</script>
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

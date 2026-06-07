@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Gestion des commandes — Espace Vendeur Market Center Place"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mes commandes — Espace Vendeur — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="manifest" href="../manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <link rel="stylesheet" href="../style.css"/>
+  <link rel="stylesheet" href="../nav.css"/>
+  <style>
+    .vendor-hero { background: linear-gradient(135deg,var(--navy) 0%,#0d2558 100%); padding:2rem 2.5rem; border-bottom:3px solid var(--red); position:relative; overflow:hidden; }
+    .vendor-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 500px 300px at 90% 50%,rgba(192,32,42,.15) 0%,transparent 70%); }
+    .vendor-hero-inner { max-width:1400px; margin:0 auto; display:flex; align-items:center; gap:1.5rem; position:relative; z-index:1; }
+    .vendor-avatar { width:58px; height:58px; border-radius:10px; background:var(--red); display:flex; align-items:center; justify-content:center; font-size:1.5rem; font-weight:900; color:#fff; flex-shrink:0; }
+    .vendor-hero h1 { font-size:1.4rem; font-weight:900; color:#fff; letter-spacing:-.3px; margin-bottom:2px; }
+    .vendor-hero p { color:rgba(255,255,255,.5); font-size:.78rem; }
+    .vendor-hero-right { margin-left:auto; }
+    .vendor-status-badge { background:rgba(22,163,74,.2); border:1px solid rgba(22,163,74,.4); color:#4ade80; border-radius:50px; padding:5px 14px; font-size:.65rem; font-weight:800; letter-spacing:1px; text-transform:uppercase; }
+
+    .orders-layout { max-width:1400px; margin:0 auto; padding:2rem 2.5rem; display:grid; grid-template-columns:200px 1fr; gap:1.5rem; }
+
+    /* Sidebar */
+    nav.vendor-nav { background:var(--white); border-radius:8px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,.06); position:sticky; top:80px; height:fit-content; width:200px; flex-shrink:0; }
+    .vendor-nav-item { display:flex; align-items:center; gap:8px; padding:.85rem 1rem; font-size:.74rem; font-weight:700; color:var(--gray); letter-spacing:.2px; border-left:3px solid transparent; transition:all .2s; text-decoration:none; white-space:nowrap; }
+    .vendor-nav-item svg { stroke:currentColor; flex-shrink:0; }
+    .vendor-nav-item:hover { background:var(--off); color:var(--navy); }
+    .vendor-nav-item.active { background:var(--off); color:var(--navy); border-left-color:var(--red); font-weight:800; }
+    .vendor-nav-sep { height:1px; background:var(--lgray); }
+    .vendor-nav-badge { margin-left:auto; background:var(--red); color:#fff; border-radius:99px; padding:1px 7px; font-size:.6rem; font-weight:900; }
+
+    /* Filtres */
+    .orders-toolbar { background:var(--white); border-radius:8px; padding:1rem 1.2rem; box-shadow:0 2px 8px rgba(0,0,0,.05); margin-bottom:1.2rem; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+    .order-status-tabs { display:flex; gap:.4rem; flex-wrap:wrap; }
+    .order-status-tab { padding:6px 14px; border:1.5px solid var(--lgray); border-radius:4px; background:var(--white); font-family:'Montserrat',sans-serif; font-size:.72rem; font-weight:700; color:var(--gray); cursor:pointer; transition:all .2s; }
+    .order-status-tab.active { border-color:var(--navy); background:var(--navy); color:#fff; }
+    .orders-search { display:flex; align-items:center; gap:8px; background:var(--off); border:1.5px solid var(--lgray); border-radius:4px; padding:7px 12px; flex:1; min-width:200px; }
+    .orders-search svg { stroke:var(--gray); }
+    .orders-search input { background:none; border:none; outline:none; font-family:'Montserrat',sans-serif; font-size:.82rem; color:var(--dark); width:100%; }
+
+    /* Stats */
+    .orders-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.2rem; }
+    .order-stat { background:var(--white); border-radius:8px; padding:1rem 1.2rem; box-shadow:0 2px 8px rgba(0,0,0,.05); border-left:4px solid var(--lgray); }
+    .order-stat.new { border-left-color:#f59e0b; }
+    .order-stat.prep { border-left-color:var(--blue); }
+    .order-stat.livr { border-left-color:#16a34a; }
+    .order-stat.total { border-left-color:var(--navy); }
+    .order-stat-val { font-size:1.6rem; font-weight:900; color:var(--navy); letter-spacing:-1px; }
+    .order-stat-lbl { font-size:.62rem; font-weight:700; color:var(--gray); text-transform:uppercase; letter-spacing:.8px; margin-top:2px; }
+
+    /* Tableau commandes */
+    .orders-table-card { background:var(--white); border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,.05); }
+    .orders-table { width:100%; border-collapse:collapse; }
+    .orders-table th { font-size:.62rem; font-weight:800; letter-spacing:1.2px; text-transform:uppercase; color:var(--gray); padding:.8rem 1rem; text-align:left; border-bottom:2px solid var(--lgray); background:var(--off); white-space:nowrap; }
+    .orders-table td { padding:.9rem 1rem; border-bottom:1px solid var(--lgray); vertical-align:middle; }
+    .orders-table tr:last-child td { border-bottom:none; }
+    .orders-table tr:hover td { background:#fafbff; }
+    .order-ref { font-size:.8rem; font-weight:800; color:var(--navy); }
+    .order-client { font-size:.82rem; font-weight:600; color:var(--dark); }
+    .order-client-tel { font-size:.7rem; color:var(--gray); }
+    .order-amount { font-size:.88rem; font-weight:800; color:var(--navy); }
+    .order-payment { font-size:.7rem; font-weight:700; background:rgba(11,31,75,.08); color:var(--navy); padding:3px 8px; border-radius:3px; }
+    .status-badge { border-radius:99px; padding:4px 11px; font-size:.62rem; font-weight:800; letter-spacing:.5px; text-transform:uppercase; white-space:nowrap; }
+    .status-badge.nouvelle { background:#fef9c3; color:#854d0e; }
+    .status-badge.en-prep  { background:#dbeafe; color:#1d4ed8; }
+    .status-badge.livraison{ background:#f3e8ff; color:#7e22ce; }
+    .status-badge.livree   { background:#dcfce7; color:#16a34a; }
+    .status-badge.annulee  { background:#fef2f2; color:var(--red); }
+    .btn-action-order { padding:5px 12px; border-radius:4px; font-family:'Montserrat',sans-serif; font-size:.68rem; font-weight:800; cursor:pointer; text-transform:uppercase; letter-spacing:.5px; transition:all .2s; border:1.5px solid var(--lgray); background:var(--white); color:var(--navy); }
+    .btn-action-order:hover { background:var(--navy); border-color:var(--navy); color:#fff; }
+    .btn-action-order.primary { background:var(--navy); border-color:var(--navy); color:#fff; }
+    .btn-action-order.primary:hover { background:var(--red); border-color:var(--red); }
+
+    /* Modal détail commande */
+    .modal-overlay { position:fixed; inset:0; background:rgba(8,14,32,.6); z-index:1000; display:none; align-items:center; justify-content:center; backdrop-filter:blur(4px); }
+    .modal-overlay.open { display:flex; animation:mIn .3s ease; }
+    @keyframes mIn{from{opacity:0}to{opacity:1}}
+    .order-modal { background:var(--white); border-radius:10px; width:100%; max-width:560px; max-height:90vh; overflow-y:auto; padding:2rem; position:relative; animation:mSlide .3s ease; }
+    @keyframes mSlide{from{transform:translateY(20px)}to{transform:translateY(0)}}
+    .order-modal-title { font-size:1rem; font-weight:900; color:var(--navy); margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:2px solid var(--lgray); display:flex; align-items:center; justify-content:space-between; }
+    .modal-close { background:none; border:none; cursor:pointer; padding:4px; }
+    .modal-close svg { stroke:var(--gray); }
+    .order-detail-row { display:flex; justify-content:space-between; padding:.6rem 0; border-bottom:1px solid var(--lgray); font-size:.83rem; }
+    .order-detail-row:last-child { border-bottom:none; }
+    .order-detail-label { color:var(--gray); font-weight:500; }
+    .order-detail-val { color:var(--navy); font-weight:700; }
+    .order-items-list { background:var(--off); border-radius:6px; padding:1rem; margin:1rem 0; }
+    .order-item-line { display:flex; align-items:center; gap:.8rem; padding:.5rem 0; border-bottom:1px solid var(--lgray); }
+    .order-item-line:last-child { border-bottom:none; }
+    .order-item-img { width:40px; height:40px; background:var(--lgray); border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+    .order-item-name { flex:1; font-size:.8rem; font-weight:700; color:var(--navy); }
+    .order-item-price { font-size:.82rem; font-weight:800; color:var(--navy); white-space:nowrap; }
+    .action-btns { display:flex; gap:.8rem; margin-top:1.5rem; padding-top:1.2rem; border-top:1px solid var(--lgray); }
+    .btn-status-change { flex:1; padding:10px; border-radius:4px; font-family:'Montserrat',sans-serif; font-weight:800; font-size:.75rem; text-transform:uppercase; cursor:pointer; transition:background .2s; border:none; }
+    .btn-confirm-order { background:var(--navy); color:#fff; }
+    .btn-confirm-order:hover { background:var(--red); }
+    .btn-cancel-order { background:var(--off); color:var(--navy); border:1.5px solid var(--lgray) !important; }
+
+    /* Pagination */
+    .orders-pagination { padding:1rem 1.2rem; border-top:1px solid var(--lgray); display:flex; align-items:center; justify-content:space-between; }
+    .pagination-info { font-size:.75rem; color:var(--gray); }
+    .pagination-btns { display:flex; gap:.3rem; }
+    .page-btn { width:32px; height:32px; border-radius:4px; border:1.5px solid var(--lgray); background:var(--white); font-family:'Montserrat',sans-serif; font-size:.75rem; font-weight:700; color:var(--gray); cursor:pointer; transition:all .2s; display:flex; align-items:center; justify-content:center; }
+    .page-btn:hover { border-color:var(--navy); color:var(--navy); }
+    .page-btn.active { background:var(--navy); border-color:var(--navy); color:#fff; }
+
+    @media(max-width:900px){ .orders-layout{grid-template-columns:1fr} nav.vendor-nav{position:static;display:flex;overflow-x:auto;width:100%} .orders-stats{grid-template-columns:1fr 1fr} }
+  </style>
+  <link rel="stylesheet" href="../components.css"/>
+  <link rel="stylesheet" href="../mobile.css"/>
+  <meta property="og:type"        content="website"/>
+  <meta property="og:site_name"   content="Market Center Place"/>
+  <meta property="og:locale"      content="fr_CI"/>
+  <meta property="og:description" content="Gestion des commandes — Espace vendeur Market Center Place."/>
+  <meta name="twitter:card"       content="summary_large_image"/>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- MODAL DÉTAIL -->
+<div class="modal-overlay" id="order-modal-overlay" onclick="if(event.target===this)closeOrderModal()">
+  <div class="order-modal" id="order-modal-content">
+    <!-- Injecté par JS -->
+  </div>
+</div>
+
+<div id="header-slot" data-page=""></div>
+
+<!-- HERO -->
+<div class="vendor-hero">
+  <div class="vendor-hero-inner">
+    <div class="vendor-avatar">TC</div>
+    <div>
+      <h1>TechCI Pro &mdash; Mes commandes</h1>
+      <p>Gestion et suivi de toutes vos commandes</p>
+    </div>
+    <div class="vendor-hero-right">
+      <span class="vendor-status-badge">Vendeur actif</span>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="../index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <a href="dashboard.html">Espace Vendeur</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>Mes commandes</span>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="orders-layout">
+
+  <!-- SIDEBAR -->
+  <nav class="vendor-nav">
+    <a class="vendor-nav-item" href="dashboard.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Tableau de bord
+    </a>
+    <a class="vendor-nav-item" href="produits.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+      Mes produits
+    </a>
+    <a class="vendor-nav-item active" href="commandes.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+      Commandes
+      <span class="vendor-nav-badge" id="new-orders-count">3</span>
+    </a>
+    <a class="vendor-nav-item" href="dashboard.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Revenus
+    </a>
+    <div class="vendor-nav-sep"></div>
+    <div class="vendor-nav-sep"></div>
+    <a class="vendor-nav-item" href="securite-vendeur.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+      Guide sécurité
+    </a>
+        <a class="vendor-nav-item" href="live.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+      Studio Live
+      <span class="vendor-nav-badge" style="background:#ff3b30;animation:none">LIVE</span>
+    </a>
+    <a class="vendor-nav-item" href="../profil-vendeur.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Mon profil vendeur
+    </a>
+    <div class="vendor-nav-sep"></div>
+    <a class="vendor-nav-item" href="../index.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      retour boutique
+    </a>
+  </nav>
+
+  <!-- CONTENU -->
+  <div>
+
+    <!-- STATS RAPIDES -->
+    <div class="orders-stats">
+      <div class="order-stat new reveal">
+        <div class="order-stat-val" id="stat-new">3</div>
+        <div class="order-stat-lbl">Nouvelles</div>
+      </div>
+      <div class="order-stat prep reveal" style="transition-delay:.1s">
+        <div class="order-stat-val" id="stat-prep">5</div>
+        <div class="order-stat-lbl">En preparation</div>
+      </div>
+      <div class="order-stat livr reveal" style="transition-delay:.2s">
+        <div class="order-stat-val" id="stat-livr">79</div>
+        <div class="order-stat-lbl">Livrees ce mois</div>
+      </div>
+      <div class="order-stat total reveal" style="transition-delay:.3s">
+        <div class="order-stat-val" id="stat-total">87</div>
+        <div class="order-stat-lbl">Total ce mois</div>
+      </div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="orders-toolbar reveal">
+      <div class="order-status-tabs">
+        <button class="order-status-tab active" onclick="filterOrders(this,'all')">Toutes (87)</button>
+        <button class="order-status-tab" onclick="filterOrders(this,'nouvelle')">Nouvelles (3)</button>
+        <button class="order-status-tab" onclick="filterOrders(this,'en-prep')">Preparation (5)</button>
+        <button class="order-status-tab" onclick="filterOrders(this,'livraison')">Livraison (0)</button>
+        <button class="order-status-tab" onclick="filterOrders(this,'livree')">Livrees (79)</button>
+        <button class="order-status-tab" onclick="filterOrders(this,'annulee')">Annulees (0)</button>
+      </div>
+      <div class="orders-search">
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Ref commande, nom client..." oninput="searchOrders(this.value)"/>
+      </div>
+    </div>
+
+    <!-- TABLEAU -->
+    <div class="orders-table-card reveal">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Reference</th>
+            <th>Client</th>
+            <th>Produits</th>
+            <th>Montant</th>
+            <th>Paiement</th>
+            <th>Date</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="orders-tbody">
+          <!-- Injecté par JS -->
+        </tbody>
+      </table>
+      <div class="orders-pagination">
+        <div class="pagination-info" id="orders-pag-info">Affichage 1-10 sur 87 commandes</div>
+        <div class="pagination-btns" id="orders-pag-btns"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="footer-slot"></div>
+<script src="../api.js"></script>
+<script src="../components.js"></script>
+<script>
+  /* ── DONNÉES COMMANDES ── */
+  const ORDERS = [
+    { id:'MCP-2025-00847', client:'Konan Kouassi',    tel:'+225 07 11 22 33', product:'Smartphone Android 128 Go',  qty:1, amount:89000,  payment:'Orange Money', date:'Aujourd\'hui 14:32', status:'nouvelle' },
+    { id:'MCP-2025-00846', client:'Adjoua Bamba',     tel:'+225 05 44 55 66', product:'Ecouteurs Bluetooth 5.3',    qty:2, amount:48000,  payment:'Wave CI',       date:'Aujourd\'hui 11:15', status:'nouvelle' },
+    { id:'MCP-2025-00845', client:'Seydou Coulibaly', tel:'+225 07 77 88 99', product:'Ordinateur portable 15"',   qty:1, amount:275000, payment:'MTN Money',     date:'Aujourd\'hui 09:47', status:'nouvelle' },
+    { id:'MCP-2025-00844', client:'Mariame Yao',      tel:'+225 01 23 45 67', product:'Chargeur USB-C 65W',         qty:3, amount:36000,  payment:'Orange Money', date:'Hier 18:22',         status:'en-prep'  },
+    { id:'MCP-2025-00843', client:'Fatou Diallo',     tel:'+225 05 98 76 54', product:'Montre connectee sport',     qty:1, amount:45000,  payment:'Wave CI',       date:'Hier 16:05',         status:'en-prep'  },
+    { id:'MCP-2025-00842', client:'Ibrahim Sylla',    tel:'+225 07 34 56 78', product:'Smartphone Android 128 Go', qty:1, amount:89000,  payment:'Moov Money',    date:'Hier 14:30',         status:'en-prep'  },
+    { id:'MCP-2025-00841', client:'Awa Coulibaly',    tel:'+225 01 11 22 33', product:'Appareil photo HD',          qty:1, amount:85000,  payment:'Visa',          date:'Hier 12:18',         status:'en-prep'  },
+    { id:'MCP-2025-00840', client:'Koffi Assi',       tel:'+225 05 55 44 33', product:'Cle USB 128 Go',             qty:5, amount:75000,  payment:'Orange Money', date:'Hier 10:05',         status:'en-prep'  },
+    { id:'MCP-2025-00839', client:'Grace Kouame',     tel:'+225 07 66 77 88', product:'Ordinateur portable 15"',   qty:1, amount:275000, payment:'MTN Money',     date:'12 nov. 2025',       status:'livree'   },
+    { id:'MCP-2025-00838', client:'Paul Gbagbo',      tel:'+225 01 99 88 77', product:'Ecouteurs Bluetooth 5.3',   qty:1, amount:24000,  payment:'Wave CI',       date:'12 nov. 2025',       status:'livree'   },
+    { id:'MCP-2025-00837', client:'Rose Kone',        tel:'+225 05 12 34 56', product:'Chargeur USB-C 65W',         qty:2, amount:24000,  payment:'Orange Money', date:'11 nov. 2025',       status:'livree'   },
+    { id:'MCP-2025-00836', client:'Moussa Traore',    tel:'+225 07 98 76 54', product:'Smartphone Android 128 Go', qty:1, amount:89000,  payment:'Moov Money',    date:'11 nov. 2025',       status:'livree'   },
+  ];
+
+  let currentFilter = 'all';
+  let currentSearch = '';
+  let ordersPage = 1;
+  const ORDERS_PER_PAGE = 10;
+
+  function getFilteredOrders() {
+    let orders = [...ORDERS];
+    if (currentFilter !== 'all') orders = orders.filter(o => o.status === currentFilter);
+    if (currentSearch) {
+      const q = currentSearch.toLowerCase();
+      orders = orders.filter(o => o.id.toLowerCase().includes(q) || o.client.toLowerCase().includes(q) || o.product.toLowerCase().includes(q));
+    }
+    return orders;
+  }
+
+  function renderOrders() {
+    const filtered = getFilteredOrders();
+    const start = (ordersPage - 1) * ORDERS_PER_PAGE;
+    const paginated = filtered.slice(start, start + ORDERS_PER_PAGE);
+    const tbody = document.getElementById('orders-tbody');
+    const info  = document.getElementById('orders-pag-info');
+    
+    if (info) info.textContent = `Affichage ${Math.min(start+1,filtered.length)}-${Math.min(start+ORDERS_PER_PAGE,filtered.length)} sur ${filtered.length} commandes`;
+
+    const statusLabels = { nouvelle:'Nouvelle', 'en-prep':'En preparation', livraison:'En livraison', livree:'Livree', annulee:'Annulee' };
+    
+    tbody.innerHTML = paginated.map(o => `
+      <tr>
+        <td><div class="order-ref">${o.id}</div></td>
+        <td><div class="order-client">${o.client}</div><div class="order-client-tel">${o.tel}</div></td>
+        <td style="font-size:.8rem;color:var(--dark);max-width:160px">${o.product}<br/><span style="color:var(--gray);font-size:.7rem">x${o.qty}</span></td>
+        <td><div class="order-amount">${o.amount.toLocaleString('fr-FR')} FCFA</div></td>
+        <td><span class="order-payment">${o.payment}</span></td>
+        <td style="font-size:.78rem;color:var(--gray);white-space:nowrap">${o.date}</td>
+        <td><span class="status-badge ${o.status}">${statusLabels[o.status]||o.status}</span></td>
+        <td>
+          <div style="display:flex;gap:.3rem">
+            <button class="btn-action-order primary" onclick="openOrderDetail('${o.id}')">Voir</button>
+            ${o.status === 'nouvelle' ? `<button class="btn-action-order" onclick="confirmOrder('${o.id}',this)" style="font-size:.62rem">Confirmer</button>` : ''}
+          </div>
+        </td>
+      </tr>
+    `).join('') || '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--gray)">Aucune commande trouvee</td></tr>';
+
+    renderOrdersPagination(filtered.length);
+  }
+
+  function renderOrdersPagination(total) {
+    const totalPages = Math.ceil(total / ORDERS_PER_PAGE);
+    const container = document.getElementById('orders-pag-btns');
+    if (!container) return;
+    let html = `<button class="page-btn" onclick="ordersGoPage(${ordersPage-1})" ${ordersPage<=1?'disabled':''}>&#8249;</button>`;
+    for (let i=1;i<=Math.min(totalPages,5);i++) html += `<button class="page-btn ${i===ordersPage?'active':''}" onclick="ordersGoPage(${i})">${i}</button>`;
+    html += `<button class="page-btn" onclick="ordersGoPage(${ordersPage+1})" ${ordersPage>=totalPages?'disabled':''}>&#8250;</button>`;
+    container.innerHTML = html;
+  }
+
+  function ordersGoPage(p) {
+    const max = Math.ceil(getFilteredOrders().length / ORDERS_PER_PAGE);
+    if (p < 1 || p > max) return;
+    ordersPage = p;
+    renderOrders();
+  }
+
+  function filterOrders(btn, status) {
+    document.querySelectorAll('.order-status-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = status;
+    ordersPage = 1;
+    renderOrders();
+  }
+
+  function searchOrders(q) {
+    currentSearch = q;
+    ordersPage = 1;
+    renderOrders();
+  }
+
+  function openOrderDetail(orderId) {
+    const o = ORDERS.find(x => x.id === orderId);
+    if (!o) return;
+    const statusLabels = { nouvelle:'Nouvelle', 'en-prep':'En preparation', livraison:'En livraison', livree:'Livree', annulee:'Annulee' };
+    document.getElementById('order-modal-content').innerHTML = `
+      <div class="order-modal-title">
+        Commande ${o.id}
+        <button class="modal-close" onclick="closeOrderModal()"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+      <div class="order-detail-row"><span class="order-detail-label">Statut</span><span class="status-badge ${o.status}">${statusLabels[o.status]}</span></div>
+      <div class="order-detail-row"><span class="order-detail-label">Client</span><span class="order-detail-val">${o.client}</span></div>
+      <div class="order-detail-row"><span class="order-detail-label">téléphone</span><span class="order-detail-val">${o.tel}</span></div>
+      <div class="order-detail-row"><span class="order-detail-label">Date</span><span class="order-detail-val">${o.date}</span></div>
+      <div class="order-detail-row"><span class="order-detail-label">Paiement</span><span class="order-detail-val">${o.payment}</span></div>
+      <div class="order-items-list">
+        <div style="font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:.6rem">Produit(s)</div>
+        <div class="order-item-line">
+          <div class="order-item-img">&#128241;</div>
+          <div class="order-item-name">${o.product}<br/><span style="font-size:.7rem;color:var(--gray)">Quantite: ${o.qty}</span></div>
+          <div class="order-item-price">${o.amount.toLocaleString('fr-FR')} FCFA</div>
+        </div>
+      </div>
+      <div class="order-detail-row" style="font-weight:900"><span class="order-detail-label" style="font-weight:900">Total</span><span class="order-detail-val" style="font-size:1rem">${o.amount.toLocaleString('fr-FR')} FCFA</span></div>
+      ${o.status === 'nouvelle' || o.status === 'en-prep' ? `
+      <div class="action-btns">
+        ${o.status === 'nouvelle' ? `<button class="btn-status-change btn-confirm-order" onclick="confirmOrder('${o.id}',null);closeOrderModal()">Accepter la commande</button>` : ''}
+        ${o.status === 'en-prep' ? `<button class="btn-status-change btn-confirm-order" onclick="markAsShipped('${o.id}');closeOrderModal()">Marquer comme expedie</button>` : ''}
+        <button class="btn-status-change btn-cancel-order" onclick="closeOrderModal()">Fermer</button>
+      </div>` : ''}
+    `;
+    document.getElementById('order-modal-overlay').classList.add('open');
+  }
+
+  function closeOrderModal() {
+    document.getElementById('order-modal-overlay').classList.remove('open');
+  }
+
+  function confirmOrder(id, btn) {
+    const o = ORDERS.find(x => x.id === id);
+    if (o) {
+      o.status = 'en-prep';
+      const newCount = ORDERS.filter(x => x.status === 'nouvelle').length;
+      const badge = document.getElementById('new-orders-count');
+      const stat = document.getElementById('stat-new');
+      if (badge) badge.textContent = newCount;
+      if (stat) stat.textContent = newCount;
+      renderOrders();
+      if (btn) { btn.textContent = 'Confirme !'; btn.style.background = '#16a34a'; setTimeout(() => { btn.textContent = 'Confirmer'; btn.style.background = ''; }, 2000); }
+    }
+  }
+
+  function markAsShipped(id) {
+    const o = ORDERS.find(x => x.id === id);
+    if (o) { o.status = 'livraison'; renderOrders(); }
+  }
+
+  /* Init */
+  renderOrders();
+</script>
+<script src="../script.js"></script>
+<script src="../chatbot.js"></script>
+<script src="../ux-improvements.js"></script>
+</body>
+</html>

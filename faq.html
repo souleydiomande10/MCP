@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Trouvez les reponses a toutes vos questions sur les commandes, paiements, livraisons et retours."/>
+  <meta property="og:title" content="FAQ — Centre d'aide — Market Center Place"/>
+  <meta property="og:description" content="Trouvez les reponses a toutes vos questions sur les commandes, paiements, livraisons et retours."/>
+  <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FAQ — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <style>
+    /* ── HERO ── */
+    .faq-hero {
+      background: var(--navy);
+      padding: 4rem 2.5rem; border-bottom: 3px solid var(--red);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .faq-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 600px 300px at 50% 120%, rgba(192,32,42,0.2) 0%, transparent 70%);
+    }
+    .faq-hero-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+    .faq-hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+    }
+    .faq-hero-eyebrow::before { content:''; width:24px; height:2px; background:var(--gold); }
+    .faq-hero h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900;
+      color: var(--white); letter-spacing: -1px; margin-bottom: 1rem;
+    }
+    .faq-hero h1 em { color: var(--red2); font-style: normal; }
+    .faq-hero p { color: rgba(255,255,255,0.55); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem; }
+
+    /* Barre de recherche FAQ */
+    .faq-search {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 6px; padding: 12px 20px;
+      transition: border-color 0.2s, background 0.2s;
+      max-width: 480px; margin: 0 auto;
+    }
+    .faq-search:focus-within { border-color: var(--red2); background: rgba(255,255,255,0.15); }
+    .faq-search svg { stroke: rgba(255,255,255,0.5); flex-shrink: 0; }
+    .faq-search input {
+      background: none; border: none; outline: none;
+      color: var(--white); font-family: 'Montserrat', sans-serif;
+      font-size: 0.88rem; width: 100%;
+    }
+    .faq-search input::placeholder { color: rgba(255,255,255,0.4); }
+
+    /* ── LAYOUT ── */
+    .faq-layout {
+      max-width: 1100px; margin: 0 auto; padding: 3rem 2.5rem;
+      display: grid; grid-template-columns: 240px 1fr; gap: 2.5rem;
+      align-items: start;
+    }
+
+    /* ── CATEGORIES NAV ── */
+    .faq-categories {
+      background: var(--white); border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      overflow: hidden; position: sticky; top: 90px;
+    }
+    .faq-cat-title {
+      padding: 1rem 1.2rem; font-size: 0.65rem; font-weight: 900;
+      letter-spacing: 2px; text-transform: uppercase; color: var(--navy);
+      border-bottom: 2px solid var(--lgray); background: var(--off);
+    }
+    .faq-cat-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 0.9rem 1.2rem; cursor: none; font-size: 0.78rem;
+      font-weight: 700; color: var(--gray); border-left: 3px solid transparent;
+      transition: all 0.2s; border-bottom: 1px solid var(--lgray);
+    }
+    .faq-cat-item:last-child { border-bottom: none; }
+    .faq-cat-item svg { stroke: currentColor; flex-shrink: 0; }
+    .faq-cat-item:hover { background: var(--off); color: var(--navy); }
+    .faq-cat-item.active { background: var(--off); color: var(--navy); border-left-color: var(--red); font-weight: 800; }
+    .faq-cat-count { margin-left: auto; background: var(--lgray); color: var(--gray); border-radius: 99px; padding: 1px 7px; font-size: 0.6rem; font-weight: 800; }
+    .faq-cat-item.active .faq-cat-count { background: var(--red); color: var(--white); }
+
+    /* ── ACCORDEON ── */
+    .faq-section { display: none; }
+    .faq-section.active { display: block; }
+    .faq-section-title {
+      font-size: 0.65rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--navy);
+      margin-bottom: 1.2rem; display: flex; align-items: center; gap: 10px;
+    }
+    .faq-section-title svg { stroke: var(--red); }
+
+    .faq-item {
+      background: var(--white); border-radius: 8px; margin-bottom: 0.7rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05); overflow: hidden;
+      border: 1.5px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .faq-item.open { border-color: var(--navy); }
+    .faq-question {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 1.3rem; cursor: none; gap: 1rem;
+      transition: background 0.2s;
+    }
+    .faq-question:hover { background: var(--off); }
+    .faq-q-text {
+      font-size: 0.88rem; font-weight: 700; color: var(--navy); line-height: 1.4;
+      flex: 1;
+    }
+    .faq-item.open .faq-q-text { color: var(--red); }
+    .faq-icon {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      background: var(--off); border: 1.5px solid var(--lgray);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s, transform 0.3s;
+    }
+    .faq-item.open .faq-icon { background: var(--navy); border-color: var(--navy); transform: rotate(45deg); }
+    .faq-icon svg { stroke: var(--gray); transition: stroke 0.2s; }
+    .faq-item.open .faq-icon svg { stroke: var(--white); }
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+      padding: 0 1.3rem;
+    }
+    .faq-item.open .faq-answer { max-height: 400px; padding: 0 1.3rem 1.3rem; }
+    .faq-answer-text {
+      font-size: 0.85rem; color: var(--gray); line-height: 1.8; padding-top: 0.2rem;
+      border-top: 1px solid var(--lgray); padding-top: 1rem;
+    }
+    .faq-answer-link {
+      display: inline-flex; align-items: center; gap: 5px; margin-top: 0.8rem;
+      color: var(--blue); font-size: 0.78rem; font-weight: 700;
+      text-decoration: none; transition: color 0.2s;
+    }
+    .faq-answer-link:hover { color: var(--red); }
+
+    /* ── CONTACT RAPIDE ── */
+    .faq-contact {
+      background: var(--navy); border-radius: 10px; padding: 2rem;
+      text-align: center; margin-top: 2rem;
+    }
+    .faq-contact h3 { font-size: 1rem; font-weight: 900; color: var(--white); margin-bottom: 0.4rem; }
+    .faq-contact p  { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 1.2rem; line-height: 1.6; }
+    .faq-contact-btns { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+    .btn-faq-contact {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 18px; border-radius: 4px;
+      font-family: 'Montserrat', sans-serif; font-weight: 800;
+      font-size: 0.75rem; letter-spacing: 0.8px; text-transform: uppercase;
+      text-decoration: none; cursor: none; transition: all 0.2s;
+    }
+    .btn-faq-contact.whatsapp { background: #25d366; color: var(--white); }
+    .btn-faq-contact.whatsapp:hover { background: #128c7e; }
+    .btn-faq-contact.email { background: rgba(255,255,255,0.1); color: var(--white); border: 1px solid rgba(255,255,255,0.2); }
+    .btn-faq-contact.email:hover { background: rgba(255,255,255,0.2); }
+    .btn-faq-contact svg { stroke: currentColor; }
+
+    /* Pas de resultat */
+    .no-results { text-align: center; padding: 3rem; color: var(--gray); display: none; }
+    .no-results svg { stroke: var(--lgray); margin-bottom: 1rem; }
+    .no-results h3 { font-weight: 800; color: var(--navy); margin-bottom: 0.4rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .faq-layout { grid-template-columns: 1fr; }
+      .faq-catégories { position: static; display: flex; overflow-x: auto; border-radius: 8px; }
+      .faq-cat-item { white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; border-right: 1px solid var(--lgray); }
+      .faq-cat-item.active { border-bottom-color: var(--red); border-left-color: transparent; }
+      .faq-cat-title { display: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<div id="header-slot" data-page=""></div>
+
+<!-- HERO -->
+<div class="faq-hero">
+  <div class="faq-hero-inner">
+    <div class="faq-hero-eyebrow">Centre d'aide</div>
+    <h1>Questions <em>frequentes</em></h1>
+    <p>Trouvez rapidement la reponse a votre question. Si vous ne trouvez pas ce que vous cherchez, notre equipe est disponible par WhatsApp.</p>
+    <div class="faq-search">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" placeholder="Rechercher une question..." id="faq-search-input" oninput="searchFAQ(this.value)"/>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>FAQ</span>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="faq-layout">
+
+  <!-- CATEGORIES -->
+  <nav class="faq-categories">
+    <div class="faq-cat-title">catégories</div>
+    <div class="faq-cat-item active" onclick="showCat('commandes', this)">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+      Commandes
+      <span class="faq-cat-count">6</span>
+    </div>
+    <div class="faq-cat-item" onclick="showCat('paiement', this)">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Paiement
+      <span class="faq-cat-count">5</span>
+    </div>
+    <div class="faq-cat-item" onclick="showCat('livraison', this)">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Livraison
+      <span class="faq-cat-count">5</span>
+    </div>
+    <div class="faq-cat-item" onclick="showCat('retours', this)">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+      Retours
+      <span class="faq-cat-count">4</span>
+    </div>
+    <div class="faq-cat-item" onclick="showCat('compte', this)">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Compte
+      <span class="faq-cat-count">4</span>
+    </div>
+    <div class="faq-cat-item" onclick="showCat('vendeurs', this)">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg>
+      Vendeurs
+      <span class="faq-cat-count">5</span>
+    </div>
+  </nav>
+
+  <!-- ACCORDEONS -->
+  <div>
+
+    <!-- COMMANDES -->
+    <div class="faq-section active" id="faq-commandes">
+      <div class="faq-section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+        Commandes
+      </div>
+      <div id="faq-items-commandes">
+        <div class="faq-item reveal">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-q-text">Comment passer une commande sur Market Center Place ?</div>
+            <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-text">Pour passer une commande, parcourez notre catalogue, ajoutez les produits souhaites a votre panier, puis cliquez sur "Passer la commande". Renseignez votre adresse de livraison et choisissez votre mode de paiement (Orange Money, MTN Money, Moov Money, Wave, Visa ou paiement a la livraison). Vous recevrez une confirmation par SMS et email dans les minutes qui suivent.</div></div>
+        </div>
+        <div class="faq-item reveal" style="transition-delay:0.05s">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-q-text">Puis-je modifier ou annuler ma commande apres l'avoir passee ?</div>
+            <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-text">Vous pouvez modifier ou annuler votre commande dans les 2 heures suivant sa validation, a condition qu'elle ne soit pas encore en cours de preparation. Contactez notre equipe via WhatsApp au +225 07 00 00 00 00 en indiquant votre reference de commande. Au-dela de ce delai, si la commande est en preparation, l'annulation n'est plus possible mais vous pouvez effectuer un retour a la reception.</div></div>
+        </div>
+        <div class="faq-item reveal" style="transition-delay:0.1s">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-q-text">Comment suivre ma commande en temps reel ?</div>
+            <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-text">Connectez-vous a votre compte et rendez-vous dans la section "Mes commandes". Vous verrez l'etat en temps reel de chaque commande : recue, en preparation, en livraison ou livree. Vous recevez egalement des notifications SMS a chaque etape importante. Pour les livraisons express, un lien de suivi GPS vous est envoye par SMS.</div></div>
+        </div>
+        <div class="faq-item reveal" style="transition-delay:0.15s">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-q-text">Que faire si je n'ai pas recu ma commande dans les delais annonces ?</div>
+            <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-text">Contactez notre service client par WhatsApp avec votre reference de commande. Nous enqueterons aupres du vendeur et du livreur dans les 4 heures. Si le colis est perdu ou endommagee, nous vous proposons soit un remboursement complet, soit un renvoi gratuit du produit. Votre protection est garantie de bout en bout.</div></div>
+        </div>
+        <div class="faq-item reveal" style="transition-delay:0.2s">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-q-text">Puis-je commander plusieurs articles aupres de vendeurs differents ?</div>
+            <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-text">Oui, vous pouvez ajouter au panier des articles de differents vendeurs et payer en une seule fois. Chaque vendeur preparera et expediera sa partie de la commande separement. Vous recevrez une notification pour chaque expedition et les articles peuvent arriver a des moments differents selon les vendeurs et les stocks disponibles.</div></div>
+        </div>
+        <div class="faq-item reveal" style="transition-delay:0.25s">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-q-text">Comment utiliser un code promo ?</div>
+            <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-text">Dans la page panier, vous trouverez un champ "Code promotionnel". Saisissez votre code et cliquez sur "Appliquer". La reduction sera automatiquement deduite du montant total. Les codes promos sont soumis a des conditions d'utilisation (date de validite, montant minimum, catégories eligibles) precises dans l'email ou la publication associee au code.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAIEMENT -->
+    <div class="faq-section" id="faq-paiement">
+      <div class="faq-section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Paiement
+      </div>
+      <div id="faq-items-paiement">
+        <div class="faq-item reveal">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-q-text">Quels modes de paiement acceptez-vous ?</div>
+            <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-text">Nous acceptons tous les principaux modes de paiement disponibles en Côte d'Ivoire : Orange Money CI, MTN Mobile Money, Moov Money, Wave CI, les cartes Visa et MasterCard, et le paiement en especes a la livraison. Nous travaillons continuellement a integrer de nouveaux modes de paiement pour vous faciliter la vie.</div></div>
+        </div>
+        <div class="faq-item reveal" style="transition-delay:0.05s">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-q-text">Mon paiement Mobile Money est-il sécurisé ?</div>
+            <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-text">Oui, tous nos paiements Mobile Money sont traites via les APIs officielles des operateurs (Orange, MTN, Moov) avec chiffrement SSL. Nous ne stockons jamais votre code PIN ou vos identifiants Mobile Money. La transaction est directement traitee par l'operateur, exactement comme si vous effectuiez un transfert classique. Vous recevez une confirmation de votre operateur en temps reel.</div></div>
+        </div>
+        <div class="faq-item reveal" style="transition-delay:0.1s">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-q-text">Mon paiement a ete debite mais ma commande n'est pas confirmee. Que faire ?</div>
+            <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-text">Ce cas peut arriver en cas de probleme technique temporaire. Attendez 10 a 15 minutes : la confirmation arrive generalement avec un leger delai. Si apres 30 minutes votre commande n'est toujours pas confirmee, contactez-nous par WhatsApp avec votre Numéro de téléphone, le montant debite et l'heure de la transaction. Nous verifions et regularisons sous 2 heures maximum.</div></div>
+        </div>
+        <div class="faq-item reveal" style="transition-delay:0.15s">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-q-text">Comment puis-je obtenir un remboursement ?</div>
+            <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-text">Si votre commande est eligible au remboursement (commande annulee, produit non conforme, produit non recu), le remboursement est effectue sur le meme mode de paiement que vous avez utilise. Pour un paiement Mobile Money, le remboursement arrive sous 24 a 48h. Pour une carte bancaire, comptez 3 a 5 jours ouvrables selon votre banque.</div></div>
+        </div>
+        <div class="faq-item reveal" style="transition-delay:0.2s">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <div class="faq-q-text">Puis-je payer en plusieurs fois ?</div>
+            <div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+          </div>
+          <div class="faq-answer"><div class="faq-answer-text">Oui, pour les commandes superieures a 50 000 FCFA, nous proposons un paiement en 3 fois sans frais via Wave CI. Cette option apparait automatiquement lors du checkout si votre commande est eligible. Vous payez un tiers a la commande, un tiers 30 jours apres, et le dernier tiers 60 jours apres la livraison.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIVRAISON -->
+    <div class="faq-section" id="faq-livraison">
+      <div class="faq-section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/></svg>
+        Livraison
+      </div>
+      <div>
+        <div class="faq-item reveal"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Quels sont les delais de livraison ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Livraison standard a Abidjan : 24 a 48 heures. Livraison express (meme jour) : disponible pour les commandes passees avant 14h. Autres villes de Côte d'Ivoire : 3 a 5 jours ouvrables. Pays voisins (Senegal, Mali, Burkina Faso, Ghana, Guinee, Togo) : 5 a 10 jours ouvrables. Ces delais courent a partir de la confirmation du paiement.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.05s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">La livraison est-elle gratuite ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">La livraison standard est gratuite pour toute commande superieure a 15 000 FCFA a Abidjan et ses communes. Pour les commandes inferieures, des frais de livraison de 1 000 a 2 000 FCFA s'appliquent selon la distance. La livraison express est facturee 1 500 FCFA quel que soit le montant de la commande.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.1s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Livrez-vous dans toute la Côte d'Ivoire ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Oui, nous livrons dans toutes les villes et communes de Côte d'Ivoire : Abidjan, Bouake, Yamoussoukro, Daloa, San-Pedro, Korhogo, Man, Gagnoa, et plus encore. Pour les zones rurales ou eloignees, nous travaillons avec des partenaires locaux pour assurer la derniere etape de livraison. Indiquez un point de repere precis lors de votre commande.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.15s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Que se passe-t-il si je suis absent lors de la livraison ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Le livreur vous contactera par téléphone avant d'arriver. En cas d'absence, il tentera une deuxieme livraison le jour ouvrable suivant sans frais supplementaires. Si vous savez que vous serez absent, vous pouvez autoriser une personne de confiance a receptionner le colis a votre place, ou nous demander de livrer a votre lieu de travail.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.2s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Puis-je choisir un creneau de livraison ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Pour la livraison express, vous choisissez le creneau matin (8h-13h) ou apres-midi (14h-19h). Pour la livraison standard, nous vous contacterons la veille par SMS pour confirmer le creneau de passage. Vous pouvez egalement nous appeler pour ajuster l'heure selon vos disponibilites, dans la mesure du possible.</div></div></div>
+      </div>
+    </div>
+
+    <!-- RETOURS -->
+    <div class="faq-section" id="faq-retours">
+      <div class="faq-section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+        Retours et remboursements
+      </div>
+      <div>
+        <div class="faq-item reveal"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Quelle est la politique de retour ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Vous disposez de 7 jours apres la reception pour retourner un produit si vous changez d'avis ou si le produit ne correspond pas a la description. Le produit doit etre dans son etat d'origine, non utilise, avec tous ses accessoires et emballages d'origine. Les produits alimentaires, hygieniques ou personnalises ne sont pas retournables pour des raisons sanitaires.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.05s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Comment initier un retour ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Connectez-vous a votre compte, allez dans "Mes commandes", trouvez la commande concernee et cliquez sur "Signaler un probleme". Decrivez le probleme et joignez des photos si necessaire. Notre equipe vous contactera dans les 24 heures avec les instructions de retour et vous enverra un bon de retour gratuit.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.1s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Que faire si le produit est arrive endommage ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Photographiez immediatement le produit endommage et le colis avant de l'ouvrir completement. Contactez-nous par WhatsApp avec les photos dans les 48 heures suivant la reception. Nous organisons un retour gratuit et vous envoyons un produit de remplacement ou vous remboursons integralement, selon votre preference. Vous n'avez rien a payer.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.15s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Les frais de retour sont-ils a ma charge ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Non, les retours sont entierement gratuits pour les cas suivants : produit endommage, produit non conforme a la description, erreur de commande de notre part. Pour un retour pour simple changement d'avis, des frais de retour de 1 000 FCFA sont appliques sur le montant rembourse. Dans tous les cas, nous organisons l'enlevement chez vous.</div></div></div>
+      </div>
+    </div>
+
+    <!-- COMPTE -->
+    <div class="faq-section" id="faq-compte">
+      <div class="faq-section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Compte utilisateur
+      </div>
+      <div>
+        <div class="faq-item reveal"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Comment Créer un compte ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Cliquez sur "Connexion" puis "Créer un compte". Renseignez votre Prénom, nom, email et numéro de telephone. Choisissez un mot de passe sécurisé. Vous recevrez un SMS de verification sur votre téléphone. Une fois votre Numéro confirme, votre compte est actif et vous pouvez commencer a acheter ou a vendre immediatement.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.05s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">J'ai oublie mon mot de passe. Comment le reinitialiser ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Sur la page de connexion, cliquez sur "Mot de passe oublie ?". Saisissez votre adresse email ou votre Numéro de téléphone. Vous recevrez un SMS ou email avec un lien de reinitialisation valable 30 minutes. Si vous ne recevez pas le message, verifiez vos spams ou contactez notre support qui reinitialisera votre mot de passe manuellement.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.1s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Mes donnees personnelles sont-elles protegees ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Oui, nous prenons la protection de vos donnees tres au serieux. Toutes les donnees sont chiffrees et stockees sur des serveurs sécurisés. Nous ne revendons jamais vos informations a des tiers. Conformement a notre politique de confidentialite, vous pouvez demander la suppression de votre compte et de toutes vos donnees a tout moment en nous contactant.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.15s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Comment supprimer mon compte ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Pour supprimer votre compte, rendez-vous dans Mon Compte > sécurité > Supprimer mon compte. Vous devrez confirmer votre identite par SMS. La suppression est irreversible et efface toutes vos donnees dans un delai de 30 jours. Assurez-vous de ne pas avoir de commandes en cours avant de proceder.</div></div></div>
+      </div>
+    </div>
+
+    <!-- VENDEURS -->
+    <div class="faq-section" id="faq-vendeurs">
+      <div class="faq-section-title">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/></svg>
+        Vendeurs
+      </div>
+      <div>
+        <div class="faq-item reveal"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Comment devenir vendeur sur Market Center Place ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Créez un compte acheteur, puis cliquez sur "Devenir vendeur". Renseignez les informations de votre boutique (nom, catégorie, description) et fournissez un document d'identite valide. Notre equipe examine votre dossier sous 48 heures ouvrables. Une fois approuve, vous pouvez commencer a publier vos produits immediatement. La premiere annee est sans commission sur les 10 premieres ventes.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.05s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Quels sont les frais et commissions ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Inscription gratuite, pas d'abonnement mensuel. Market Center Place preleve une commission de 5 a 8% sur chaque vente selon la catégorie. électronique : 5%, Mode : 7%, Alimentation : 6%, autres : 8%. Ces commissions couvrent le traitement du paiement, la protection acheteur, et l'hebergement de votre boutique. Aucun frais cache.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.1s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Comment recevoir mes revenus de vente ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Les revenus de vos commandes livrees sont accumules dans votre portefeuille vendeur. Vous pouvez demander un virement tous les lundis et jeudis. Les fonds sont envoyes sur votre compte Orange Money, MTN Money, Moov Money, Wave ou virement bancaire selon votre preference. Le virement est effectue dans les 24 heures suivant votre demande.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.15s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Combien de produits puis-je publier ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">Il n'y a pas de limite au nombre de produits que vous pouvez publier. Chaque fiche produit peut comporter jusqu'a 8 photos, une description detaillee, plusieurs variantes (taille, couleur) et votre tarif de livraison specifique. Nous recommandons des photos de qualité et des descriptions completes pour maximiser vos ventes.</div></div></div>
+        <div class="faq-item reveal" style="transition-delay:0.2s"><div class="faq-question" onclick="toggleFAQ(this)"><div class="faq-q-text">Que se passe-t-il si un acheteur signale un probleme avec ma vente ?</div><div class="faq-icon"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div><div class="faq-answer"><div class="faq-answer-text">En cas de litige, notre equipe de mediation contacte les deux parties dans les 24 heures. Vous avez la possibilité de vous exprimer et de fournir des preuves (photos, messages, etc.). La plupart des litiges sont resolus a l'amiable. En cas de faute averee du vendeur, Market Center Place peut prelever le remboursement sur le portefeuille vendeur. Maintenir un taux de satisfaction eleve protege votre compte.</div></div></div>
+      </div>
+    </div>
+
+    <!-- AUCUN RESULTAT -->
+    <div class="no-results" id="no-results">
+      <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <h3>Aucun resultat</h3>
+      <p>Essayez d'autres mots cles ou contactez notre support.</p>
+    </div>
+
+    <!-- CONTACT RAPIDE -->
+    <div class="faq-contact">
+      <h3>Vous n'avez pas trouve votre reponse ?</h3>
+      <p>Notre equipe est disponible du lundi au samedi, de 8h a 20h. Reponse garantie sous 2 heures.</p>
+      <div class="faq-contact-btns">
+        <a href="contact.html" class="btn-faq-contact whatsapp">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 14 19.79 19.79 0 0 1 1.61 5.47 2 2 0 0 1 3.57 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.8a16 16 0 0 0 6.29 6.29l.9-.9a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Contacter via WhatsApp
+        </a>
+        <a href="contact.html" class="btn-faq-contact email">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Envoyer un email
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div id="footer-slot"></div>
+
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script>
+  /* ── catégories ── */
+  function showCat(id, navEl) {
+    document.querySelectorAll('.faq-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.faq-cat-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('faq-' + id).classList.add('active');
+    if (navEl) navEl.classList.add('active');
+    document.getElementById('faq-search-input').value = '';
+    document.getElementById('no-results').style.display = 'none';
+    initReveal();
+  }
+
+  /* ── ACCORDEON ── */
+  function toggleFAQ(btn) {
+    const item = btn.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  /* ── RECHERCHE ── */
+  function searchFAQ(query) {
+    const q = query.toLowerCase().trim();
+    if (!q) {
+      document.querySelectorAll('.faq-item').forEach(i => i.style.display = '');
+      document.getElementById('no-results').style.display = 'none';
+      return;
+    }
+    document.querySelectorAll('.faq-section').forEach(s => s.classList.remove('active'));
+
+    let found = 0;
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const text = item.textContent.toLowerCase();
+      const match = text.includes(q);
+      item.style.display = match ? '' : 'none';
+      if (match) {
+        found++;
+        const section = item.closest('.faq-section');
+        if (section) section.classList.add('active');
+      }
+    });
+
+    document.getElementById('no-results').style.display = found === 0 ? 'block' : 'none';
+    if (found > 0) {
+      document.querySelectorAll('.faq-cat-item').forEach(n => n.classList.remove('active'));
+    }
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(() => { const l = document.getElementById('loader'); if(l) l.classList.add('hidden'); }, 800);
+  });
+</script>
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

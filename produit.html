@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Achetez le Smartphone Android 128 Go chez TechCI Pro sur Market Center Place. Livraison rapide, paiement sécurisé Orange Money, MTN, Wave."/>
+  <meta property="og:title" content="Smartphone Android 128 Go — Market Center Place"/>
+  <meta property="og:description" content="Achetez le Smartphone Android 128 Go chez TechCI Pro sur Market Center Place. Livraison rapide, paiement sécurisé Orange Money, MTN, Wave."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="Market Center Place"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smartphone Android 128 Go — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <style>
+    /* ── FICHE PRODUIT ── */
+    .product-page {
+      max-width: 1200px; margin: 0 auto; padding: 2.5rem;
+    }
+
+    /* ── LAYOUT PRINCIPAL ── */
+    .product-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      margin-bottom: 5rem;
+    }
+
+    /* ── GALERIE ── */
+    .gallery-main {
+      background: var(--lgray); border-radius: 10px;
+      height: 420px; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; cursor: none;
+    }
+    .gallery-main-img {
+      font-size: 9rem; transition: transform 0.4s ease;
+    }
+    .gallery-main:hover .gallery-main-img { transform: scale(1.06); }
+    .gallery-badge-main {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--red); color: var(--white);
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; padding: 5px 12px; border-radius: 4px;
+    }
+    .gallery-wish-main {
+      position: absolute; top: 16px; right: 16px;
+      width: 40px; height: 40px; background: var(--white);
+      border: none; border-radius: 50%; cursor: none;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .gallery-wish-main:hover { transform: scale(1.1); background: var(--red); }
+    .gallery-wish-main:hover svg { stroke: var(--white); }
+    .gallery-wish-main svg { stroke: var(--gray); transition: stroke 0.2s; }
+
+    .gallery-thumbs {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin-top: 1rem;
+    }
+    .gallery-thumb {
+      background: var(--lgray); border-radius: 6px; height: 80px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; cursor: none; border: 2px solid transparent;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .gallery-thumb.active { border-color: var(--navy); }
+    .gallery-thumb:hover { border-color: var(--red2); transform: scale(1.03); }
+
+    /* ── INFOS PRODUIT ── */
+    .product-info { padding-top: 0.5rem; }
+    .product-category-link {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--red); text-decoration: none;
+    }
+    .product-category-link:hover { text-decoration: underline; }
+    .product-title {
+      font-size: 1.7rem; font-weight: 900; color: var(--navy);
+      letter-spacing: -0.5px; line-height: 1.2;
+      margin: 0.8rem 0 1rem;
+    }
+    .product-meta {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem;
+      flex-wrap: wrap;
+    }
+    .product-rating-display {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .product-stars-big { color: #f59e0b; font-size: 1rem; }
+    .product-rating-num { font-size: 0.82rem; font-weight: 800; color: var(--navy); }
+    .product-reviews-link {
+      font-size: 0.78rem; color: var(--blue); font-weight: 600; text-decoration: none;
+    }
+    .product-reviews-link:hover { text-decoration: underline; }
+    .product-sold { font-size: 0.78rem; color: var(--gray); font-weight: 500; }
+    .product-stock {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #dcfce7; color: #16a34a;
+      border-radius: 99px; padding: 3px 10px;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.5px;
+    }
+    .product-stock::before { content:''; width:6px;height:6px;background:#16a34a;border-radius:50%; }
+
+    /* Prix */
+    .price-block { margin: 1.2rem 0 1.5rem; }
+    .price-main { font-size: 2.2rem; font-weight: 900; color: var(--navy); letter-spacing: -1px; }
+    .price-old-display { font-size: 1rem; color: var(--gray); text-decoration: line-through; margin-left: 8px; font-weight: 500; }
+    .price-save {
+      display: inline-block; background: #fef2f2; color: var(--red);
+      border-radius: 4px; padding: 3px 8px;
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.5px; margin-left: 8px;
+    }
+    .price-installment { font-size: 0.78rem; color: var(--gray); margin-top: 4px; font-weight: 500; }
+    .price-installment strong { color: var(--navy); }
+
+    /* Options */
+    .option-block { margin-bottom: 1.2rem; }
+    .option-label {
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--navy); margin-bottom: 0.6rem;
+      display: flex; gap: 6px; align-items: center;
+    }
+    .option-label span { color: var(--gray); font-weight: 500; font-size: 0.78rem; text-transform: none; letter-spacing: 0; }
+    .color-options { display: flex; gap: 0.5rem; }
+    .color-dot {
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 2px solid transparent; cursor: none;
+      transition: transform 0.2s, border-color 0.2s;
+      position: relative;
+    }
+    .color-dot.active { border-color: var(--navy); transform: scale(1.1); }
+    .color-dot::after {
+      content:''; position:absolute; inset:-4px;
+      border: 2px solid transparent; border-radius: 50%;
+      transition: border-color 0.2s;
+    }
+    .color-dot.active::after { border-color: var(--navy); }
+    .size-options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .size-btn {
+      padding: 7px 14px; border: 1.5px solid var(--lgray);
+      border-radius: 4px; background: var(--white);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem; font-weight: 700; color: var(--gray);
+      cursor: none; transition: all 0.2s;
+    }
+    .size-btn:hover { border-color: var(--navy); color: var(--navy); }
+    .size-btn.active { border-color: var(--navy); background: var(--navy); color: var(--white); }
+    .size-btn.unavailable { opacity: 0.35; text-decoration: line-through; }
+
+    /* Quantite + CTA */
+    .qty-cta { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+    .qty-ctrl {
+      display: flex; align-items: center; border: 1.5px solid var(--lgray); border-radius: 5px; overflow: hidden;
+    }
+    .qty-btn {
+      width: 38px; height: 46px; background: var(--off); border: none;
+      font-size: 1.1rem; font-weight: 700; color: var(--navy);
+      cursor: none; transition: background 0.2s;
+    }
+    .qty-btn:hover { background: var(--lgray); }
+    .qty-val {
+      width: 50px; text-align: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem; font-weight: 800; color: var(--navy);
+      border: none; outline: none; background: var(--white);
+    }
+    .btn-add-main {
+      flex: 1; padding: 14px 20px;
+      background: var(--navy); color: var(--white);
+      border: none; border-radius: 5px; cursor: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 0.82rem; letter-spacing: 1px;
+      text-transform: uppercase; position: relative; overflow: hidden;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 4px 20px rgba(11,31,75,0.25);
+    }
+    .btn-add-main:hover { background: var(--red); transform: translateY(-2px); }
+    .btn-buy-now {
+      flex: 1; padding: 14px 20px;
+      background: var(--red); color: var(--white);
+      border: none; border-radius: 5px; cursor: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 0.82rem; letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 4px 20px rgba(192,32,42,0.3);
+    }
+    .btn-buy-now:hover { background: var(--red2); transform: translateY(-2px); }
+
+    /* Paiements acceptes */
+    .payment-accept {
+      background: var(--off); border-radius: 6px; padding: 1rem 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .payment-accept-title {
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--navy); margin-bottom: 0.7rem;
+    }
+    .payment-pills { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .payment-pill {
+      background: var(--white); border: 1.5px solid var(--lgray);
+      border-radius: 4px; padding: 4px 10px;
+      font-size: 0.68rem; font-weight: 800; color: var(--navy);
+      letter-spacing: 0.3px;
+    }
+    .payment-pill.orange { border-color: #ff6b00; color: #ff6b00; }
+    .payment-pill.mtn    { border-color: #ffd700; color: #a07800; }
+    .payment-pill.moov   { border-color: #0057b7; color: #0057b7; }
+    .payment-pill.wave   { border-color: #0070ba; color: #0070ba; }
+
+    /* Garanties */
+    .guarantees { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .guarantee-item {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--white); border: 1px solid var(--lgray); border-radius: 5px;
+      padding: 8px 10px;
+    }
+    .guarantee-item svg { stroke: var(--navy); flex-shrink: 0; }
+    .guarantee-text { font-size: 0.72rem; font-weight: 600; color: var(--navy); }
+
+    /* ── ONGLETS DETAILS ── */
+    .product-tabs-section { margin-bottom: 4rem; }
+    .product-tabs {
+      display: flex; gap: 0; border-bottom: 2px solid var(--lgray);
+      margin-bottom: 2rem;
+    }
+    .product-tab {
+      padding: 1rem 1.5rem; border: none; background: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px;
+      text-transform: uppercase; color: var(--gray); cursor: none;
+      position: relative; transition: color 0.2s;
+    }
+    .product-tab::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 2px; background: var(--navy);
+      transition: width 0.3s ease;
+    }
+    .product-tab.active { color: var(--navy); }
+    .product-tab.active::after { width: 100%; }
+    .tab-content { display: none; animation: tabIn 0.3s ease; }
+    .tab-content.active { display: block; }
+    @keyframes tabIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Description */
+    .desc-text { font-size: 0.9rem; color: var(--gray); line-height: 1.9; margin-bottom: 1.5rem; }
+    .desc-features { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .desc-feature {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: var(--off); border-radius: 6px; padding: 0.8rem;
+    }
+    .desc-feature svg { stroke: var(--navy); flex-shrink: 0; margin-top: 1px; }
+    .desc-feature-text { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
+
+    /* Specs */
+    .specs-table { width: 100%; border-collapse: collapse; }
+    .specs-table tr { border-bottom: 1px solid var(--lgray); }
+    .specs-table tr:last-child { border-bottom: none; }
+    .specs-table td { padding: 0.9rem 0.5rem; font-size: 0.85rem; }
+    .specs-table td:first-child { font-weight: 800; color: var(--navy); width: 35%; }
+    .specs-table td:last-child { color: var(--gray); }
+    .specs-table tr:nth-child(odd) td { background: var(--off); }
+
+    /* Avis */
+    .reviews-header {
+      display: flex; gap: 3rem; margin-bottom: 2rem;
+      background: var(--off); border-radius: 8px; padding: 1.5rem;
+    }
+    .reviews-avg { text-align: center; }
+    .reviews-avg-num {
+      font-size: 4rem; font-weight: 900; color: var(--navy); line-height: 1;
+    }
+    .reviews-avg-stars { color: #f59e0b; font-size: 1.2rem; margin: 6px 0 4px; }
+    .reviews-avg-total { font-size: 0.78rem; color: var(--gray); }
+    .reviews-bars { flex: 1; display: flex; flex-direction: column; gap: 6px; justify-content: center; }
+    .reviews-bar-row { display: flex; align-items: center; gap: 10px; }
+    .reviews-bar-label { font-size: 0.75rem; font-weight: 700; color: var(--navy); width: 40px; text-align: right; }
+    .reviews-bar-track { flex: 1; height: 6px; background: var(--lgray); border-radius: 99px; overflow: hidden; }
+    .reviews-bar-fill { height: 100%; background: #f59e0b; border-radius: 99px; transition: width 0.8s ease; }
+    .reviews-bar-count { font-size: 0.72rem; color: var(--gray); width: 30px; }
+    .review-card { border-bottom: 1px solid var(--lgray); padding: 1.5rem 0; }
+    .review-card:last-child { border-bottom: none; }
+    .review-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.6rem; }
+    .review-avatar {
+      width: 40px; height: 40px; background: var(--navy);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-weight: 900; color: var(--white); font-size: 0.85rem;
+    }
+    .review-name { font-weight: 800; font-size: 0.85rem; color: var(--navy); }
+    .review-date { font-size: 0.72rem; color: var(--gray); }
+    .review-stars { color: #f59e0b; font-size: 0.85rem; }
+    .review-text { font-size: 0.85rem; color: var(--gray); line-height: 1.7; margin-top: 0.5rem; }
+    .review-verified {
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.5px;
+      color: #16a34a; background: #dcfce7; border-radius: 3px;
+      padding: 2px 7px; margin-left: auto;
+    }
+
+    /* ── PRODUITS SIMILAIRES ── */
+    .similar-section { margin-bottom: 4rem; }
+
+    /* ── VENDEUR ── */
+    .seller-card {
+      background: var(--white); border: 1.5px solid var(--lgray);
+      border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 1.2rem;
+    }
+    .seller-avatar {
+      width: 56px; height: 56px; background: var(--navy); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; color: var(--white); font-size: 1.1rem; flex-shrink: 0;
+    }
+    .seller-info { flex: 1; }
+    .seller-name { font-weight: 800; font-size: 0.95rem; color: var(--navy); margin-bottom: 2px; }
+    .seller-stats { font-size: 0.75rem; color: var(--gray); }
+    .seller-badge { background: var(--navy); color: var(--white); border-radius: 3px; padding: 2px 8px; font-size: 0.62rem; font-weight: 800; letter-spacing: 1px; }
+    .btn-seller { padding: 9px 18px; border: 1.5px solid var(--navy); border-radius: 4px; background: none; color: var(--navy); font-family:'Montserrat',sans-serif; font-size: 0.75rem; font-weight: 800; cursor: none; letter-spacing: 0.5px; transition: all 0.2s; }
+    .btn-seller:hover { background: var(--navy); color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .product-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .qty-cta { flex-wrap: wrap; }
+      .desc-features { grid-template-columns: 1fr; }
+      .guarantees { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <style id="gsap-extra">
+    /* Gloss sur les cartes */
+    .prod-card, .mode-card { transform-style: preserve-3d; }
+    .card-gloss {
+      position: absolute; inset: 0; border-radius: inherit;
+      pointer-events: none; z-index: 2;
+      transition: background .1s;
+    }
+    /* Barre progression */
+    #progress { transform-origin: left; }
+    /* Overflow hidden pour split text */
+    .hero h1 .line { display: block; overflow: hidden; }
+    /* Curseur */
+    #cursor     { position: fixed; pointer-events: none; z-index: 99999; width: 8px; height: 8px; border-radius: 50%; background: #c0202a; transform: translate(-50%, -50%); }
+    #cursorRing { position: fixed; pointer-events: none; z-index: 99998; width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid rgba(192,32,42,.5); transform: translate(-50%, -50%); }
+    /* Page overlay GSAP */
+    #gsap-page-overlay { border-radius: 0 !important; }
+    /* Sections */
+    .word { overflow: hidden; display: inline-block; }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<div id="header-slot" data-page="catalogue"></div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <a href="catalogue.html">Catalogue</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <a href="catalogue.html">électronique</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>Smartphone Android 128 Go</span>
+  </div>
+</div>
+
+<!-- CONTENU PRINCIPAL -->
+<div class="product-page">
+
+  <!-- LAYOUT PRODUIT -->
+  <div class="product-layout">
+
+    <!-- GALERIE -->
+    <div class="reveal-left">
+      <div class="gallery-main">
+        <span class="gallery-badge-main">-25%</span>
+        <button class="gallery-wish-main">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <div class="gallery-main-img" id="main-img">
+  <img loading="lazy" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600&q=85" 
+    style="width:100%;height:100%;object-fit:cover;border-radius:6px" 
+    id="main-img-el" alt="Smartphone Android 128 Go"/>
+</div>
+      </div>
+      <div class="gallery-thumbs">
+        <div class="gallery-thumb active" onclick="switchMainImg(this, 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=120&q=80')"><img loading="lazy" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=120&q=80" style="width:100%;height:100%;object-fit:cover;border-radius:4px" alt=""/></div>
+        <div class="gallery-thumb" onclick="switchMainImg(this, 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=600&q=85')"><img loading="lazy" src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=120&q=80" style="width:100%;height:100%;object-fit:cover;border-radius:4px" alt=""/></div>
+        <div class="gallery-thumb" onclick="switchMainImg(this, 'https://images.unsplash.com/photo-1591815302525-756a9bcc3425?w=120&q=80')"><img loading="lazy" src="https://images.unsplash.com/photo-1591815302525-756a9bcc3425?w=120&q=80" style="width:100%;height:100%;object-fit:cover;border-radius:4px" alt=""/></div>
+        <div class="gallery-thumb" onclick="switchMainImg(this, 'https://images.unsplash.com/photo-1591815302525-756a9bcc3425?w=600&q=85')"><img loading="lazy" src="https://images.unsplash.com/photo-1591815302525-756a9bcc3425?w=120&q=80" style="width:100%;height:100%;object-fit:cover;border-radius:4px" alt=""/></div>
+      </div>
+    </div>
+
+    <!-- INFOS ── -->
+    <div class="product-info reveal-right">
+      <a href="catalogue.html" class="product-category-link">électronique &mdash; Smartphones</a>
+      <h1 class="product-title">Smartphone Android 128 Go<br/>Ecran 6.7 pouces AMOLED</h1>
+
+      <div class="product-meta">
+        <div class="product-rating-display">
+          <span class="product-stars-big">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="product-rating-num">4.9</span>
+        </div>
+        <a href="#avis" class="product-reviews-link">128 avis clients</a>
+        <span class="product-sold">&#8226; 342 vendus ce mois</span>
+        <span class="product-stock">En stock</span>
+      </div>
+
+      <!-- Vendeur -->
+      <div class="seller-card">
+        <div class="seller-avatar">TC</div>
+        <div class="seller-info">
+          <div class="seller-name">TechCI Pro <span class="seller-badge">vérifié</span></div>
+          <div class="seller-stats">&#9733; 4.8 &middot; 1 240 ventes &middot; Abidjan, Côte d'Ivoire</div>
+        </div>
+        <button class="btn-seller">Voir la boutique</button>
+      </div>
+
+      <!-- Prix -->
+      <div class="price-block">
+        <div>
+          <span class="price-main">89 000 FCFA</span>
+          <span class="price-old-display">119 000 FCFA</span>
+          <span class="price-save">Vous economisez 30 000 FCFA</span>
+        </div>
+        <div class="price-installment">Ou <strong>3 x 29 700 FCFA</strong> sans frais avec Wave</div>
+      </div>
+
+      <!-- Couleur -->
+      <div class="option-block">
+        <div class="option-label">Couleur <span>Noir Minuit</span></div>
+        <div class="color-options">
+          <div class="color-dot active" style="background:#1a1a2e" title="Noir Minuit"></div>
+          <div class="color-dot" style="background:#2563eb" title="Bleu Cobalt"></div>
+          <div class="color-dot" style="background:#c0202a" title="Rouge Bordeaux"></div>
+          <div class="color-dot" style="background:#e8e8e8;border:1.5px solid var(--lgray)" title="Argent"></div>
+        </div>
+      </div>
+
+      <!-- Stockage -->
+      <div class="option-block">
+        <div class="option-label">Stockage</div>
+        <div class="size-options">
+          <button class="size-btn unavailable">64 Go</button>
+          <button class="size-btn active">128 Go</button>
+          <button class="size-btn">256 Go</button>
+          <button class="size-btn">512 Go</button>
+        </div>
+      </div>
+
+      <!-- Quantite + CTA -->
+      <div class="qty-cta">
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeQty(-1)">&#8722;</button>
+          <input type="number" class="qty-val" value="1" min="1" max="99" id="qty" readonly/>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+        <button class="btn-add-main btn-primary-red" onclick="addMainToCart()">Ajouter au panier</button>
+      </div>
+      <button class="btn-buy-now" style="width:100%;padding:14px;margin-bottom:1.2rem" onclick="window.location='panier.html'">Acheter maintenant</button>
+
+      <!-- Paiements -->
+      <div class="payment-accept">
+        <div class="payment-accept-title">Modes de paiement acceptes</div>
+        <div class="payment-pills">
+          <span class="payment-pill orange">Orange Money</span>
+          <span class="payment-pill mtn">MTN Money</span>
+          <span class="payment-pill moov">Moov Money</span>
+          <span class="payment-pill wave">Wave</span>
+          <span class="payment-pill">Visa / MasterCard</span>
+          <span class="payment-pill">Paiement livraison</span>
+        </div>
+      </div>
+
+      <!-- Garanties -->
+      <div class="guarantees">
+        <div class="guarantee-item">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div class="guarantee-text">Garantie vendeur 12 mois</div>
+        </div>
+        <div class="guarantee-item">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+          <div class="guarantee-text">retour gratuit 7 jours</div>
+        </div>
+        <div class="guarantee-item">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <div class="guarantee-text">Livraison en 24-48h</div>
+        </div>
+        <div class="guarantee-item">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <div class="guarantee-text">Paiement 100% sécurisé</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ONGLETS DETAILS -->
+  <div class="product-tabs-section reveal">
+    <div class="product-tabs">
+      <button class="product-tab active" onclick="switchTab('desc', this)">Description</button>
+      <button class="product-tab" onclick="switchTab('specs', this)">Caracteristiques</button>
+      <button class="product-tab" onclick="switchTab('avis', this)" id="avis">Avis (128)</button>
+      <button class="product-tab" onclick="switchTab('livraison', this)">Livraison &amp; Retours</button>
+    </div>
+
+    <!-- Description -->
+    <div class="tab-content active" id="tab-desc">
+      <p class="desc-text">Le Smartphone Android 128 Go est la solution ideale pour les utilisateurs exigeants en Côte d'Ivoire. Avec son ecran AMOLED de 6.7 pouces et sa batterie de 5000 mAh, il tient toute la journee meme avec une utilisation intensive. Compatible 4G, il est parfait pour Mobile Money, les reseaux sociaux et le travail professionnel.</p>
+      <div class="desc-features">
+        <div class="desc-feature"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg><div class="desc-feature-text">Ecran AMOLED 6.7" Full HD+</div></div>
+        <div class="desc-feature"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg><div class="desc-feature-text">Processeur Octa-core 2.4 GHz</div></div>
+        <div class="desc-feature"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg><div class="desc-feature-text">8 Go RAM + 128 Go stockage</div></div>
+        <div class="desc-feature"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg><div class="desc-feature-text">Batterie 5000 mAh charge rapide</div></div>
+        <div class="desc-feature"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg><div class="desc-feature-text">Triple camera 108 MP + 12 MP + 5 MP</div></div>
+        <div class="desc-feature"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg><div class="desc-feature-text">Compatible Orange CI, MTN CI, Moov</div></div>
+      </div>
+    </div>
+
+    <!-- Specs -->
+    <div class="tab-content" id="tab-specs">
+      <table class="specs-table">
+        <tr><td>Marque</td><td>TechPro</td></tr>
+        <tr><td>Modele</td><td>TechPro X15 Pro</td></tr>
+        <tr><td>Ecran</td><td>6.7 pouces AMOLED, 120 Hz, Full HD+ (2400 x 1080 px)</td></tr>
+        <tr><td>Processeur</td><td>Octa-core 2.4 GHz, 4 nm</td></tr>
+        <tr><td>RAM</td><td>8 Go LPDDR5</td></tr>
+        <tr><td>Stockage</td><td>128 Go UFS 3.1 (extensible microSD)</td></tr>
+        <tr><td>Appareil photo</td><td>108 MP + 12 MP + 5 MP (arriere) / 32 MP (avant)</td></tr>
+        <tr><td>Batterie</td><td>5000 mAh, charge rapide 65W</td></tr>
+        <tr><td>OS</td><td>Android 14</td></tr>
+        <tr><td>Connectivite</td><td>4G LTE, Wifi 6, Bluetooth 5.3, NFC, USB-C</td></tr>
+        <tr><td>SIM</td><td>Dual SIM nano (compatible Orange CI, MTN CI, Moov CI)</td></tr>
+        <tr><td>Dimensions</td><td>163 x 75 x 8.2 mm</td></tr>
+        <tr><td>Poids</td><td>195 g</td></tr>
+        <tr><td>Garantie</td><td>12 mois vendeur + 6 mois constructeur</td></tr>
+      </table>
+    </div>
+
+    <!-- Avis -->
+    <div class="tab-content" id="tab-avis">
+      <div class="reviews-header">
+        <div class="reviews-avg">
+          <div class="reviews-avg-num">4.9</div>
+          <div class="reviews-avg-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="reviews-avg-total">128 avis</div>
+        </div>
+        <div class="reviews-bars">
+          <div class="reviews-bar-row"><span class="reviews-bar-label">5</span><div class="reviews-bar-track"><div class="reviews-bar-fill" style="width:88%"></div></div><span class="reviews-bar-count">113</span></div>
+          <div class="reviews-bar-row"><span class="reviews-bar-label">4</span><div class="reviews-bar-track"><div class="reviews-bar-fill" style="width:8%"></div></div><span class="reviews-bar-count">10</span></div>
+          <div class="reviews-bar-row"><span class="reviews-bar-label">3</span><div class="reviews-bar-track"><div class="reviews-bar-fill" style="width:3%"></div></div><span class="reviews-bar-count">4</span></div>
+          <div class="reviews-bar-row"><span class="reviews-bar-label">2</span><div class="reviews-bar-track"><div class="reviews-bar-fill" style="width:1%"></div></div><span class="reviews-bar-count">1</span></div>
+          <div class="reviews-bar-row"><span class="reviews-bar-label">1</span><div class="reviews-bar-track"><div class="reviews-bar-fill" style="width:0%"></div></div><span class="reviews-bar-count">0</span></div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">AK</div>
+          <div><div class="review-name">Adjoua Kouassi</div><div class="review-date">12 novembre 2024</div></div>
+          <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="review-verified">Achat vérifié</span>
+        </div>
+        <p class="review-text">Excellent téléphone ! La livraison a ete rapide, j'ai recu en moins de 24h a Cocody. L'appareil photo est incroyable et la batterie tient vraiment toute la journee. Je recommande vivement TechCI Pro.</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">KB</div>
+          <div><div class="review-name">Koffi Bamba</div><div class="review-date">3 octobre 2024</div></div>
+          <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="review-verified">Achat vérifié</span>
+        </div>
+        <p class="review-text">J'utilise cet appareil pour mon activité commerciale. Le double SIM est parfait pour avoir Orange et MTN en meme temps. L'ecran est tres lumineux, ideal en plein soleil.</p>
+      </div>
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar">MY</div>
+          <div><div class="review-name">Mariame Yao</div><div class="review-date">28 septembre 2024</div></div>
+          <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+          <span class="review-verified">Achat vérifié</span>
+        </div>
+        <p class="review-text">Tres bon produit dans l'ensemble. J'enleve une etoile car le chargeur n'etait pas inclus dans la boite, mais le vendeur m'a propose un geste commercial. Le téléphone lui-meme est parfait.</p>
+      </div>
+    </div>
+
+    <!-- Livraison -->
+    <div class="tab-content" id="tab-livraison">
+      <div class="desc-features">
+        <div class="desc-feature"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><div class="desc-feature-text">Abidjan : livraison en 24-48h</div></div>
+        <div class="desc-feature"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><div class="desc-feature-text">Autres villes : 3 a 5 jours ouvrables</div></div>
+        <div class="desc-feature"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg><div class="desc-feature-text">retour gratuit sous 7 jours</div></div>
+        <div class="desc-feature"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="desc-feature-text">Produit vérifié avant expedition</div></div>
+      </div>
+      <p class="desc-text" style="margin-top:1.5rem">La livraison gratuite est disponible pour toute commande superieure a 15 000 FCFA. En cas de probleme, notre equipe est disponible par WhatsApp pour vous assister rapidement.</p>
+    </div>
+  </div>
+
+  <!-- PRODUITS SIMILAIRES -->
+  <div class="similar-section reveal">
+    <div class="section-header">
+      <div class="section-eyebrow">Selection</div>
+      <h2 class="section-title">Produits <em>similaires</em></h2>
+    </div>
+    <div class="prods-grid">
+      <div class="prod-card">
+    <div class="card-gloss"></div><div class="prod-img" style="background:#f0f4f8;padding:0;overflow:hidden"><img loading="lazy" src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&q=80" style="width:100%;height:100%;object-fit:cover" alt="PC"/><div class="prod-overlay"><button class="prod-quick">Apercu</button></div></div><div class="prod-body"><div class="prod-cat">High-Tech</div><div class="prod-name">Ordinateur portable 15" &mdash; 8Go RAM</div><div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(56)</span></div><div class="prod-foot"><div><span class="prod-price">275 000 FCFA</span></div><button class="btn-add">Ajouter</button></div></div></div>
+      <div class="prod-card">
+    <div class="card-gloss"></div><div class="prod-img" style="background:#f0f4f8;padding:0;overflow:hidden;position:relative"><img loading="lazy" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Smartphone"/><div class="prod-overlay"><button class="prod-quick">Apercu</button></div></div><div class="prod-body"><div class="prod-cat">électronique</div><div class="prod-name">Smartphone 64 Go &mdash; Ecran 6.1"</div><div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9734; <span>(89)</span></div><div class="prod-foot"><div><span class="prod-price">55 000 FCFA</span></div><button class="btn-add">Ajouter</button></div></div></div>
+      <div class="prod-card">
+    <div class="card-gloss"></div><span class="prod-badge">-20%</span><div class="prod-img" style="background:#f0f4f8;padding:0;overflow:hidden;position:relative"><img loading="lazy" src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80" style="width:100%;height:100%;object-fit:cover" alt="Audio"/><div class="prod-overlay"><button class="prod-quick">Apercu</button></div></div><div class="prod-body"><div class="prod-cat">électronique</div><div class="prod-name">Ecouteurs sans fil Bluetooth 5.3</div><div class="prod-stars">&#9733;&#9733;&#9733;&#9733;&#9733; <span>(204)</span></div><div class="prod-foot"><div><span class="prod-price">24 000 FCFA</span><span class="prod-old">30 000</span></div><button class="btn-add">Ajouter</button></div></div></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div id="footer-slot"></div>
+
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script>document.addEventListener("DOMContentLoaded", function(){ if(typeof mcpUpdateCart === "function") mcpUpdateCart(); });</script>
+<script>
+  /* ── GALERIE ── */
+  function switchImg(thumb, emoji) {
+    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+  }
+
+  function switchMainImg(thumb, url) {
+    const img = document.getElementById('main-img-el');
+    if (img) {
+      img.style.opacity   = '0';
+      img.style.transform = 'scale(0.97)';
+      setTimeout(() => {
+        img.src             = url;
+        img.style.opacity   = '1';
+        img.style.transform = 'scale(1)';
+        img.style.transition = 'opacity .3s ease, transform .3s ease';
+      }, 200);
+    }
+    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+    if (thumb) thumb.classList.add('active');
+  }
+
+  /* ── QUANTITE ── */
+  function changeQty(delta) {
+    const input = document.getElementById('qty');
+    let val = parseInt(input.value) + delta;
+    if (val < 1)  val = 1;
+    if (val > 99) val = 99;
+    input.value = val;
+  }
+
+  /* ── ONGLETS ── */
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.product-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  /* ── COULEUR ── */
+  document.querySelectorAll('.color-dot').forEach(dot => {
+    dot.addEventListener('click', function() {
+      document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  /* ── TAILLE ── */
+  document.querySelectorAll('.size-btn:not(.unavailable)').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  /* ── PANIER ── */
+  function addMainToCart() {
+    const qty     = parseInt(document.getElementById('qty')?.value || '1');
+    const items   = JSON.parse(localStorage.getItem('mcp_cart') || '[]');
+    const found   = items.find(i => i.id === 'prod-1');
+    if (found) found.qty = (found.qty || 1) + qty;
+    else items.push({
+      id: 'prod-1', name: 'Smartphone Android 128 Go',
+      price: 89000, qty,
+      img: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=120&q=80'
+    });
+    localStorage.setItem('mcp_cart', JSON.stringify(items));
+    if (typeof mcpUpdateCart === 'function') mcpUpdateCart();
+
+    const btn = document.querySelector('.btn-add-main');
+    if (btn) {
+      const orig = btn.textContent;
+      btn.innerHTML = '<svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg> ' + qty + ' article(s) ajouté(s) !';
+      btn.style.background = '#16a34a';
+      btn.disabled = true;
+      setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.disabled = false; }, 2000);
+    }
+  });
+    }
+    const btn = document.querySelector('.btn-add-main');
+    btn.textContent = qty + ' article(s) ajoute(s) !';
+    btn.style.background = 'var(--red)';
+    setTimeout(() => { btn.textContent = 'Ajouter au panier'; btn.style.background = ''; }, 2000);
+  }
+
+  /* ── LOADER ── */
+  window.addEventListener('load', () => {
+    setTimeout(() => { const l = document.getElementById('loader'); if(l) l.classList.add('hidden'); }, 1200);
+  });
+
+  /* ── AJOUT AU PANIER ── */
+  function addToCart(btn) {
+    const qty = parseInt(document.getElementById('qty')?.value || '1');
+    const product = {
+      id: 'prod-smartphone-128',
+      name: 'Smartphone Android 128 Go',
+      price: 89000,
+      qty: 1,
+      img: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=120&q=80'};
+    const items = JSON.parse(localStorage.getItem('mcp_cart') || '[]');
+    const found = items.find(i => i.id === product.id);
+    if (found) found.qty = (found.qty||1) + qty;
+    else items.push({...product, qty});
+    localStorage.setItem('mcp_cart', JSON.stringify(items));
+    if (typeof mcpUpdateCart === 'function') mcpUpdateCart();
+    btn.textContent = 'Ajouté !';
+    btn.style.background = '#16a34a';
+    setTimeout(() => { btn.textContent = 'Ajouter au panier'; btn.style.background = ''; }, 2000);
+  }
+</script>
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+  <!-- GSAP Premium -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <script src="gsap-animations.js"></script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

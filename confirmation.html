@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Votre commande a ete confirmee sur Market Center Place. Suivez votre livraison en temps reel."/>
+  <meta property="og:title" content="Commande confirmee — Market Center Place"/>
+  <meta property="og:description" content="Votre commande a ete confirmee sur Market Center Place. Suivez votre livraison en temps reel."/>
+  <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Commande Confirmee — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <style>
+    /* ── PAGE CONFIRMATION ── */
+    body { background: var(--off); }
+
+    /* Hero confirmation */
+    .confirm-hero {
+      background: var(--navy);
+      padding: 3rem 2.5rem 5rem;
+      border-bottom: 3px solid var(--red);
+      position: relative; overflow: hidden; text-align: center;
+    }
+    .confirm-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at 50% 100%, rgba(192,32,42,0.2) 0%, transparent 70%);
+    }
+
+    /* Etapes */
+    .tunnel-steps-center {
+      display: flex; align-items: center; justify-content: center; gap: 0;
+      margin-bottom: 3rem; position: relative; z-index: 1;
+    }
+    .tunnel-step {
+      display: flex; align-items: center; gap: 8px; padding: 6px 16px;
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.8px;
+      text-transform: uppercase; color: rgba(255,255,255,0.35);
+    }
+    .tunnel-step.done   { color: var(--gold); }
+    .tunnel-step.active { color: var(--white); }
+    .tunnel-step-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 900;
+      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4);
+      border: 1.5px solid rgba(255,255,255,0.15);
+    }
+    .tunnel-step.done   .tunnel-step-num { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+    .tunnel-step.active .tunnel-step-num { background: #16a34a; color: var(--white); border-color: #16a34a; }
+    .tunnel-sep { width: 30px; height: 1px; background: rgba(255,255,255,0.15); }
+
+    /* Icone succes animee */
+    .success-icon-wrap {
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 100px; height: 100px; margin: 0 auto 2rem;
+    }
+    .success-ring {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 3px solid var(--gold);
+      animation: successRing 0.6s 0.3s ease both;
+    }
+    @keyframes successRing {
+      from { transform: scale(0); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .success-circle {
+      width: 100%; height: 100%; border-radius: 50%;
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      display: flex; align-items: center; justify-content: center;
+      animation: successPop 0.5s 0.2s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes successPop {
+      from { transform: scale(0); }
+      to   { transform: scale(1); }
+    }
+    .success-check {
+      stroke-dasharray: 30;
+      stroke-dashoffset: 30;
+      animation: checkDraw 0.5s 0.8s ease forwards;
+    }
+    @keyframes checkDraw { to { stroke-dashoffset: 0; } }
+
+    .confirm-hero h1 {
+      position: relative; z-index: 1;
+      font-size: 2.2rem; font-weight: 900; color: var(--white);
+      letter-spacing: -1px; margin-bottom: 0.5rem;
+      animation: slideUp 0.6s 0.9s ease both;
+    }
+    .confirm-hero h1 em { color: var(--gold); font-style: normal; }
+    .confirm-hero p {
+      position: relative; z-index: 1;
+      color: rgba(255,255,255,0.6); font-size: 0.92rem; line-height: 1.7;
+      max-width: 500px; margin: 0 auto;
+      animation: slideUp 0.6s 1.1s ease both;
+    }
+    @keyframes slideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Badge Numéro commande */
+    .order-ref {
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50px; padding: 10px 24px; margin-top: 1.5rem;
+      animation: slideUp 0.6s 1.3s ease both;
+    }
+    .order-ref-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .order-ref-num   { font-size: 1rem; font-weight: 900; color: var(--gold); letter-spacing: 1px; }
+
+    /* ── CONTENU PRINCIPAL ── */
+    .confirm-content {
+      max-width: 900px; margin: 0 auto; padding: 2.5rem;
+      margin-top: -2.5rem; position: relative; z-index: 2;
+    }
+
+    /* Carte principale */
+    .confirm-card {
+      background: var(--white); border-radius: 10px;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.1);
+      overflow: hidden; margin-bottom: 1.5rem;
+      animation: cardIn 0.6s 1.5s ease both;
+    }
+    @keyframes cardIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Timeline livraison */
+    .delivery-timeline {
+      padding: 2rem; background: var(--off);
+      border-bottom: 1px solid var(--lgray);
+    }
+    .timeline-title {
+      font-size: 0.68rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--navy); margin-bottom: 1.5rem;
+    }
+    .timeline {
+      display: flex; align-items: flex-start; gap: 0;
+      position: relative;
+    }
+    .timeline::before {
+      content: ''; position: absolute; top: 16px; left: 16px;
+      right: 16px; height: 2px; background: var(--lgray); z-index: 0;
+    }
+    .timeline-step {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      text-align: center; position: relative; z-index: 1;
+    }
+    .timeline-dot {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 2px solid var(--lgray); background: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 0.6rem; transition: all 0.3s;
+    }
+    .timeline-step.done .timeline-dot { background: #16a34a; border-color: #16a34a; }
+    .timeline-step.done .timeline-dot svg { stroke: var(--white); }
+    .timeline-step.active .timeline-dot { background: var(--navy); border-color: var(--navy); animation: dotPulse 1.5s ease infinite; }
+    .timeline-step.active .timeline-dot svg { stroke: var(--white); }
+    @keyframes dotPulse { 0%,100%{box-shadow:0 0 0 0 rgba(11,31,75,0.3)} 50%{box-shadow:0 0 0 8px rgba(11,31,75,0)} }
+    .timeline-dot svg { stroke: var(--lgray); }
+    .timeline-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; color: var(--navy); margin-bottom: 2px; }
+    .timeline-date  { font-size: 0.65rem; color: var(--gray); font-weight: 500; }
+
+    /* Detail commande */
+    .order-detail { padding: 2rem; }
+    .detail-title {
+      font-size: 0.68rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--navy); margin-bottom: 1.2rem;
+    }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+    .detail-item { background: var(--off); border-radius: 6px; padding: 1rem; }
+    .detail-item-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--gray); margin-bottom: 4px; }
+    .detail-item-val   { font-size: 0.88rem; font-weight: 700; color: var(--navy); }
+
+    /* Articles commandes */
+    .order-articles { border-top: 1px solid var(--lgray); padding-top: 1.5rem; }
+    .article-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 0.8rem 0; border-bottom: 1px solid var(--lgray);
+    }
+    .article-row:last-child { border-bottom: none; }
+    .article-img {
+      width: 56px; height: 56px; background: var(--lgray);
+      border-radius: 6px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.8rem; flex-shrink: 0;
+    }
+    .article-info { flex: 1; }
+    .article-name { font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
+    .article-meta { font-size: 0.72rem; color: var(--gray); }
+    .article-price { font-size: 0.92rem; font-weight: 900; color: var(--navy); white-space: nowrap; }
+
+    /* Total */
+    .order-total-block {
+      border-top: 2px solid var(--lgray); padding-top: 1rem; margin-top: 0.5rem;
+    }
+    .total-row { display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.4rem; }
+    .total-row-label { color: var(--gray); font-weight: 500; }
+    .total-row-val   { font-weight: 700; color: var(--navy); }
+    .total-row.grand-total {
+      font-size: 1rem; margin-top: 0.6rem;
+      padding-top: 0.6rem; border-top: 2px solid var(--lgray);
+    }
+    .total-row.grand-total .total-row-label { font-weight: 900; color: var(--navy); }
+    .total-row.grand-total .total-row-val   { font-size: 1.3rem; font-weight: 900; color: var(--red); }
+
+    /* ── INFOS SUPPLEMENTAIRES ── */
+    .info-cards {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;
+      animation: cardIn 0.6s 1.8s ease both;
+    }
+    .info-card {
+      background: var(--white); border-radius: 8px; padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .info-card-icon {
+      width: 44px; height: 44px; border-radius: 8px;
+      background: var(--off); display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+      border: 1px solid var(--lgray);
+    }
+    .info-card-icon svg { stroke: var(--navy); }
+    .info-card h4 { font-size: 0.82rem; font-weight: 800; color: var(--navy); margin-bottom: 4px; }
+    .info-card p  { font-size: 0.75rem; color: var(--gray); line-height: 1.5; }
+    .info-card a  { color: var(--blue); font-weight: 700; text-decoration: none; }
+
+    /* ── ACTIONS ── */
+    .confirm-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: cardIn 0.6s 2s ease both;
+    }
+    .btn-action-primary {
+      background: var(--navy); color: var(--white);
+      border: none; border-radius: 5px; padding: 14px 28px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;
+      text-transform: uppercase; cursor: none; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-action-primary:hover { background: var(--red); transform: translateY(-2px); }
+    .btn-action-outline {
+      background: transparent; color: var(--navy);
+      border: 2px solid var(--lgray); border-radius: 5px; padding: 14px 28px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 0.8rem; letter-spacing: 1px;
+      text-transform: uppercase; cursor: none; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .btn-action-outline:hover { border-color: var(--navy); transform: translateY(-2px); }
+
+    /* Confettis */
+    .confetti-wrap {
+      position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute; width: 8px; height: 8px; border-radius: 2px;
+      animation: confettiFall linear forwards;
+    }
+    @keyframes confettiFall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .detail-grid  { grid-template-columns: 1fr; }
+      .info-cards   { grid-template-columns: 1fr; }
+      .confirm-actions { flex-direction: column; }
+      .tunnel-steps-center { display: none; }
+      .timeline::before { display: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="confetti-wrap" id="confetti"></div>
+
+<!-- HEADER -->
+<div id="header-slot" data-page=""></div>
+
+<!-- HERO -->
+<div class="confirm-hero">
+  <!-- Etapes -->
+  <div class="tunnel-steps-center">
+    <div class="tunnel-step done"><span class="tunnel-step-num">&#10003;</span> Panier</div>
+    <div class="tunnel-sep"></div>
+    <div class="tunnel-step done"><span class="tunnel-step-num">&#10003;</span> Livraison</div>
+    <div class="tunnel-sep"></div>
+    <div class="tunnel-step done"><span class="tunnel-step-num">&#10003;</span> Paiement</div>
+    <div class="tunnel-sep"></div>
+    <div class="tunnel-step active"><span class="tunnel-step-num">&#10003;</span> Confirmation</div>
+  </div>
+
+  <!-- Icone succes -->
+  <div class="success-icon-wrap">
+    <div class="success-ring"></div>
+    <div class="success-circle">
+      <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white">
+        <polyline class="success-check" points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+  </div>
+
+  <h1>Commande <em>confirmee</em> !</h1>
+  <p>Merci pour votre commande. Vous recevrez une confirmation par SMS et email dans quelques instants.</p>
+
+  <div class="order-ref">
+    <span class="order-ref-label">Reference</span>
+    <span class="order-ref-num" id="order-ref-num">MCP-2025-00847</span>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>Commande confirmee</span>
+  </div>
+</div>
+
+<!-- CONTENU -->
+<div class="confirm-content">
+
+  <!-- CARTE PRINCIPALE -->
+  <div class="confirm-card">
+
+    <!-- Timeline livraison -->
+    <div class="delivery-timeline">
+      <div class="timeline-title">Suivi de votre commande</div>
+      <div class="timeline">
+        <div class="timeline-step done">
+          <div class="timeline-dot">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="timeline-label">Commande<br/>recue</div>
+          <div class="timeline-date" id="date-order">Aujourd'hui</div>
+        </div>
+        <div class="timeline-step active">
+          <div class="timeline-dot">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <div class="timeline-label">Preparation<br/>en cours</div>
+          <div class="timeline-date" id="date-prep">Dans 2-4h</div>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div class="timeline-label">En cours<br/>de livraison</div>
+          <div class="timeline-date" id="date-ship">Demain matin</div>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-dot">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </div>
+          <div class="timeline-label">Livree</div>
+          <div class="timeline-date" id="date-delivered">Dans 24-48h</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail commande -->
+    <div class="order-detail">
+      <div class="detail-title">Detail de la commande</div>
+
+      <div class="detail-grid">
+        <div class="detail-item">
+          <div class="detail-item-label">Reference</div>
+          <div class="detail-item-val">MCP-2025-00847</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-item-label">Date</div>
+          <div class="detail-item-val" id="order-date-display">Aujourd'hui</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-item-label">Mode de paiement</div>
+          <div class="detail-item-val">Orange Money</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-item-label">Statut paiement</div>
+          <div class="detail-item-val" style="color:#16a34a">&#10003; Paiement confirme</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-item-label">Livraison</div>
+          <div class="detail-item-val">Standard &mdash; Gratuite</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-item-label">Adresse</div>
+          <div class="detail-item-val">Cocody, Abidjan, CI</div>
+        </div>
+      </div>
+
+      <!-- Articles -->
+      <div class="order-articles">
+        <div class="article-row">
+          <div class="article-img">&#128241;</div>
+          <div class="article-info">
+            <div class="article-name">Smartphone Android 128 Go &mdash; Noir Minuit</div>
+            <div class="article-meta">électronique &middot; Qte : 1 &middot; Vendeur : TechCI Pro</div>
+          </div>
+          <div class="article-price">89 000 FCFA</div>
+        </div>
+        <div class="article-row">
+          <div class="article-img">&#127807;</div>
+          <div class="article-info">
+            <div class="article-name">Huile de karite pur 500 ml</div>
+            <div class="article-meta">beauté &middot; Qte : 2 &middot; Vendeur : NatureBio CI</div>
+          </div>
+          <div class="article-price">14 400 FCFA</div>
+        </div>
+        <div class="article-row">
+          <div class="article-img">&#127890;</div>
+          <div class="article-info">
+            <div class="article-name">Sac artisanal Bogolan</div>
+            <div class="article-meta">Accessoires &middot; Qte : 1 &middot; Vendeur : Artisans Wax</div>
+          </div>
+          <div class="article-price">22 500 FCFA</div>
+        </div>
+      </div>
+
+      <!-- Total -->
+      <div class="order-total-block">
+        <div class="total-row"><span class="total-row-label">Sous-total</span><span class="total-row-val">125 900 FCFA</span></div>
+        <div class="total-row"><span class="total-row-label">Livraison</span><span class="total-row-val" style="color:#16a34a">Gratuite</span></div>
+        <div class="total-row grand-total">
+          <span class="total-row-label">Total paye</span>
+          <span class="total-row-val">125 900 FCFA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFOS CARTES -->
+  <div class="info-cards">
+    <div class="info-card">
+      <div class="info-card-icon">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 14 19.79 19.79 0 0 1 1.61 5.47 2 2 0 0 1 3.57 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.8a16 16 0 0 0 6.29 6.29l.9-.9a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+      <div>
+        <h4>Besoin d'aide ?</h4>
+        <p>Notre equipe est disponible par WhatsApp au <a href="#">+225 07 00 00 00 00</a> du lundi au samedi de 8h a 20h.</p>
+      </div>
+    </div>
+    <div class="info-card">
+      <div class="info-card-icon">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+      </div>
+      <div>
+        <h4>Politique de retour</h4>
+        <p>Pas satisfait ? Retournez le produit sous 7 jours, gratuitement. <a href="#">En savoir plus</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="confirm-actions">
+    <a href="compte.html" class="btn-action-primary">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="white"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Suivre ma commande
+    </a>
+    <a href="catalogue.html" class="btn-action-outline">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      Continuer mes achats
+    </a>
+    <a href="#" class="btn-action-outline" onclick="window.print()">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.2" stroke="currentColor"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Imprimer le recapitulatif
+    </a>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div id="footer-slot"></div>
+
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script>
+  /* ── DATES ── */
+  function formatDate(d) {
+    return d.toLocaleDateString('fr-FR', { weekday:'long', day:'numeric', month:'long' });
+  }
+  const now       = new Date();
+  const tomorrow  = new Date(now); tomorrow.setDate(now.getDate() + 1);
+  const dayAfter  = new Date(now); dayAfter.setDate(now.getDate() + 2);
+  document.getElementById('date-order').textContent     = formatDate(now);
+  document.getElementById('date-ship').textContent      = formatDate(tomorrow);
+  document.getElementById('date-delivered').textContent = formatDate(dayAfter);
+  document.getElementById('order-date-display').textContent = formatDate(now);
+
+  /* ── REFERENCE ALEATOIRE ── */
+  const ref = 'MCP-2025-' + String(Math.floor(Math.random() * 90000) + 10000);
+  document.querySelectorAll('#order-ref-num, [id="order-ref"]').forEach(el => el.textContent = ref);
+
+  /* ── CONFETTIS ── */
+  function launchConfetti() {
+    const colors = ['#c0202a','#e8282f','#0b1f4b','#c8a84b','#ffffff','#16a34a'];
+    const container = document.getElementById('confetti');
+    for (let i = 0; i < 80; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.top  = '-10px';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.width  = (Math.random() * 8 + 4) + 'px';
+      el.style.height = (Math.random() * 8 + 4) + 'px';
+      el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      el.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      el.style.animationDelay   = (Math.random() * 1.5) + 's';
+      container.appendChild(el);
+      setTimeout(() => el.remove(), 4000);
+    }
+  }
+
+  /* ── VIDER LE PANIER ── */
+  localStorage.removeItem('mcp_cart');
+  localStorage.removeItem('mcp_total');
+  const badge = document.getElementById('cart-count');
+  if (badge) badge.textContent = '0';
+
+  /* ── LANCEMENT ── */
+  window.addEventListener('load', () => {
+    setTimeout(launchConfetti, 1000);
+  });
+</script>
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

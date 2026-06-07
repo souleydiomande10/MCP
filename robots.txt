@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /vendeur/
+Disallow: /compte.html
+Disallow: /panier.html
+Disallow: /checkout.html
+Disallow: /confirmation.html
+
+Sitemap: https://marketcenterplace.ci/sitemap.xml

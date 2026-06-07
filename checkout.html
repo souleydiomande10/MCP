@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Finalisez votre achat. Paiement securise par Orange Money, MTN Money, Moov Money, Wave ou carte bancaire."/>
+  <meta property="og:title" content="Finaliser ma commande — Market Center Place"/>
+  <meta property="og:description" content="Finalisez votre achat. Paiement securise par Orange Money, MTN Money, Moov Money, Wave ou carte bancaire."/>
+  <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Paiement — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <style>
+    /* ── PAGE CHECKOUT ── */
+    .checkout-hero {
+      background: var(--navy); padding: 2.5rem;
+      border-bottom: 3px solid var(--red);
+    }
+    .checkout-hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .checkout-hero h1 { font-size: 1.8rem; font-weight: 900; color: var(--white); letter-spacing: -0.5px; }
+    .checkout-hero h1 em { color: var(--red2); font-style: normal; }
+    .checkout-hero p { color: rgba(255,255,255,0.45); font-size: 0.82rem; margin-top: 4px; }
+
+    /* Etapes */
+    .tunnel-steps { display: flex; align-items: center; gap: 0; }
+    .tunnel-step {
+      display: flex; align-items: center; gap: 8px; padding: 6px 16px;
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.8px;
+      text-transform: uppercase; color: rgba(255,255,255,0.35);
+    }
+    .tunnel-step.done   { color: var(--gold); }
+    .tunnel-step.active { color: var(--white); }
+    .tunnel-step-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 900;
+      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4);
+      border: 1.5px solid rgba(255,255,255,0.15);
+    }
+    .tunnel-step.active .tunnel-step-num { background: var(--red); color: var(--white); border-color: var(--red); }
+    .tunnel-step.done   .tunnel-step-num { background: var(--gold); color: var(--dark); border-color: var(--gold); }
+    .tunnel-sep { width: 30px; height: 1px; background: rgba(255,255,255,0.15); }
+
+    /* ── LAYOUT ── */
+    .checkout-layout {
+      max-width: 1200px; margin: 0 auto; padding: 2.5rem;
+      display: grid; grid-template-columns: 1fr 380px; gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── BLOCS FORMULAIRE ── */
+    .checkout-block {
+      background: var(--white); border-radius: 8px; padding: 1.5rem;
+      margin-bottom: 1.2rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .checkout-block-title {
+      font-size: 0.7rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--navy);
+      margin-bottom: 1.3rem; padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--lgray);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .checkout-block-title svg { stroke: var(--red); }
+    .checkout-block-num {
+      width: 24px; height: 24px; background: var(--navy); color: var(--white);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 900; flex-shrink: 0;
+    }
+
+    /* Formulaire */
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block; font-size: 0.68rem; font-weight: 800;
+      letter-spacing: 1px; text-transform: uppercase;
+      color: var(--navy); margin-bottom: 5px;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 11px 14px;
+      background: var(--off); border: 1.5px solid var(--lgray);
+      border-radius: 4px; outline: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.85rem; color: var(--dark);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--blue); background: var(--white);
+    }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+
+    /* Options livraison */
+    .delivery-options { display: flex; flex-direction: column; gap: 0.7rem; }
+    .delivery-option {
+      display: flex; align-items: center; gap: 1rem;
+      border: 2px solid var(--lgray); border-radius: 6px; padding: 1rem 1.2rem;
+      cursor: none; transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .delivery-option.selected { border-color: var(--navy); background: var(--off); }
+    .delivery-option input[type="radio"] { accent-color: var(--navy); flex-shrink: 0; cursor: none; }
+    .delivery-option-icon {
+      width: 40px; height: 40px; background: var(--lgray);
+      border-radius: 6px; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .delivery-option.selected .delivery-option-icon { background: var(--navy); }
+    .delivery-option.selected .delivery-option-icon svg { stroke: var(--white); }
+    .delivery-option-icon svg { stroke: var(--navy); transition: stroke 0.2s; }
+    .delivery-option-info { flex: 1; }
+    .delivery-option-name { font-weight: 800; font-size: 0.88rem; color: var(--navy); margin-bottom: 2px; }
+    .delivery-option-desc { font-size: 0.75rem; color: var(--gray); }
+    .delivery-option-price {
+      font-weight: 900; font-size: 0.88rem; color: var(--navy);
+      white-space: nowrap;
+    }
+    .delivery-option-price.free { color: #16a34a; }
+    .delivery-badge {
+      position: absolute; top: -8px; right: 12px;
+      background: var(--red); color: var(--white);
+      font-size: 0.6rem; font-weight: 900; letter-spacing: 0.8px;
+      text-transform: uppercase; padding: 2px 8px; border-radius: 3px;
+    }
+
+    /* Options paiement */
+    .payment-options { display: flex; flex-direction: column; gap: 0.7rem; }
+    .payment-option {
+      display: flex; align-items: center; gap: 1rem;
+      border: 2px solid var(--lgray); border-radius: 6px; padding: 1rem 1.2rem;
+      cursor: none; transition: border-color 0.2s, background 0.2s;
+    }
+    .payment-option.selected { border-color: var(--navy); background: var(--off); }
+    .payment-option input[type="radio"] { accent-color: var(--navy); flex-shrink: 0; cursor: none; }
+    .payment-option-logo {
+      width: 48px; height: 32px; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.6rem; font-weight: 900; letter-spacing: 0.3px;
+      flex-shrink: 0;
+    }
+    .payment-option-logo.orange { background: #ff6b00; color: #fff; }
+    .payment-option-logo.mtn    { background: #ffd700; color: #333; }
+    .payment-option-logo.moov   { background: #0057b7; color: #fff; }
+    .payment-option-logo.wave   { background: #0070ba; color: #fff; }
+    .payment-option-logo.visa   { background: #1a1f71; color: #fff; }
+    .payment-option-logo.cash   { background: var(--lgray); color: var(--navy); }
+    .payment-option-info { flex: 1; }
+    .payment-option-name { font-weight: 800; font-size: 0.88rem; color: var(--navy); }
+    .payment-option-desc { font-size: 0.72rem; color: var(--gray); margin-top: 2px; }
+
+    /* Champ téléphone Mobile Money */
+    .mm-phone-field {
+      margin-top: 1rem; display: none;
+      animation: slideDown 0.3s ease;
+    }
+    @keyframes slideDown { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:translateY(0)} }
+    .mm-phone-field.visible { display: block; }
+    .mm-note {
+      font-size: 0.72rem; color: var(--gray); margin-top: 6px; font-weight: 500; line-height: 1.5;
+    }
+
+    /* ── résumé COMMANDE ── */
+    .order-summary {
+      background: var(--white); border-radius: 8px; padding: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      position: sticky; top: 90px;
+    }
+    .order-summary-title {
+      font-size: 0.7rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--navy);
+      margin-bottom: 1.2rem; padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--lgray);
+    }
+    .order-item {
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-bottom: 0.8rem; padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--lgray);
+    }
+    .order-item:last-child { border-bottom: none; margin-bottom: 0; }
+    .order-item-img {
+      width: 50px; height: 50px; background: var(--lgray);
+      border-radius: 5px; display: flex; align-items: center;
+      justify-content: center; font-size: 1.5rem; flex-shrink: 0; position: relative;
+    }
+    .order-item-qty {
+      position: absolute; top: -6px; right: -6px;
+      background: var(--navy); color: var(--white);
+      width: 18px; height: 18px; border-radius: 50%;
+      font-size: 0.6rem; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .order-item-name { flex: 1; font-size: 0.78rem; font-weight: 600; color: var(--navy); line-height: 1.3; }
+    .order-item-price { font-size: 0.82rem; font-weight: 800; color: var(--navy); white-space: nowrap; }
+
+    .order-lines { margin-top: 1rem; }
+    .order-line {
+      display: flex; justify-content: space-between;
+      font-size: 0.82rem; margin-bottom: 0.5rem;
+    }
+    .order-line-label { color: var(--gray); font-weight: 500; }
+    .order-line-val   { font-weight: 700; color: var(--navy); }
+    .order-line.total {
+      padding-top: 0.8rem; border-top: 2px solid var(--lgray);
+      margin-top: 0.5rem; font-size: 0.95rem;
+    }
+    .order-line.total .order-line-label { font-weight: 800; color: var(--navy); }
+    .order-line.total .order-line-val   { font-size: 1.2rem; font-weight: 900; }
+
+    .btn-confirm {
+      width: 100%; padding: 16px; background: var(--red); color: var(--white);
+      border: none; border-radius: 5px; cursor: none; margin-top: 1.2rem;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900; font-size: 0.88rem; letter-spacing: 1px;
+      text-transform: uppercase; position: relative; overflow: hidden;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 6px 24px rgba(192,32,42,0.35);
+    }
+    .btn-confirm:hover { background: var(--red2); transform: translateY(-2px); }
+    .btn-confirm::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.12) 50%, transparent 60%);
+      transform: translateX(-100%); transition: transform 0.5s ease;
+    }
+    .btn-confirm:hover::before { transform: translateX(100%); }
+
+    .order-secure {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      margin-top: 0.8rem; font-size: 0.7rem; color: var(--gray); font-weight: 600;
+    }
+    .order-secure svg { stroke: var(--gray); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .checkout-layout { grid-template-columns: 1fr; }
+      .order-summary { position: static; }
+      .tunnel-steps { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<div id="header-slot" data-page=""></div>
+
+<!-- HERO -->
+<div class="checkout-hero">
+  <div class="checkout-hero-inner">
+    <div>
+      <h1>Finaliser ma <em>commande</em></h1>
+      <p>Livraison et paiement sécurisé</p>
+    </div>
+    <div class="tunnel-steps">
+      <div class="tunnel-step done">
+        <span class="tunnel-step-num">&#10003;</span> Panier
+      </div>
+      <div class="tunnel-sep"></div>
+      <div class="tunnel-step active">
+        <span class="tunnel-step-num">2</span> Livraison
+      </div>
+      <div class="tunnel-sep"></div>
+      <div class="tunnel-step active">
+        <span class="tunnel-step-num">3</span> Paiement
+      </div>
+      <div class="tunnel-sep"></div>
+      <div class="tunnel-step">
+        <span class="tunnel-step-num">4</span> Confirmation
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <a href="panier.html">Mon Panier</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>Paiement</span>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="checkout-layout">
+
+  <!-- FORMULAIRES -->
+  <div>
+
+    <!-- BLOC 1 : INFORMATIONS PERSONNELLES -->
+    <div class="checkout-block reveal">
+      <div class="checkout-block-title">
+        <span class="checkout-block-num">1</span>
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Informations personnelles
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom</label>
+          <input type="text" placeholder="Konan" value="Konan"/>
+        </div>
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" placeholder="Kouassi" value="Kouassi"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="checkout-email" placeholder="konan@email.com"/>
+        </div>
+        <div class="form-group">
+          <label>téléphone</label>
+          <input type="tel" placeholder="+225 07 00 00 00 00" id="phone-principal"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOC 2 : ADRESSE DE LIVRAISON -->
+    <div class="checkout-block reveal">
+      <div class="checkout-block-title">
+        <span class="checkout-block-num">2</span>
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Adresse de livraison
+      </div>
+      <div class="form-group">
+        <label>Pays</label>
+        <select>
+          <option selected>Côte d'Ivoire</option>
+          <option>Senegal</option>
+          <option>Mali</option>
+          <option>Burkina Faso</option>
+          <option>Ghana</option>
+          <option>Guinee</option>
+          <option>Togo</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Ville</label>
+          <select id="city-select">
+            <option>Abidjan</option>
+            <option>Bouake</option>
+            <option>Yamoussoukro</option>
+            <option>Daloa</option>
+            <option>San-Pedro</option>
+            <option>Korhogo</option>
+            <option>Man</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Commune / Quartier</label>
+          <select id="commune-select">
+            <option>Cocody</option>
+            <option>Plateau</option>
+            <option>Yopougon</option>
+            <option>Marcory</option>
+            <option>Adjame</option>
+            <option>Abobo</option>
+            <option>Treichville</option>
+            <option>Port-Bouet</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Adresse precise</label>
+        <input type="text" placeholder="Ex: Rue des Jardins, immeuble Laurier, porte 12"/>
+      </div>
+      <div class="form-group">
+        <label>Point de repere</label>
+        <textarea placeholder="Ex: Face au carrefour Shell, apres le marche Agnissan..."></textarea>
+      </div>
+    </div>
+
+    <!-- BLOC 3 : MODE DE LIVRAISON -->
+    <div class="checkout-block reveal">
+      <div class="checkout-block-title">
+        <span class="checkout-block-num">3</span>
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Mode de livraison
+      </div>
+      <div class="delivery-options">
+
+        <label class="delivery-option selected" onclick="selectDelivery(this, 0)">
+          <input type="radio" name="delivery" checked/>
+          <div class="delivery-option-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div class="delivery-option-info">
+            <div class="delivery-option-name">Livraison standard</div>
+            <div class="delivery-option-desc">48 a 72h — Abidjan et environs</div>
+          </div>
+          <div class="delivery-option-price free">Gratuite</div>
+          <span class="delivery-badge">Recommande</span>
+        </label>
+
+        <label class="delivery-option" onclick="selectDelivery(this, 1500)">
+          <input type="radio" name="delivery"/>
+          <div class="delivery-option-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="delivery-option-info">
+            <div class="delivery-option-name">Livraison express</div>
+            <div class="delivery-option-desc">Aujourd'hui avant 20h (commande avant 14h)</div>
+          </div>
+          <div class="delivery-option-price">1 500 FCFA</div>
+        </label>
+
+        <label class="delivery-option" onclick="selectDelivery(this, 0)">
+          <input type="radio" name="delivery"/>
+          <div class="delivery-option-icon">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </div>
+          <div class="delivery-option-info">
+            <div class="delivery-option-name">Retrait en point relais</div>
+            <div class="delivery-option-desc">Disponible en 24h — Choisir un point de retrait</div>
+          </div>
+          <div class="delivery-option-price free">Gratuit</div>
+        </label>
+
+      </div>
+    </div>
+
+    <!-- BLOC 4 : MODE DE PAIEMENT -->
+    <div class="checkout-block reveal">
+      <div class="checkout-block-title">
+        <span class="checkout-block-num">4</span>
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        Mode de paiement
+      </div>
+      <div class="payment-options">
+
+        <label class="payment-option selected" onclick="selectPayment(this, 'orange')">
+          <input type="radio" name="payment" checked/>
+          <div class="payment-option-logo orange">ORANGE<br/>MONEY</div>
+          <div class="payment-option-info">
+            <div class="payment-option-name">Orange Money CI</div>
+            <div class="payment-option-desc">Paiement instantane via votre compte Orange Money</div>
+          </div>
+        </label>
+
+        <label class="payment-option" onclick="selectPayment(this, 'mtn')">
+          <input type="radio" name="payment"/>
+          <div class="payment-option-logo mtn">MTN<br/>MONEY</div>
+          <div class="payment-option-info">
+            <div class="payment-option-name">MTN Mobile Money</div>
+            <div class="payment-option-desc">Paiement depuis votre compte MTN Money</div>
+          </div>
+        </label>
+
+        <label class="payment-option" onclick="selectPayment(this, 'moov')">
+          <input type="radio" name="payment"/>
+          <div class="payment-option-logo moov">MOOV<br/>MONEY</div>
+          <div class="payment-option-info">
+            <div class="payment-option-name">Moov Money</div>
+            <div class="payment-option-desc">Paiement depuis votre compte Moov Money</div>
+          </div>
+        </label>
+
+        <label class="payment-option" onclick="selectPayment(this, 'wave')">
+          <input type="radio" name="payment"/>
+          <div class="payment-option-logo wave">WAVE</div>
+          <div class="payment-option-info">
+            <div class="payment-option-name">Wave CI</div>
+            <div class="payment-option-desc">Transfert rapide et sans frais via Wave</div>
+          </div>
+        </label>
+
+        <label class="payment-option" onclick="selectPayment(this, 'visa')">
+          <input type="radio" name="payment"/>
+          <div class="payment-option-logo visa">VISA</div>
+          <div class="payment-option-info">
+            <div class="payment-option-name">Carte Visa / MasterCard</div>
+            <div class="payment-option-desc">Paiement par carte bancaire internationale</div>
+          </div>
+        </label>
+
+        <label class="payment-option" onclick="selectPayment(this, 'cash')">
+          <input type="radio" name="payment"/>
+          <div class="payment-option-logo cash">CASH</div>
+          <div class="payment-option-info">
+            <div class="payment-option-name">Paiement a la livraison</div>
+            <div class="payment-option-desc">Especes ou Mobile Money lors de la reception</div>
+          </div>
+        </label>
+
+      </div>
+
+      <!-- Champ telephone Mobile Money -->
+      <div class="mm-phone-field visible" id="mm-phone">
+        <div class="form-group" style="margin-bottom:0">
+          <label>Numéro <span id="mm-label">Orange Money</span></label>
+          <input type="tel" placeholder="+225 07 00 00 00 00" id="mm-phone-input"/>
+        </div>
+        <div class="mm-note">
+          Un code de confirmation sera envoye a ce numéro. Assurez-vous qu'il s'agit de votre Numéro <span id="mm-label2">Orange Money</span> actif.
+        </div>
+      </div>
+
+      <!-- Champ carte bancaire -->
+      <div class="mm-phone-field" id="card-fields">
+        <div class="form-group">
+          <label>Numéro de carte</label>
+          <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)"/>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date d'expiration</label>
+            <input type="text" placeholder="MM/AA" maxlength="5"/>
+          </div>
+          <div class="form-group">
+            <label>CVV</label>
+            <input type="text" placeholder="123" maxlength="3"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RESUME COMMANDE -->
+  <div class="order-summary reveal-right">
+    <div class="order-summary-title">Votre commande</div>
+
+    <div id="order-items">
+      <div class="order-item">
+        <div class="order-item-img">&#128241;<span class="order-item-qty">1</span></div>
+        <div class="order-item-name">Smartphone Android 128 Go &mdash; Noir Minuit</div>
+        <div class="order-item-price">89 000 FCFA</div>
+      </div>
+      <div class="order-item">
+        <div class="order-item-img">&#127807;<span class="order-item-qty">2</span></div>
+        <div class="order-item-name">Huile de karite pur 500 ml</div>
+        <div class="order-item-price">14 400 FCFA</div>
+      </div>
+      <div class="order-item">
+        <div class="order-item-img">&#127890;<span class="order-item-qty">1</span></div>
+        <div class="order-item-name">Sac artisanal Bogolan</div>
+        <div class="order-item-price">22 500 FCFA</div>
+      </div>
+    </div>
+
+    <div class="order-lines">
+      <div class="order-line">
+        <span class="order-line-label">Sous-total</span>
+        <span class="order-line-val" id="order-subtotal">125 900 FCFA</span>
+      </div>
+      <div class="order-line">
+        <span class="order-line-label">Livraison</span>
+        <span class="order-line-val" id="order-shipping" style="color:#16a34a">Gratuite</span>
+      </div>
+      <div class="order-line total">
+        <span class="order-line-label">Total TTC</span>
+        <span class="order-line-val" id="order-total">125 900 FCFA</span>
+      </div>
+    </div>
+
+    <button class="btn-confirm" onclick="confirmOrder()">
+      Confirmer et payer &rarr;
+    </button>
+    <div class="order-secure">
+      <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Paiement 100% sécurisé — SSL
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div id="footer-slot"></div>
+
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script>
+  let deliveryCost = 0;
+
+  /* ── MODE LIVRAISON ── */
+  function selectDelivery(el, cost) {
+    document.querySelectorAll('.delivery-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    deliveryCost = cost;
+    const shippingEl = document.getElementById('order-shipping');
+    if (cost === 0) { shippingEl.textContent = 'Gratuite'; shippingEl.style.color = '#16a34a'; }
+    else { shippingEl.textContent = cost.toLocaleString('fr-FR') + ' FCFA'; shippingEl.style.color = 'var(--navy)'; }
+    updateOrderTotal();
+  }
+
+  /* ── MODE PAIEMENT ── */
+  function selectPayment(el, type) {
+    document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    const mmField   = document.getElementById('mm-phone');
+    const cardField = document.getElementById('card-fields');
+    const labels    = { orange: 'Orange Money', mtn: 'MTN Money', moov: 'Moov Money', wave: 'Wave' };
+    mmField.classList.remove('visible');
+    cardField.classList.remove('visible');
+    if (labels[type]) {
+      mmField.classList.add('visible');
+      document.getElementById('mm-label').textContent  = labels[type];
+      document.getElementById('mm-label2').textContent = labels[type];
+    } else if (type === 'visa') {
+      cardField.classList.add('visible');
+    }
+  }
+
+  /* ── FORMAT CARTE ── */
+  function formatCard(input) {
+    let val = input.value.replace(/\D/g, '').substring(0, 16);
+    input.value = val.replace(/(.{4})/g, '$1 ').trim();
+  }
+
+  /* ── TOTAL ── */
+  function updateOrderTotal() {
+    const subtotal = parseInt(localStorage.getItem('mcp_total') || 125900);
+    const total    = subtotal + deliveryCost;
+    document.getElementById('order-subtotal').textContent = subtotal.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('order-total').textContent    = total.toLocaleString('fr-FR') + ' FCFA';
+  }
+
+  /* ── CONFIRMER ── */
+  async function confirmOrder() {
+    // Validation
+    const required = ['checkout-prenom','checkout-nom','checkout-adresse'];
+    let valid = true;
+    required.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (!el.value.trim()) {
+        el.style.borderColor = 'var(--red)';
+        el.style.boxShadow   = '0 0 0 3px rgba(192,32,42,.15)';
+        valid = false;
+      } else {
+        el.style.borderColor = '#16a34a';
+        el.style.boxShadow   = '';
+      }
+    });
+    if (!valid) { document.querySelector('[style*="red"]')?.scrollIntoView({behavior:'smooth',block:'center'}); return; }
+
+    const btn = document.querySelector('.btn-confirm');
+    if (btn) { btn.disabled = true; btn.textContent = 'Traitement...'; btn.style.background = 'var(--gray)'; }
+
+    // Récupérer le panier
+    const cartItems = JSON.parse(localStorage.getItem('mcp_cart') || '[]');
+
+    // Récupérer mode paiement sélectionné
+    const paymentSelected = document.querySelector('.payment-option.selected, input[name="payment"]:checked');
+    const modePaiement = paymentSelected?.dataset?.mode || paymentSelected?.value || 'livraison';
+
+    // Si API disponible et utilisateur connecté
+    if (typeof MCP_API !== 'undefined' && MCP_API.isLoggedIn() && cartItems.length > 0) {
+      try {
+        const orderData = {
+          items: cartItems.map(i => ({ produit_id: i.id, quantite: i.qty || 1, variante: i.variant || null })),
+          mode_paiement: modePaiement,
+          livraison_type: document.querySelector('input[name="delivery"]:checked')?.value || 'standard',
+          prénom:   document.getElementById('checkout-Prénom')?.value || '',
+          nom:      document.getElementById('checkout-nom')?.value    || '',
+          téléphone:document.getElementById('phone-principal')?.value || '',
+          adresse:  document.getElementById('checkout-adresse')?.value|| '',
+          ville:    document.getElementById('checkout-ville')?.value  || 'Abidjan',
+          commune:  document.getElementById('checkout-commune')?.value|| '',
+          code_promo: document.getElementById('promo-input')?.value   || '',
+        };
+
+        const res = await MCP_API.createOrder(orderData);
+        localStorage.removeItem('mcp_cart');
+
+        // Si URL de paiement CinetPay → rediriger
+        if (res.payment_url) {
+          window.location.href = res.payment_url;
+        } else {
+          // Paiement à la livraison → confirmation directe
+          window.location.href = `confirmation.html?ref=${res.reference}`;
+        }
+        return;
+      } catch (err) {
+        console.error('Erreur commande:', err);
+        // Fallback : continuer sans API
+      }
+    }
+
+    // Fallback sans API
+    localStorage.removeItem('mcp_cart');
+    setTimeout(() => { window.location.href = 'confirmation.html'; }, 1500);
+  }
+
+  window.addEventListener('DOMContentLoaded', updateOrderTotal);
+</script>
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

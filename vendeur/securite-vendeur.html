@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Guide de sécurité pour les vendeurs Market Center Place. Protégez votre boutique contre les arnaques, faux acheteurs et fraudes en Côte d'Ivoire."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="robots" content="noindex"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <title>Guide sécurité vendeur — Market Center Place</title>
+  <link rel="manifest" href="../manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/></svg>" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../style.css"/>
+  <link rel="stylesheet" href="../nav.css"/>
+  <style>
+    :root {
+      --navy:#0b1f4b; --navy2:#0d2558; --red:#c0202a;
+      --gold:#c8a84b; --green:#16a34a; --orange:#f59e0b;
+      --white:#ffffff; --off:#f4f6fb; --lgray:#e8edf5;
+      --gray:#64748b; --dark:#080e20;
+    }
+
+    /* ── HERO VENDEUR ── */
+    .vendor-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #0d2558 100%);
+      padding: 2rem 2.5rem; border-bottom: 3px solid var(--red);
+      position: relative; overflow: hidden;
+    }
+    .vendor-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 500px 300px at 90% 50%, rgba(192,32,42,.15), transparent 70%);
+    }
+    .vendor-hero-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; align-items: center; gap: 1.5rem;
+      position: relative; z-index: 1;
+    }
+    .vendor-avatar {
+      width: 58px; height: 58px; border-radius: 10px;
+      background: var(--red); display: flex; align-items: center;
+      justify-content: center; font-size: 1.5rem; font-weight: 900;
+      color: white; flex-shrink: 0;
+    }
+    .vendor-hero h1 { font-size: 1.4rem; font-weight: 900; color: white; letter-spacing: -.3px; margin-bottom: 2px; }
+    .vendor-hero p  { color: rgba(255,255,255,.5); font-size: .78rem; }
+    .vendor-hero-badges { margin-left: auto; display: flex; gap: .6rem; align-items: center; }
+    .vendor-status-badge {
+      background: rgba(22,163,74,.2); border: 1px solid rgba(22,163,74,.4);
+      color: #4ade80; border-radius: 50px; padding: 5px 14px;
+      font-size: .65rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    /* ── LAYOUT ── */
+    .dashboard-layout {
+      max-width: 1400px; margin: 0 auto;
+      padding: 2rem 2.5rem;
+      display: grid; grid-template-columns: 220px 1fr;
+      gap: 1.5rem; align-items: start;
+    }
+
+    /* ── SIDEBAR ── */
+    .vendor-nav {
+      background: white; border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+      position: sticky; top: 80px; height: fit-content;
+    }
+    .vendor-nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: .85rem 1.2rem; font-size: .76rem;
+      font-weight: 700; color: var(--gray);
+      letter-spacing: .3px; border-left: 3px solid transparent;
+      transition: all .2s; text-decoration: none; white-space: nowrap;
+    }
+    .vendor-nav-item svg { stroke: currentColor; flex-shrink: 0; }
+    .vendor-nav-item:hover  { background: var(--off); color: var(--navy); }
+    .vendor-nav-item.active { background: var(--off); color: var(--navy); border-left-color: var(--red); font-weight: 800; }
+    .vendor-nav-badge {
+      margin-left: auto; background: var(--red); color: white;
+      border-radius: 99px; padding: 1px 7px; font-size: .6rem; font-weight: 900;
+    }
+    .vendor-nav-sep { height: 1px; background: var(--lgray); }
+
+    /* ── CONTENU PRINCIPAL ── */
+    .sec-content { min-width: 0; }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--off); border-radius: 10px; padding: 1.4rem;
+      margin-bottom: 2rem; border-left: 4px solid var(--navy);
+    }
+    .toc-title {
+      font-size: .65rem; font-weight: 900; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--navy); margin-bottom: .9rem;
+    }
+    .toc-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: .35rem;
+    }
+    .toc-link {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .76rem; font-weight: 700; color: var(--gray);
+      text-decoration: none; padding: 4px 0; transition: color .2s;
+    }
+    .toc-link:hover { color: var(--navy); }
+    .toc-num {
+      width: 20px; height: 20px; background: var(--navy); color: white;
+      border-radius: 4px; font-size: .6rem; font-weight: 900;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    /* ── SECTION ── */
+    .sec-section { margin-bottom: 3rem; }
+    .sec-header {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.4rem; padding-bottom: .8rem;
+      border-bottom: 2px solid var(--lgray);
+    }
+    .sec-icon {
+      width: 46px; height: 46px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .sec-icon.navy  { background: rgba(11,31,75,.08); }
+    .sec-icon.red   { background: rgba(192,32,42,.08); }
+    .sec-icon.green { background: rgba(22,163,74,.08); }
+    .sec-icon.gold  { background: rgba(200,168,75,.12); }
+    .sec-icon.orange{ background: rgba(245,158,11,.1); }
+    .sec-icon.navy   svg { stroke: var(--navy); }
+    .sec-icon.red    svg { stroke: var(--red); }
+    .sec-icon.green  svg { stroke: var(--green); }
+    .sec-icon.gold   svg { stroke: var(--gold); }
+    .sec-icon.orange svg { stroke: var(--orange); }
+    .sec-label { font-size: .58rem; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray); }
+    .sec-title { font-size: 1.15rem; font-weight: 900; color: var(--navy); letter-spacing: -.3px; }
+
+    /* ── ALERTES ── */
+    .alert-list { display: flex; flex-direction: column; gap: .75rem; }
+    .alert-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1rem 1.2rem; border-radius: 8px; border-left: 4px solid;
+    }
+    .alert-item.danger  { background: #fef2f2; border-color: var(--red); }
+    .alert-item.warning { background: #fffbeb; border-color: var(--orange); }
+    .alert-item.info    { background: #f0f9ff; border-color: #0ea5e9; }
+    .alert-item.green   { background: #f0fdf4; border-color: var(--green); }
+    .alert-icon-wrap {
+      width: 28px; height: 28px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .danger  .alert-icon-wrap { background: rgba(192,32,42,.1); }
+    .warning .alert-icon-wrap { background: rgba(245,158,11,.1); }
+    .info    .alert-icon-wrap { background: rgba(14,165,233,.1); }
+    .green   .alert-icon-wrap { background: rgba(22,163,74,.1); }
+    .danger  .alert-icon-wrap svg { stroke: var(--red); }
+    .warning .alert-icon-wrap svg { stroke: var(--orange); }
+    .info    .alert-icon-wrap svg { stroke: #0ea5e9; }
+    .green   .alert-icon-wrap svg { stroke: var(--green); }
+    .alert-body h4 {
+      font-size: .8rem; font-weight: 900; color: var(--dark); margin-bottom: .3rem;
+    }
+    .alert-body p {
+      font-size: .76rem; color: var(--gray); line-height: 1.7;
+    }
+    .alert-body strong { color: var(--dark); font-weight: 800; }
+
+    /* ── CARTES CONSEIL ── */
+    .conseil-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .conseil-card {
+      background: white; border-radius: 10px; padding: 1.3rem;
+      border: 1.5px solid var(--lgray);
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .conseil-card:hover {
+      border-color: var(--navy); transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(11,31,75,.1);
+    }
+    .conseil-card-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: .9rem;
+    }
+    .conseil-card-icon svg { stroke: white; }
+    .conseil-card h4 { font-size: .82rem; font-weight: 900; color: var(--dark); margin-bottom: .45rem; }
+    .conseil-card p  { font-size: .75rem; color: var(--gray); line-height: 1.7; }
+
+    /* ── ÉTAPES NUMÉROTÉES ── */
+    .steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .steps::before {
+      content: ''; position: absolute; left: 20px; top: 28px; bottom: 28px;
+      width: 2px; background: var(--lgray);
+    }
+    .step {
+      display: flex; gap: 1.2rem; padding: .7rem 0; position: relative; z-index: 1;
+    }
+    .step-num {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--navy); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; font-weight: 900; flex-shrink: 0;
+      border: 3px solid white; box-shadow: 0 0 0 2px var(--navy);
+    }
+    .step-body { padding-top: .55rem; }
+    .step-body h4 { font-size: .84rem; font-weight: 900; color: var(--dark); margin-bottom: .3rem; }
+    .step-body p  { font-size: .76rem; color: var(--gray); line-height: 1.7; }
+    .step-body strong { color: var(--navy); font-weight: 800; }
+
+    /* ── COMPARAISON ── */
+    .compare-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .compare-col  { border-radius: 10px; overflow: hidden; }
+    .compare-head {
+      padding: .85rem 1.2rem; display: flex; align-items: center; gap: .6rem;
+      font-size: .74rem; font-weight: 900; color: white;
+    }
+    .compare-head svg { stroke: white; }
+    .compare-col.bad  .compare-head { background: var(--red); }
+    .compare-col.good .compare-head { background: var(--green); }
+    .compare-rows { background: white; border: 1.5px solid var(--lgray); border-top: none; }
+    .compare-row {
+      display: flex; gap: .7rem; align-items: flex-start;
+      padding: .8rem 1rem; border-bottom: 1px solid var(--off);
+      font-size: .76rem; color: #374151; line-height: 1.55;
+    }
+    .compare-row:last-child { border-bottom: none; }
+    .compare-row svg { flex-shrink: 0; margin-top: 2px; }
+    .compare-col.bad  .compare-row svg { stroke: var(--red); }
+    .compare-col.good .compare-row svg { stroke: var(--green); }
+
+    /* ── BLOC TEMPLATE ── */
+    .msg-template {
+      background: var(--off); border-radius: 8px; padding: 1.1rem 1.3rem;
+      border-left: 3px solid var(--navy); margin: .8rem 0;
+      font-size: .78rem; color: var(--dark); line-height: 1.8;
+      font-style: italic; position: relative;
+    }
+    .msg-template::before {
+      content: '"';
+      font-size: 3rem; color: var(--lgray); font-style: normal;
+      position: absolute; top: -.5rem; left: .5rem; line-height: 1;
+    }
+    .msg-template-label {
+      font-size: .6rem; font-weight: 900; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--navy); margin-bottom: .5rem;
+    }
+    .btn-copy {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: white; border: 1.5px solid var(--lgray);
+      border-radius: 5px; padding: 5px 12px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem; font-weight: 800; color: var(--gray);
+      cursor: pointer; transition: all .2s; margin-top: .5rem;
+    }
+    .btn-copy:hover { border-color: var(--navy); color: var(--navy); }
+    .btn-copy svg { stroke: currentColor; }
+
+    /* ── CHECK-LIST ── */
+    .check-list { display: flex; flex-direction: column; gap: .6rem; }
+    .check-item {
+      display: flex; align-items: flex-start; gap: .9rem;
+      padding: .85rem 1rem; background: white; border-radius: 8px;
+      border: 1.5px solid var(--lgray);
+    }
+    .check-item-icon {
+      width: 26px; height: 26px; border-radius: 6px;
+      background: #dcfce7; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+    }
+    .check-item-icon svg { stroke: var(--green); }
+    .check-item h4 { font-size: .8rem; font-weight: 900; color: var(--dark); margin-bottom: .2rem; }
+    .check-item p  { font-size: .75rem; color: var(--gray); line-height: 1.6; }
+
+    /* ── URGENCY ── */
+    .urgency-box {
+      background: #fffbeb; border: 2px solid var(--orange);
+      border-radius: 10px; padding: 1.4rem; margin: 1.2rem 0;
+    }
+    .urgency-box h4 {
+      display: flex; align-items: center; gap: .5rem;
+      font-size: .84rem; font-weight: 900; color: #92400e; margin-bottom: .8rem;
+    }
+    .urgency-box ul {
+      list-style: none; display: flex; flex-direction: column; gap: .45rem;
+    }
+    .urgency-box li {
+      font-size: .78rem; color: var(--gray); line-height: 1.6;
+      display: flex; align-items: flex-start; gap: .5rem;
+    }
+    .urgency-box li::before { content: '→'; color: var(--orange); font-weight: 900; flex-shrink: 0; }
+
+    /* ── BANNIÈRE FINALE ── */
+    .final-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, #1a3166 100%);
+      border-radius: 12px; padding: 2rem;
+      display: flex; align-items: center; gap: 2rem;
+      margin-top: 2rem; position: relative; overflow: hidden;
+    }
+    .final-banner::before {
+      content: ''; position: absolute; right: -40px; top: -40px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: rgba(200,168,75,.08);
+    }
+    .final-banner-icon {
+      width: 60px; height: 60px; border-radius: 14px;
+      background: rgba(200,168,75,.15); border: 1.5px solid rgba(200,168,75,.3);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .final-banner-icon svg { stroke: var(--gold); }
+    .final-banner h3 { font-size: 1rem; font-weight: 900; color: white; margin-bottom: .4rem; }
+    .final-banner p  { font-size: .78rem; color: rgba(255,255,255,.6); line-height: 1.7; }
+    .final-banner-tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .8rem; }
+    .final-tag {
+      display: flex; align-items: center; gap: 5px;
+      background: rgba(74,222,128,.15); border: 1px solid rgba(74,222,128,.3);
+      color: #4ade80; border-radius: 20px; padding: 3px 10px;
+      font-size: .63rem; font-weight: 700;
+    }
+    .final-tag svg { stroke: #4ade80; }
+
+    /* ── FAQ ── */
+    .faq-list { display: flex; flex-direction: column; gap: .4rem; }
+    .faq-item  { background: white; border-radius: 8px; border: 1.5px solid var(--lgray); overflow: hidden; }
+    .faq-q {
+      width: 100%; padding: 1rem 1.2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      background: none; border: none; text-align: left;
+      font-family: 'Montserrat', sans-serif; font-size: .82rem; font-weight: 800;
+      color: var(--navy); cursor: pointer; transition: background .2s;
+    }
+    .faq-q:hover { background: var(--off); }
+    .faq-chevron { stroke: var(--gray); transition: transform .3s; flex-shrink: 0; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height .4s cubic-bezier(.22,1,.36,1); }
+    .faq-item.open .faq-a { max-height: 500px; }
+    .faq-a-inner {
+      padding: 0 1.2rem 1.1rem;
+      font-size: .78rem; color: var(--gray); line-height: 1.8;
+    }
+    .faq-a-inner strong { color: var(--navy); font-weight: 800; }
+
+    /* ── CTA ── */
+    .cta-box {
+      background: var(--off); border-radius: 12px;
+      padding: 1.8rem; text-align: center; margin-top: 1.5rem;
+    }
+    .cta-box h3 { font-size: 1rem; font-weight: 900; color: var(--navy); margin-bottom: .4rem; }
+    .cta-box p  { font-size: .78rem; color: var(--gray); margin-bottom: 1.2rem; line-height: 1.6; }
+    .cta-btns { display: flex; gap: .7rem; justify-content: center; flex-wrap: wrap; }
+    .cta-btn {
+      display: flex; align-items: center; gap: 7px;
+      padding: 11px 22px; border-radius: 6px;
+      font-family: 'Montserrat', sans-serif; font-size: .76rem; font-weight: 800;
+      text-decoration: none; cursor: pointer; transition: all .2s; border: none;
+    }
+    .cta-btn svg { stroke: currentColor; }
+    .cta-btn.primary { background: var(--navy); color: white; }
+    .cta-btn.primary:hover { background: var(--red); transform: translateY(-1px); }
+    .cta-btn.outline { background: white; color: var(--navy); border: 1.5px solid var(--lgray); }
+    .cta-btn.outline:hover { border-color: var(--navy); transform: translateY(-1px); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 900px) {
+      .dashboard-layout { grid-template-columns: 1fr; padding: 1rem; }
+      .vendor-nav { position: static; display: flex; overflow-x: auto; }
+      .vendor-nav-sep { display: none; }
+      .compare-wrap { grid-template-columns: 1fr; }
+      .vendor-hero { padding: 1.5rem 1.2rem; }
+    }
+  </style>
+  <link rel="stylesheet" href="../components.css"/>
+  <link rel="stylesheet" href="../mobile.css"/>
+</head>
+<body>
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div id="header-slot" data-page=""></div>
+
+<!-- HERO -->
+<div class="vendor-hero">
+  <div class="vendor-hero-inner">
+    <div class="vendor-avatar">TC</div>
+    <div>
+      <h1>Guide sécurité &mdash; Espace Vendeur</h1>
+      <p>Protégez votre boutique, vos revenus et votre réputation sur Market Center Place</p>
+    </div>
+    <div class="vendor-hero-badges">
+      <span class="vendor-status-badge">Vendeur actif</span>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="../index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <a href="dashboard.html">Espace Vendeur</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>Guide sécurité</span>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <nav class="vendor-nav">
+    <a class="vendor-nav-item" href="dashboard.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Tableau de bord
+    </a>
+    <a class="vendor-nav-item" href="produits.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+      Mes produits
+    </a>
+    <a class="vendor-nav-item" href="commandes.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+      Commandes
+      <span class="vendor-nav-badge">5</span>
+    </a>
+    <a class="vendor-nav-item" href="dashboard.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Revenus
+    </a>
+    <div class="vendor-nav-sep"></div>
+    <a class="vendor-nav-item active" href="securite-vendeur.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+      Guide sécurité
+    </a>
+    <a class="vendor-nav-item" href="live.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+      Studio Live
+      <span class="vendor-nav-badge" style="background:#ff3b30">LIVE</span>
+    </a>
+    <a class="vendor-nav-item" href="../profil-vendeur.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Mon profil vendeur
+    </a>
+    <a class="vendor-nav-item" href="dashboard.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+      Paramètres
+    </a>
+    <div class="vendor-nav-sep"></div>
+    <a class="vendor-nav-item" href="../index.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      retour boutique
+    </a>
+  </nav>
+
+  <!-- CONTENU -->
+  <div class="sec-content">
+
+    <!-- TOC -->
+    <div class="toc reveal">
+      <div class="toc-title">Dans ce guide</div>
+      <div class="toc-grid">
+        <a class="toc-link" href="#faux-acheteurs"><span class="toc-num">1</span> Faux acheteurs à reconnaître</a>
+        <a class="toc-link" href="#photos"><span class="toc-num">2</span> Protéger vos photos et contenu</a>
+        <a class="toc-link" href="#litiges"><span class="toc-num">3</span> Gestion des litiges</a>
+        <a class="toc-link" href="#paiements"><span class="toc-num">4</span> Sécuriser vos paiements</a>
+        <a class="toc-link" href="#compte"><span class="toc-num">5</span> Sécuriser votre compte</a>
+        <a class="toc-link" href="#comptabilite"><span class="toc-num">6</span> Bonnes pratiques comptables</a>
+        <a class="toc-link" href="#reputation"><span class="toc-num">7</span> Protéger votre réputation</a>
+        <a class="toc-link" href="#faq"><span class="toc-num">8</span> Questions fréquentes</a>
+      </div>
+    </div>
+
+    <!-- 1. FAUX ACHETEURS -->
+    <div class="sec-section reveal" id="faux-acheteurs">
+      <div class="sec-header">
+        <div class="sec-icon red">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+        </div>
+        <div>
+          <div class="sec-label">Section 1</div>
+          <div class="sec-title">Faux acheteurs à reconnaître</div>
+        </div>
+      </div>
+      <p style="font-size:.82rem;color:var(--gray);margin-bottom:1.2rem;line-height:1.7">
+        Les escrocs ciblent les vendeurs aussi bien que les acheteurs. Voici les signaux qui doivent immédiatement vous alerter.
+      </p>
+      <div class="alert-list stagger-children">
+
+        <div class="alert-item danger reveal">
+          <div class="alert-icon-wrap">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div class="alert-body">
+            <h4>L'acheteur veut payer par virement bancaire direct ou Western Union</h4>
+            <p>Tout paiement légitime passe par la plateforme MCP. Si quelqu'un propose de payer "directement" pour éviter les commissions, c'est une arnaque. <strong>Vous perdez toute protection et tout recours.</strong> Refusez systématiquement et signalez ce compte.</p>
+          </div>
+        </div>
+
+        <div class="alert-item danger reveal">
+          <div class="alert-icon-wrap">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div class="alert-body">
+            <h4>L'acheteur dit avoir payé mais vous envoyez un faux SMS de confirmation</h4>
+            <p>Technique courante en Côte d'Ivoire : l'escroc vous montre une capture d'écran ou un SMS falsifié prouvant un paiement qui n'a pas eu lieu. <strong>Ne vérifiez jamais un paiement via une capture d'écran.</strong> Connectez-vous à votre Tableau de bord MCP pour confirmer la réception réelle des fonds avant toute expédition.</p>
+          </div>
+        </div>
+
+        <div class="alert-item danger reveal">
+          <div class="alert-icon-wrap">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div class="alert-body">
+            <h4>Commande anormalement grande d'un nouveau compte</h4>
+            <p>Un compte créé ce jour qui commande 50 smartphones à la fois avec un empressement inhabituel est très suspect. <strong>Contactez le support MCP avant d'expédier</strong> toute commande volumineuse d'un acheteur sans historique.</p>
+          </div>
+        </div>
+
+        <div class="alert-item warning reveal">
+          <div class="alert-icon-wrap">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          </div>
+          <div class="alert-body">
+            <h4>L'acheteur demande de livrer à une adresse différente de celle de la commande</h4>
+            <p>Après avoir passé commande, l'acheteur demande de changer l'adresse de livraison par message. <strong>Ne modifiez jamais l'adresse hors du système de commande officiel.</strong> Si c'est légitime, il doit annuler et recommander.</p>
+          </div>
+        </div>
+
+        <div class="alert-item warning reveal">
+          <div class="alert-icon-wrap">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          </div>
+          <div class="alert-body">
+            <h4>Acheteur qui ouvre un litige immédiatement après réception</h4>
+            <p>Certains escrocs achètent, reçoivent le produit, puis déclarent faussement qu'ils n'ont rien reçu ou que le produit est défectueux. <strong>Photographiez systématiquement chaque produit et son emballage avant expédition.</strong> Exigez une signature à la livraison pour les commandes au-dessus de 30 000 FCFA.</p>
+          </div>
+        </div>
+
+        <div class="alert-item info reveal">
+          <div class="alert-icon-wrap">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg>
+          </div>
+          <div class="alert-body">
+            <h4>Acheteur qui demande votre numéro personnel ou vous contacte hors MCP</h4>
+            <p>Gardez toutes les communications dans la messagerie MCP. Cela protège les deux parties et constitue une preuve en cas de litige. Si quelqu'un insiste pour vous contacter par WhatsApp ou appel direct pour "finaliser" une commande, méfiez-vous.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2. PHOTOS ET CONTENU -->
+    <div class="sec-section reveal" id="photos">
+      <div class="sec-header">
+        <div class="sec-icon gold">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div>
+          <div class="sec-label">Section 2</div>
+          <div class="sec-title">Protéger vos photos et votre contenu</div>
+        </div>
+      </div>
+      <div class="conseil-grid stagger-children">
+        <div class="conseil-card reveal">
+          <div class="conseil-card-icon" style="background:var(--navy)">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <h4>Ajoutez un filigrane à vos photos</h4>
+          <p>Watermarquez chaque photo avec le nom de votre boutique et l'URL de MCP. Des applications gratuites comme Canva ou Snapseed permettent de le faire facilement. Les concurrents ne pourront pas réutiliser vos images.</p>
+        </div>
+        <div class="conseil-card reveal">
+          <div class="conseil-card-icon" style="background:var(--red)">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+          <h4>Photographiez votre propre stock</h4>
+          <p>Évitez de copier des photos depuis d'autres sites. Prenez vos propres photos sous bonne lumière. Cela prouve que vous êtes le vrai vendeur du produit et renforce la confiance des acheteurs.</p>
+        </div>
+        <div class="conseil-card reveal">
+          <div class="conseil-card-icon" style="background:var(--green)">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h4>Conservez les originaux en haute résolution</h4>
+          <p>Gardez les photos originales sur votre téléphone ou disque dur. En cas de litige sur "ce que vous avez vendu", vos photos horodatées constituent une preuve irréfutable.</p>
+        </div>
+        <div class="conseil-card reveal">
+          <div class="conseil-card-icon" style="background:var(--orange)">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <h4>Décrivez précisément chaque produit</h4>
+          <p>Une description incomplète vous expose aux litiges. Mentionnez l'état (neuf/occasion), les dimensions exactes, la garantie, les accessoires inclus et les conditions de retour. Ce que vous écrivez est votre contrat.</p>
+        </div>
+        <div class="conseil-card reveal">
+          <div class="conseil-card-icon" style="background:#8b5cf6">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <h4>Signalez les copieurs immédiatement</h4>
+          <p>Si vous découvrez qu'un autre vendeur utilise vos photos ou copie vos descriptions, signalez-le via le bouton "Signaler" sur sa boutique. Notre équipe vérifie sous 24h et supprime le contenu volé.</p>
+        </div>
+        <div class="conseil-card reveal">
+          <div class="conseil-card-icon" style="background:#0ea5e9">
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          </div>
+          <h4>Vidéos = preuves supplémentaires</h4>
+          <p>Filmez-vous en train d'emballer chaque commande importante. Une vidéo de 30 secondes montrant le produit en bon état dans la boîte peut résoudre un litige en votre faveur en moins d'une heure.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. LITIGES -->
+    <div class="sec-section reveal" id="litiges">
+      <div class="sec-header">
+        <div class="sec-icon navy">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        </div>
+        <div>
+          <div class="sec-label">Section 3</div>
+          <div class="sec-title">Gérer les litiges à votre avantage</div>
+        </div>
+      </div>
+      <div class="steps stagger-children">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Répondez dans les 24 heures</h4>
+            <p>Dès qu'un acheteur ouvre un litige, vous êtes notifié. <strong>Ne tardez jamais à répondre.</strong> Un vendeur qui ne répond pas dans les délais est automatiquement considéré comme en tort par notre système. Même si vous avez besoin de temps pour vérifier, accusez réception du message immédiatement.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Rassemblez vos preuves avant de répondre</h4>
+            <p>Réunissez : photo du produit emballé, reçu de dépôt chez le livreur, numéro de suivi, captures d'écran de la description, photos du produit avant envoi. <strong>Plus vous avez de preuves, plus votre dossier est solide.</strong></p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Restez calme et professionnel dans vos messages</h4>
+            <p>Un vendeur agressif ou qui insulte l'acheteur dans les messages du litige <strong>perd systématiquement</strong>, même s'il a raison sur le fond. Soyez factuel, poli et précis. Le médiateur MCP lit tous les échanges.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Proposez une solution avant que MCP ne tranche</h4>
+            <p>Si vous sentez que l'acheteur est de bonne foi mais insatisfait, proposez un avoir, un remplacement ou un remboursement partiel. Résoudre un litige à l'amiable <strong>préserve votre note</strong> et votre réputation, même si vous perdez quelques francs.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h4>Contestez les abus — signalez les faux litiges</h4>
+            <p>Si un acheteur ouvre un litige abusif (a reçu le produit mais prétend ne pas l'avoir eu), signalez-le. Joignez votre preuve de livraison. <strong>Les acheteurs frauduleux sont bannis.</strong> Vous ne devez pas subir sans réagir.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Templates de réponse -->
+      <div style="margin-top:1.5rem">
+        <div style="font-size:.72rem;font-weight:900;color:var(--navy);margin-bottom:.8rem;letter-spacing:-.2px">
+          Modèles de réponse à copier-coller
+        </div>
+
+        <div class="msg-template-label">Réponse à un litige "produit non reçu" (quand vous avez la preuve de livraison)</div>
+        <div class="msg-template" id="tpl-1">
+          Bonjour, merci de m'avoir contacté. Je comprends votre inquiétude. Votre commande a bien été expédiée le [DATE] via [LIVREUR] avec le numéro de suivi [NUMÉRO]. Selon les informations du livreur, le colis a été remis le [DATE] à [HEURE]. Je vous joins le reçu de dépôt et la confirmation de livraison. Si le colis a été remis à une autre personne à votre domicile, vérifiez auprès de vos proches. Restez disponible pour tout complément d'information.
+        </div>
+        <button class="btn-copy" onclick="copyTpl('tpl-1',this)">
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copier ce modèle
+        </button>
+
+        <div class="msg-template-label" style="margin-top:1rem">Réponse à un litige "produit défectueux" (quand vous pensez que le client l'a abîmé)</div>
+        <div class="msg-template" id="tpl-2">
+          Bonjour, je suis désolé que vous rencontriez ce problème. Ce produit a été testé et vérifié avant expédition. Je vous joins des photos prises le [DATE] juste avant l'emballage montrant qu'il était en parfait état. Afin de traiter votre demande au mieux, pouvez-vous m'envoyer des photos et une vidéo du défaut constaté ? Selon ce que vous m'envoyez, je pourrai vous proposer une solution adaptée.
+        </div>
+        <button class="btn-copy" onclick="copyTpl('tpl-2',this)">
+          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copier ce modèle
+        </button>
+      </div>
+    </div>
+
+    <!-- 4. PAIEMENTS SÉCURISÉS -->
+    <div class="sec-section reveal" id="paiements">
+      <div class="sec-header">
+        <div class="sec-icon green">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <div>
+          <div class="sec-label">Section 4</div>
+          <div class="sec-title">Sécuriser vos paiements</div>
+        </div>
+      </div>
+      <div class="compare-wrap reveal">
+        <div class="compare-col bad">
+          <div class="compare-head">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Ce qu'il ne faut JAMAIS faire
+          </div>
+          <div class="compare-rows">
+            <div class="compare-row"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Expédier avant confirmation de paiement dans votre Tableau de bord</div>
+            <div class="compare-row"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Accepter une capture d'écran comme preuve de paiement</div>
+            <div class="compare-row"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Donner votre numéro Mobile Money personnel aux acheteurs</div>
+            <div class="compare-row"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Accepter des paiements partiels et expédier "le reste après"</div>
+            <div class="compare-row"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Retirer vos fonds sur un compte non sécurisé immédiatement</div>
+          </div>
+        </div>
+        <div class="compare-col good">
+          <div class="compare-head">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Les bonnes pratiques
+          </div>
+          <div class="compare-rows">
+            <div class="compare-row"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>N'expédier qu'après confirmation "Paiement reçu" dans votre Tableau de bord</div>
+            <div class="compare-row"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Vérifier chaque paiement dans l'historique de votre compte MCP</div>
+            <div class="compare-row"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Retirer vos fonds régulièrement vers votre compte principal</div>
+            <div class="compare-row"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Conserver les reçus de toutes vos transactions pendant 6 mois</div>
+            <div class="compare-row"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Activer les alertes SMS pour chaque paiement reçu</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="urgency-box reveal">
+        <h4>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="#92400e"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
+          L'arnaque du "trop-perçu" Mobile Money — très fréquente en CI
+        </h4>
+        <ul>
+          <li>Un "acheteur" vous envoie plus d'argent que le prix du produit, puis dit que c'est une erreur et vous demande de rembourser la différence.</li>
+          <li>En réalité, le premier paiement est frauduleux (faux virement, compte volé) et sera annulé. Vous aurez remboursé de votre poche.</li>
+          <li><strong>Règle absolue :</strong> Si un acheteur vous "surpaie", contactez immédiatement MCP. Ne remboursez jamais par vous-même.</li>
+          <li>Si un paiement semble suspect, attendez 48h avant d'expédier le produit. Un vrai paiement ne disparaît pas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 5. SÉCURISER VOTRE COMPTE -->
+    <div class="sec-section reveal" id="compte">
+      <div class="sec-header">
+        <div class="sec-icon navy">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div>
+          <div class="sec-label">Section 5</div>
+          <div class="sec-title">Sécuriser votre compte vendeur</div>
+        </div>
+      </div>
+      <div class="check-list stagger-children">
+        <div class="check-item reveal">
+          <div class="check-item-icon"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Activez la double authentification (2FA)</h4>
+            <p>Dans Paramètres → Sécurité, activez le code SMS à chaque connexion. Même si quelqu'un obtient votre mot de passe, il ne pourra pas accéder à votre compte sans votre téléphone.</p>
+          </div>
+        </div>
+        <div class="check-item reveal">
+          <div class="check-item-icon"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Utilisez un mot de passe fort et unique</h4>
+            <p>Minimum 12 caractères, avec majuscules, chiffres et symboles. N'utilisez pas le même mot de passe que votre email ou votre Mobile Money. Changez-le tous les 3 mois.</p>
+          </div>
+        </div>
+        <div class="check-item reveal">
+          <div class="check-item-icon"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Ne partagez jamais vos identifiants avec des assistants ou employés</h4>
+            <p>Si vous avez des collaborateurs, MCP propose des accès multi-utilisateurs avec des droits limités. Chaque personne doit avoir son propre accès. Un employé qui part ne doit plus pouvoir se connecter à votre compte.</p>
+          </div>
+        </div>
+        <div class="check-item reveal">
+          <div class="check-item-icon"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Vérifiez régulièrement votre historique de connexions</h4>
+            <p>Dans Paramètres → Sécurité → Sessions actives, vérifiez les appareils connectés à votre compte. Si vous voyez un appareil ou une localisation inconnue, déconnectez-le immédiatement et changez votre mot de passe.</p>
+          </div>
+        </div>
+        <div class="check-item reveal">
+          <div class="check-item-icon"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Méfiez-vous des faux emails "MCP"</h4>
+            <p>Des escrocs envoient des emails imitant MCP pour voler vos identifiants. Nos emails viennent uniquement de <strong>@marketcenterplace.ci</strong>. Ne cliquez jamais sur un lien dans un email suspect — allez directement sur le site.</p>
+          </div>
+        </div>
+        <div class="check-item reveal">
+          <div class="check-item-icon"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Déconnectez-vous après chaque session sur un appareil partagé</h4>
+            <p>Si vous accédez à votre compte depuis le téléphone d'un ami ou un cybercafé, déconnectez-vous absolument après. Un oubli peut compromettre l'ensemble de votre boutique et vos fonds.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. COMPTABILITÉ -->
+    <div class="sec-section reveal" id="comptabilite">
+      <div class="sec-header">
+        <div class="sec-icon orange">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div>
+          <div class="sec-label">Section 6</div>
+          <div class="sec-title">Bonnes pratiques comptables</div>
+        </div>
+      </div>
+      <div class="alert-list stagger-children">
+        <div class="alert-item green reveal">
+          <div class="alert-icon-wrap">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="alert-body">
+            <h4>Tenez un journal de toutes vos ventes</h4>
+            <p>Un simple tableau Excel ou Google Sheets suffit. Notez chaque vente : date, produit, montant, frais MCP, bénéfice net. Cela vous aide à connaître exactement votre rentabilité et à détecter toute anomalie.</p>
+          </div>
+        </div>
+        <div class="alert-item green reveal">
+          <div class="alert-icon-wrap">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="alert-body">
+            <h4>Séparez votre argent personnel de l'argent de la boutique</h4>
+            <p>Ouvrez un compte Mobile Money ou bancaire dédié à votre activité de vendeur. Cela facilite la comptabilité, évite les confusions et protège votre argent personnel en cas de litige commercial.</p>
+          </div>
+        </div>
+        <div class="alert-item green reveal">
+          <div class="alert-icon-wrap">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="alert-body">
+            <h4>Vérifiez vos versements MCP régulièrement</h4>
+            <p>Comparez chaque semaine les ventes de votre Tableau de bord avec les versements reçus. Signalez immédiatement toute différence à notre support. Gardez tous les relevés de virements reçus pendant au moins 2 ans.</p>
+          </div>
+        </div>
+        <div class="alert-item warning reveal">
+          <div class="alert-icon-wrap">
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+          </div>
+          <div class="alert-body">
+            <h4>Déclarez votre activité si vous vendez régulièrement</h4>
+            <p>En Côte d'Ivoire, toute activité commerciale régulière doit être déclarée. Si vous vendez plus de 200 000 FCFA par mois, renseignez-vous auprès du Centre de Formalités des Entreprises (CFE) pour régulariser votre situation. <strong>Cela vous protège juridiquement et vous ouvre des droits.</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. RÉPUTATION -->
+    <div class="sec-section reveal" id="reputation">
+      <div class="sec-header">
+        <div class="sec-icon gold">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div>
+          <div class="sec-label">Section 7</div>
+          <div class="sec-title">Protéger et améliorer votre réputation</div>
+        </div>
+      </div>
+      <div class="check-list stagger-children">
+        <div class="check-item reveal">
+          <div class="check-item-icon"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Répondez à tous les avis, même négatifs</h4>
+            <p>Un acheteur mécontent qui reçoit une réponse professionnelle et une solution concrète change souvent son avis. Les futurs acheteurs lisent vos réponses — une réponse calme et constructive rassure autant qu'un bon avis.</p>
+          </div>
+        </div>
+        <div class="check-item reveal">
+          <div class="check-item-icon"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Ne sollicitez pas de faux avis</h4>
+            <p>Demander à des amis de laisser de faux avis 5 étoiles est détectable par notre algorithme et entraîne la suspension immédiate de votre boutique. Concentrez-vous sur la qualité — les vrais bons avis viennent naturellement.</p>
+          </div>
+        </div>
+        <div class="check-item reveal">
+          <div class="check-item-icon"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Tenez vos stocks à jour en temps réel</h4>
+            <p>Vendre un produit en rupture de stock est la cause numéro un des avis négatifs et des annulations. Mettez à jour vos stocks dans votre Tableau de bord dès qu'un article est épuisé. Un produit indisponible doit être désactivé immédiatement.</p>
+          </div>
+        </div>
+        <div class="check-item reveal">
+          <div class="check-item-icon"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div>
+            <h4>Expédiez dans les délais annoncés</h4>
+            <p>Si vous promettez une livraison en 24h sur Abidjan, tenez-le. Si un retard survient, prévenez l'acheteur avant qu'il ne contacte le support. La communication proactive transforme un problème en satisfaction.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. FAQ -->
+    <div class="sec-section reveal" id="faq">
+      <div class="sec-header">
+        <div class="sec-icon navy">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div>
+          <div class="sec-label">Section 8</div>
+          <div class="sec-title">Questions fréquentes des vendeurs</div>
+        </div>
+      </div>
+      <div class="faq-list stagger-children">
+
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaqV(this)">
+            Un acheteur dit ne pas avoir reçu son colis mais mon livreur confirme la livraison. Que faire ?
+            <svg class="faq-chevron" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Fournissez au médiateur MCP : le reçu de dépôt chez le livreur, le numéro de suivi, la confirmation de livraison avec heure et signature si disponible. Si le livreur atteste de la remise à la bonne adresse, <strong>vous êtes protégé.</strong> Notre équipe contacte directement le prestataire de livraison pour obtenir les preuves. Les faux litiges de ce type sont détectés et sanctionnent l'acheteur, pas le vendeur.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaqV(this)">
+            Comment me protéger contre les retours abusifs de produits ?
+            <svg class="faq-chevron" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              La règle des 7 jours de retour s'applique uniquement aux produits non conformes ou défectueux — pas aux changements d'avis sans raison valable. Pour vous protéger : <strong>photographiez chaque produit avant expédition</strong>, utilisez un service de livraison avec preuve de remise, et notez précisément dans votre description les caractéristiques exactes. Si un retour vous semble abusif (produit endommagé par le client qui prétend qu'il était défectueux), fournissez vos photos "avant" au médiateur.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaqV(this)">
+            Quelqu'un a créé une fausse boutique en copiant mon nom. Que faire ?
+            <svg class="faq-chevron" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Signalez immédiatement via le bouton "Signaler cette boutique" sur leur profil, en sélectionnant la raison "Imitation / Usurpation d'identité". Notre équipe vérifie sous 24h et supprime la boutique frauduleuse. En parallèle, renforcez votre identité visuelle : ajoutez votre logo, filigranez vos photos, et demandez votre badge de certification si ce n'est pas encore fait. <strong>Votre ancienneté et vos avis prouvent que vous êtes l'original.</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaqV(this)">
+            Un concurrent laisse de faux avis négatifs sur ma boutique. Comment réagir ?
+            <svg class="faq-chevron" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              Signalez chaque avis suspect via le bouton "Signaler cet avis" en précisant vos raisons (commande non trouvée dans votre historique, profil créé ce jour, etc.). <strong>Notre système analyse automatiquement les modèles de faux avis.</strong> En attendant, répondez professionnellement à chaque avis négatif — ne vous laissez pas entraîner dans une polémique. Les vrais acheteurs savent distinguer les avis authentiques des manœuvres malveillantes.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q" onclick="toggleFaqV(this)">
+            Mes fonds sont bloqués suite à un litige. Quand vais-je les recevoir ?
+            <svg class="faq-chevron" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-a">
+            <div class="faq-a-inner">
+              En cas de litige ouvert, les fonds correspondants sont maintenus en sécurité pendant le traitement. <strong>Le délai maximum de résolution est de 5 jours ouvrables.</strong> Pour accélérer le processus : répondez rapidement aux messages du médiateur, fournissez toutes vos preuves dès le début, et acceptez les propositions de compromis raisonnables. Si le litige est résolu en votre faveur, les fonds sont versés dans les 24h suivant la décision.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- BANNIÈRE FINALE -->
+    <div class="final-banner reveal">
+      <div class="final-banner-icon">
+        <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+      </div>
+      <div style="position:relative;z-index:1">
+        <h3>Respectez ces règles et vous vendrez en toute sérénité</h3>
+        <p>La grande majorité des problèmes de vente en ligne se résolvent avec des preuves, de la communication et du professionnalisme. Notre équipe est là pour vous soutenir à chaque étape.</p>
+        <div class="final-banner-tags">
+          <span class="final-tag"><svg width="9" height="9" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Photos avant expédition</span>
+          <span class="final-tag"><svg width="9" height="9" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Paiement confirmé avant envoi</span>
+          <span class="final-tag"><svg width="9" height="9" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Tout dans la messagerie MCP</span>
+          <span class="final-tag"><svg width="9" height="9" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 2FA activé</span>
+          <span class="final-tag"><svg width="9" height="9" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Journal comptable tenu</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-box reveal">
+      <h3>Une question ou un problème urgent ?</h3>
+      <p>Notre équipe support vendeur est disponible du lundi au samedi, de 8h à 20h. Pour les urgences (compte piraté, litige grave), nous répondons 7j/7.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/2250700000000?text=Bonjour%20MCP,%20j'ai%20un%20problème%20en%20tant%20que%20vendeur" target="_blank" class="cta-btn primary">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          WhatsApp support vendeur
+        </a>
+        <a href="../contact.html" class="cta-btn outline">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Formulaire de contact
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /sec-content -->
+</div><!-- /dashboard-layout -->
+
+<div id="footer-slot"></div>
+<script src="../api.js"></script>
+<script src="../components.js"></script>
+<script src="../script.js"></script>
+<script src="../chatbot.js"></script>
+<script>
+/* ── FAQ ACCORDÉON ── */
+function toggleFaqV(btn) {
+  const item = btn.closest('.faq-item');
+  const open = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  if (!open) item.classList.add('open');
+}
+
+/* ── COPIER LES TEMPLATES ── */
+function copyTpl(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const text = el.textContent.trim();
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg> Copié !';
+      btn.style.color = '#16a34a';
+      btn.style.borderColor = '#16a34a';
+      setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; btn.style.borderColor = ''; }, 2000);
+    });
+  } else {
+    // Fallback pour les navigateurs anciens
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+  }
+}
+</script>
+<script src="../ux-improvements.js"></script>
+</body>
+</html>

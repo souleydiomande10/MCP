@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Contactez l'equipe Market Center Place par WhatsApp, telephone ou email. Reponse garantie sous 2 heures."/>
+  <meta property="og:title" content="Nous contacter — Market Center Place"/>
+  <meta property="og:description" content="Contactez l'equipe Market Center Place par WhatsApp, telephone ou email. Reponse garantie sous 2 heures."/>
+  <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <style>
+    /* ── HERO ── */
+    .contact-hero {
+      background: var(--navy);
+      padding: 4rem 2.5rem; border-bottom: 3px solid var(--red);
+      position: relative; overflow: hidden;
+    }
+    .contact-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 500px 300px at 80% 50%, rgba(192,32,42,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 300px 300px at 10% 80%, rgba(26,75,170,0.18) 0%, transparent 70%);
+    }
+    .contact-hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .contact-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.68rem; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1rem;
+    }
+    .contact-eyebrow::before { content:''; width:24px; height:2px; background:var(--gold); }
+    .contact-hero h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 900;
+      color: var(--white); letter-spacing: -1px; line-height: 1.1; margin-bottom: 1rem;
+    }
+    .contact-hero h1 em { color: var(--red2); font-style: normal; }
+    .contact-hero p { color: rgba(255,255,255,0.55); font-size: 0.92rem; line-height: 1.8; }
+
+    /* Canaux de contact rapide */
+    .contact-channels { display: flex; flex-direction: column; gap: 0.8rem; }
+    .contact-channel {
+      display: flex; align-items: center; gap: 1rem;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px; padding: 1rem 1.2rem;
+      text-decoration: none; cursor: none;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .contact-channel:hover { background: rgba(255,255,255,0.12); border-color: var(--red2); transform: translateX(4px); }
+    .channel-icon {
+      width: 44px; height: 44px; border-radius: 8px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .channel-icon.whatsapp { background: #25d366; }
+    .channel-icon.phone    { background: var(--blue); }
+    .channel-icon.email    { background: var(--red); }
+    .channel-icon.hours    { background: rgba(200,168,75,0.3); border: 1px solid rgba(200,168,75,0.5); }
+    .channel-icon svg { stroke: var(--white); }
+    .channel-icon.hours svg { stroke: var(--gold); }
+    .channel-info { flex: 1; }
+    .channel-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 2px; }
+    .channel-value { font-size: 0.88rem; font-weight: 700; color: var(--white); }
+    .channel-arrow { color: rgba(255,255,255,0.3); font-size: 1.2rem; transition: color 0.2s; }
+    .contact-channel:hover .channel-arrow { color: var(--red2); }
+
+    /* ── LAYOUT PRINCIPAL ── */
+    .contact-main { max-width: 1200px; margin: 0 auto; padding: 4rem 2.5rem; display: grid; grid-template-columns: 1fr 420px; gap: 3rem; align-items: start; }
+
+    /* ── FORMULAIRE ── */
+    .contact-form-card { background: var(--white); border-radius: 10px; padding: 2.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .contact-form-title { font-size: 0.68rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); margin-bottom: 0.4rem; }
+    .contact-form-subtitle { font-size: 0.88rem; color: var(--gray); margin-bottom: 2rem; line-height: 1.6; }
+
+    /* Choix du sujet */
+    .subject-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 1.5rem; }
+    .subject-btn {
+      border: 2px solid var(--lgray); border-radius: 6px; padding: 0.7rem;
+      text-align: center; cursor: none; font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem; font-weight: 700; color: var(--gray);
+      transition: all 0.2s; background: var(--white);
+    }
+    .subject-btn:hover  { border-color: var(--navy); color: var(--navy); }
+    .subject-btn.active { border-color: var(--navy); background: var(--navy); color: var(--white); }
+    .subject-btn-icon { display: block; font-size: 1.2rem; margin-bottom: 4px; }
+
+    .form-group { margin-bottom: 1.1rem; }
+    .form-group label { display: block; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--navy); margin-bottom: 5px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 11px 14px; background: var(--off);
+      border: 1.5px solid var(--lgray); border-radius: 5px;
+      font-family: 'Montserrat', sans-serif; font-size: 0.85rem; color: var(--dark);
+      outline: none; transition: border-color 0.2s, background 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--blue); background: var(--white); }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .char-counter { text-align: right; font-size: 0.65rem; color: var(--gray); margin-top: 3px; font-weight: 600; }
+
+    /* Upload piece jointe */
+    .upload-zone {
+      border: 2px dashed var(--lgray); border-radius: 5px; padding: 1.2rem;
+      text-align: center; cursor: none; transition: all 0.2s; margin-bottom: 1.1rem;
+    }
+    .upload-zone:hover { border-color: var(--blue); background: var(--off); }
+    .upload-zone svg { stroke: var(--gray); margin-bottom: 6px; }
+    .upload-zone p { font-size: 0.78rem; color: var(--gray); font-weight: 600; }
+    .upload-zone span { font-size: 0.65rem; color: var(--gray); display: block; margin-top: 2px; }
+
+    /* Bouton envoyer */
+    .btn-send {
+      width: 100%; padding: 14px; background: var(--navy); color: var(--white);
+      border: none; border-radius: 5px; cursor: none;
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
+      font-size: 0.82rem; letter-spacing: 1px; text-transform: uppercase;
+      position: relative; overflow: hidden;
+      transition: background 0.2s, transform 0.2s; box-shadow: 0 4px 20px rgba(11,31,75,0.3);
+    }
+    .btn-send:hover { background: var(--red); transform: translateY(-2px); }
+    .btn-send::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%);
+      transform: translateX(-100%); transition: transform 0.5s;
+    }
+    .btn-send:hover::before { transform: translateX(100%); }
+
+    /* Message de succes */
+    .send-success {
+      display: none; text-align: center; padding: 2rem;
+      animation: successIn 0.5s ease;
+    }
+    @keyframes successIn { from{opacity:0;transform:scale(0.9)} to{opacity:1;transform:scale(1)} }
+    .send-success-icon { width: 60px; height: 60px; background: #dcfce7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+    .send-success-icon svg { stroke: #16a34a; }
+    .send-success h3 { font-size: 1.1rem; font-weight: 900; color: var(--navy); margin-bottom: 0.5rem; }
+    .send-success p  { font-size: 0.85rem; color: var(--gray); line-height: 1.7; }
+
+    /* ── SIDEBAR INFO ── */
+    .contact-sidebar {}
+    .info-block {
+      background: var(--white); border-radius: 8px; padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06); margin-bottom: 1.2rem;
+    }
+    .info-block-title { font-size: 0.65rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--navy); margin-bottom: 1.2rem; padding-bottom: 0.8rem; border-bottom: 2px solid var(--lgray); }
+    .info-item { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 1rem; }
+    .info-item:last-child { margin-bottom: 0; }
+    .info-item-icon { width: 36px; height: 36px; border-radius: 6px; background: var(--off); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid var(--lgray); }
+    .info-item-icon svg { stroke: var(--navy); }
+    .info-item-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; color: var(--gray); margin-bottom: 2px; }
+    .info-item-val   { font-size: 0.85rem; font-weight: 700; color: var(--navy); }
+    .info-item-sub   { font-size: 0.75rem; color: var(--gray); margin-top: 2px; }
+
+    /* Horaires */
+    .hours-grid { display: grid; gap: 0.5rem; }
+    .hours-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; padding: 0.4rem 0; border-bottom: 1px solid var(--lgray); }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day { font-weight: 700; color: var(--navy); }
+    .hours-time { color: var(--gray); font-weight: 500; }
+    .hours-closed { color: var(--red); font-weight: 700; font-size: 0.75rem; }
+    .hours-open-badge { background: #dcfce7; color: #16a34a; border-radius: 99px; padding: 2px 8px; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.5px; }
+
+    /* Reseaux sociaux */
+    .social-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .social-link {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--off); border: 1.5px solid var(--lgray);
+      border-radius: 5px; padding: 8px 14px; text-decoration: none;
+      font-size: 0.75rem; font-weight: 700; color: var(--navy); cursor: none;
+      transition: all 0.2s;
+    }
+    .social-link:hover { border-color: var(--navy); background: var(--navy); color: var(--white); }
+    .social-link:hover svg { stroke: var(--white); }
+    .social-link svg { stroke: var(--navy); transition: stroke 0.2s; }
+
+    /* Carte localisation */
+    .map-card {
+      background: var(--navy); border-radius: 8px; overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .map-placeholder {
+      height: 200px; background: linear-gradient(135deg, var(--navy), #0d2558);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 0.8rem; border-bottom: 2px solid var(--red);
+    }
+    .map-placeholder svg { stroke: rgba(255,255,255,0.4); }
+    .map-placeholder span { font-size: 0.78rem; color: rgba(255,255,255,0.4); font-weight: 600; }
+    .map-address { padding: 1.2rem; }
+    .map-address-title { font-size: 0.65rem; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+    .map-address-val   { font-size: 0.88rem; font-weight: 700; color: var(--white); line-height: 1.5; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .contact-hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-main { grid-template-columns: 1fr; }
+      .subject-grid { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<div id="header-slot" data-page=""></div>
+
+<!-- HERO -->
+<div class="contact-hero">
+  <div class="contact-hero-inner">
+    <div class="reveal-left">
+      <div class="contact-eyebrow">Nous contacter</div>
+      <h1>Comment pouvons-nous<br/>vous <em>aider</em> ?</h1>
+      <p>Notre equipe est a votre disposition du lundi au samedi. Nous nous engageons a repondre a toutes les demandes dans un delai de 2 heures ouvrables.</p>
+    </div>
+    <div class="contact-channels reveal-right">
+      <a class="contact-channel" href="#">
+        <div class="channel-icon whatsapp"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 14 19.79 19.79 0 0 1 1.61 5.47 2 2 0 0 1 3.57 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.8a16 16 0 0 0 6.29 6.29l.9-.9a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <div class="channel-info"><div class="channel-label">WhatsApp</div><div class="channel-value">+225 07 00 00 00 00</div></div>
+        <span class="channel-arrow">&#8250;</span>
+      </a>
+      <a class="contact-channel" href="#">
+        <div class="channel-icon phone"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 14 19.79 19.79 0 0 1 1.61 5.47 2 2 0 0 1 3.57 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.8a16 16 0 0 0 6.29 6.29l.9-.9a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <div class="channel-info"><div class="channel-label">téléphone</div><div class="channel-value">+225 27 00 00 00 00</div></div>
+        <span class="channel-arrow">&#8250;</span>
+      </a>
+      <a class="contact-channel" href="#">
+        <div class="channel-icon email"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div class="channel-info"><div class="channel-label">Email</div><div class="channel-value"><span class="__cf_email__" data-cfemail="dab9b5b4aebbb9ae9ab7bba8b1bfaeb9bfb4aebfa8aab6bbb9bff4b9b3">[email&#160;protected]</span></div></div>
+        <span class="channel-arrow">&#8250;</span>
+      </a>
+      <div class="contact-channel" style="cursor:default">
+        <div class="channel-icon hours"><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+        <div class="channel-info"><div class="channel-label">disponibilité</div><div class="channel-value">Lun - Sam, 8h - 20h</div></div>
+        <span style="background:#dcfce7;color:#16a34a;border-radius:99px;padding:3px 10px;font-size:0.62rem;font-weight:800;">En ligne</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>Contact</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="contact-main">
+
+  <!-- FORMULAIRE -->
+  <div class="contact-form-card reveal">
+    <div id="form-container">
+      <div class="contact-form-title">Envoyer un message</div>
+      <div class="contact-form-subtitle">Remplissez ce formulaire et nous vous repondrons dans les 2 heures ouvrables.</div>
+
+      <!-- Sujet -->
+      <div class="form-group">
+        <label>Sujet de votre demande</label>
+        <div class="subject-grid">
+          <button class="subject-btn active" onclick="selectSubject(this)">
+            <span class="subject-btn-icon">&#128722;</span>
+            Commande
+          </button>
+          <button class="subject-btn" onclick="selectSubject(this)">
+            <span class="subject-btn-icon">&#128181;</span>
+            Paiement
+          </button>
+          <button class="subject-btn" onclick="selectSubject(this)">
+            <span class="subject-btn-icon">&#128666;</span>
+            Livraison
+          </button>
+          <button class="subject-btn" onclick="selectSubject(this)">
+            <span class="subject-btn-icon">&#128101;</span>
+            Mon compte
+          </button>
+          <button class="subject-btn" onclick="selectSubject(this)">
+            <span class="subject-btn-icon">&#127978;</span>
+            Devenir vendeur
+          </button>
+          <button class="subject-btn" onclick="selectSubject(this)">
+            <span class="subject-btn-icon">&#128172;</span>
+            Autre
+          </button>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom</label>
+          <input type="text" placeholder="Konan" id="f-prenom"/>
+        </div>
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" placeholder="Kouassi" id="f-nom"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="konan@email.com" id="f-email"/>
+        </div>
+        <div class="form-group">
+          <label>téléphone</label>
+          <input type="tel" placeholder="+225 07 00 00 00 00" id="f-tel"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Reference de commande (si applicable)</label>
+        <input type="text" placeholder="Ex: MCP-2025-00847"/>
+      </div>
+      <div class="form-group">
+        <label>Votre message</label>
+        <textarea id="f-message" placeholder="Decrivez votre probleme ou question en detail..." oninput="countChars(this)"></textarea>
+        <div class="char-counter"><span id="char-count">0</span> / 1000 caracteres</div>
+      </div>
+
+      <div class="upload-zone">
+        <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p>Ajouter une piece jointe (optionnel)</p>
+        <span>Photo, capture d'ecran — PNG, JPG, PDF, max 5 Mo</span>
+      </div>
+
+      <button class="btn-send" onclick="sendMessage()">Envoyer le message</button>
+    </div>
+
+    <!-- Succes -->
+    <div class="send-success" id="send-success">
+      <div class="send-success-icon"><svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h3>Message envoye !</h3>
+      <p>Merci pour votre message. Notre equipe vous repondra dans les <strong>2 heures ouvrables</strong> par email ou téléphone selon votre preference.</p>
+      <p style="margin-top:0.8rem;font-size:0.8rem">Reference de votre demande : <strong id="ticket-ref" style="color:var(--navy)"></strong></p>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="contact-sidebar">
+
+    <!-- Infos de contact -->
+    <div class="info-block reveal">
+      <div class="info-block-title">Nos coordonnees</div>
+      <div class="info-item">
+        <div class="info-item-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div>
+          <div class="info-item-label">Adresse</div>
+          <div class="info-item-val">Plateau, Abidjan</div>
+          <div class="info-item-sub">Rue des Banques, Immeuble MCP<br/>Côte d'Ivoire</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 14 19.79 19.79 0 0 1 1.61 5.47 2 2 0 0 1 3.57 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.8a16 16 0 0 0 6.29 6.29l.9-.9a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <div>
+          <div class="info-item-label">téléphone & WhatsApp</div>
+          <div class="info-item-val">+225 07 00 00 00 00</div>
+          <div class="info-item-sub">Reponse sous 30 minutes</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div>
+          <div class="info-item-label">Email</div>
+          <div class="info-item-val">contact@marketcenterplace.ci</div>
+          <div class="info-item-sub">Reponse sous 2h ouvrables</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Horaires -->
+    <div class="info-block reveal" style="transition-delay:0.1s">
+      <div class="info-block-title">Horaires d'ouverture</div>
+      <div class="hours-grid">
+        <div class="hours-row"><span class="hours-day">Lundi &mdash; Vendredi</span><span class="hours-time">8h00 &mdash; 20h00 <span class="hours-open-badge">Ouvert</span></span></div>
+        <div class="hours-row"><span class="hours-day">Samedi</span><span class="hours-time">9h00 &mdash; 18h00 <span class="hours-open-badge">Ouvert</span></span></div>
+        <div class="hours-row"><span class="hours-day">Dimanche</span><span class="hours-closed">Ferme</span></div>
+        <div class="hours-row"><span class="hours-day">Jours feries</span><span class="hours-closed">Ferme</span></div>
+      </div>
+    </div>
+
+    <!-- Reseaux sociaux -->
+    <div class="info-block reveal" style="transition-delay:0.2s">
+      <div class="info-block-title">Retrouvez-nous</div>
+      <div class="social-links">
+        <a href="#" class="social-link">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          Facebook
+        </a>
+        <a href="#" class="social-link">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Instagram
+        </a>
+        <a href="#" class="social-link">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>
+          YouTube
+        </a>
+        <a href="#" class="social-link">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 14 19.79 19.79 0 0 1 1.61 5.47 2 2 0 0 1 3.57 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.8a16 16 0 0 0 6.29 6.29l.9-.9a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- Carte localisation -->
+    <div class="map-card reveal" style="transition-delay:0.3s">
+      <div class="map-placeholder">
+        <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Plateau, Abidjan, Côte d'Ivoire</span>
+      </div>
+      <div class="map-address">
+        <div class="map-address-title">Notre adresse</div>
+        <div class="map-address-val">Rue des Banques, Immeuble MCP<br/>Plateau &mdash; Abidjan, Côte d'Ivoire</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div id="footer-slot"></div>
+
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script>
+  /* ── SUJET ── */
+  function selectSubject(btn) {
+    document.querySelectorAll('.subject-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  /* ── COMPTEUR CARACTERES ── */
+  function countChars(textarea) {
+    const count = textarea.value.length;
+    document.getElementById('char-count').textContent = count;
+    if (count > 900) document.getElementById('char-count').style.color = 'var(--red)';
+    else document.getElementById('char-count').style.color = '';
+    if (count > 1000) textarea.value = textarea.value.substring(0, 1000);
+  }
+
+  /* ── ENVOI ── */
+  function sendMessage() {
+    const prenom  = document.getElementById('f-prenom').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const message = document.getElementById('f-message').value.trim();
+
+    if (!prénom || !email || !message) {
+      alert('Veuillez remplir au minimum votre Prénom, email et message.');
+      return;
+    }
+
+    const btn = document.querySelector('.btn-send');
+    btn.textContent = 'Envoi en cours...';
+    btn.style.background = 'var(--gray)';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      const ref = 'TKT-' + Date.now().toString().slice(-6);
+      document.getElementById('ticket-ref').textContent = ref;
+      document.g
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

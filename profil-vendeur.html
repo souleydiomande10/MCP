@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Decouvrez la boutique TechCI Pro: electronique de qualite, 4.8/5 de satisfaction, livraison 24h Abidjan."/>
+  <meta property="og:title" content="TechCI Pro — Profil Vendeur — Market Center Place"/>
+  <meta property="og:description" content="Decouvrez la boutique TechCI Pro: electronique de qualite, 4.8/5 de satisfaction, livraison 24h Abidjan."/>
+  <meta property="og:type" content="website"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TechCI Pro — Profil Vendeur — Market Center Place</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="nav.css"/>
+  <style>
+    /* ── HERO PROFIL ── */
+    .seller-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #0d2558 100%);
+      padding: 3rem 2.5rem 0; border-bottom: 3px solid var(--red);
+      position: relative; overflow: hidden;
+    }
+    .seller-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 500px 400px at 90% 50%, rgba(192,32,42,0.15) 0%, transparent 70%);
+    }
+    .seller-hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+    .seller-hero-top {
+      display: flex; align-items: flex-end; gap: 2rem; padding-bottom: 2rem;
+    }
+    .seller-avatar-xl {
+      width: 100px; height: 100px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--red), #8b0e15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.4rem; font-weight: 900; color: #fff;
+      border: 3px solid rgba(255,255,255,0.2); flex-shrink: 0;
+    }
+    .seller-hero-info { flex: 1; }
+    .seller-verified {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(22,163,74,0.2); border: 1px solid rgba(22,163,74,0.4);
+      color: #4ade80; border-radius: 3px; padding: 3px 10px;
+      font-size: 0.62rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .seller-verified svg { stroke: #4ade80; }
+    .seller-name { font-size: 2rem; font-weight: 900; color: #fff; letter-spacing: -1px; margin-bottom: 0.3rem; }
+    .seller-cat  { font-size: 0.8rem; color: rgba(255,255,255,0.5); font-weight: 500; }
+    .seller-hero-actions { display: flex; gap: 0.8rem; align-items: center; }
+    .btn-contact-seller {
+      background: var(--red); color: #fff; border: none; border-radius: 4px;
+      padding: 10px 22px; font-family: 'Montserrat',sans-serif;
+      font-weight: 800; font-size: 0.75rem; letter-spacing: 0.8px;
+      text-transform: uppercase; cursor: pointer; transition: background .2s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .btn-contact-seller:hover { background: var(--red2); }
+    .btn-follow-seller {
+      background: rgba(255,255,255,0.08); color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.2); border-radius: 50px;
+      padding: 10px 22px; font-family: 'Montserrat',sans-serif;
+      font-weight: 700; font-size: 0.75rem; text-transform: uppercase;
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-follow-seller:hover { background: rgba(255,255,255,0.18); }
+    .btn-follow-seller.is-following {
+      background: linear-gradient(135deg, rgba(22,163,74,.25), rgba(22,163,74,.15));
+      border-color: rgba(74,222,128,.4);
+      color: #4ade80;
+    }
+    .btn-follow-seller.is-following svg { stroke: #4ade80; }
+    .btn-follow-seller.is-following:hover {
+      background: rgba(192,32,42,.2);
+      border-color: rgba(192,32,42,.4);
+      color: #ff9090;
+    }
+    .btn-follow-seller.is-following:hover::before { content: "Se désabonner"; }
+    /* Notification toast abonnement */
+    .follow-toast {
+      position: fixed; top: 74px; left: 50%;
+      transform: translateX(-50%) translateY(-80px);
+      background: #0b1f4b; color: white;
+      border-radius: 10px; padding: .9rem 1.4rem;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .78rem; font-weight: 700;
+      box-shadow: 0 12px 40px rgba(0,0,0,.3);
+      z-index: 9999; display: flex; align-items: center; gap: .7rem;
+      transition: transform .4s cubic-bezier(.34,1.2,.64,1);
+      white-space: nowrap;
+    }
+    .follow-toast.show { transform: translateX(-50%) translateY(0); }
+    .follow-toast.follow-on  { background: #16a34a; }
+    .follow-toast.follow-off { background: #374151; }
+    .follow-toast svg { stroke: white; flex-shrink: 0; }
+    /* Avantages abonné */
+    .follow-perks {
+      background: rgba(200,168,75,.08);
+      border: 1px solid rgba(200,168,75,.2);
+      border-radius: 8px; padding: .7rem 1rem;
+      margin-top: .6rem; display: none;
+      animation: fadeUp .3s ease;
+    }
+    .follow-perks.show { display: block; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+    .follow-perk {
+      display: flex; align-items: center; gap: 7px;
+      font-size: .68rem; color: #c8a84b; font-weight: 600;
+      margin-bottom: .3rem;
+    }
+    .follow-perk:last-child { margin-bottom: 0; }
+    .follow-perk svg { stroke: #c8a84b; flex-shrink: 0; }
+
+    /* Stats strip */
+    .seller-stats-strip {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 1.5rem;
+    }
+    .seller-stat-item {
+      padding: 1.2rem; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .seller-stat-item:last-child { border-right: none; }
+    .seller-stat-val { font-size: 1.5rem; font-weight: 900; color: #fff; letter-spacing: -0.5px; display: block; }
+    .seller-stat-val em { color: var(--gold); font-style: normal; font-size: 1rem; }
+    .seller-stat-lbl { font-size: 0.62rem; font-weight: 700; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.8px; margin-top: 2px; }
+
+    /* ── LAYOUT ── */
+    .seller-layout {
+      max-width: 1200px; margin: 0 auto; padding: 2.5rem;
+      display: grid; grid-template-columns: 1fr 300px; gap: 2rem;
+      align-items: start;
+    }
+
+    /* ── SIDEBAR INFO ── */
+    .seller-sidebar {}
+    .seller-info-card {
+      background: var(--white); border-radius: 8px; padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06); margin-bottom: 1.2rem;
+    }
+    .seller-info-title {
+      font-size: 0.65rem; font-weight: 900; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--navy);
+      margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 2px solid var(--lgray);
+    }
+    .seller-info-row {
+      display: flex; align-items: center; gap: 0.8rem;
+      padding: 0.6rem 0; border-bottom: 1px solid var(--lgray);
+      font-size: 0.82rem;
+    }
+    .seller-info-row:last-child { border-bottom: none; }
+    .seller-info-row svg { stroke: var(--navy); flex-shrink: 0; }
+    .seller-info-label { color: var(--gray); font-weight: 500; font-size: 0.75rem; }
+    .seller-info-val   { color: var(--navy); font-weight: 700; }
+
+    /* Note globale */
+    .seller-rating-big { text-align: center; padding: 1rem 0; }
+    .seller-rating-num { font-size: 3.5rem; font-weight: 900; color: var(--navy); letter-spacing: -2px; line-height: 1; }
+    .seller-rating-stars { color: #f59e0b; font-size: 1.2rem; margin: 0.4rem 0; }
+    .seller-rating-count { font-size: 0.75rem; color: var(--gray); font-weight: 500; }
+    .rating-bars { margin-top: 1rem; }
+    .rating-bar-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; font-size: 0.7rem; color: var(--gray); }
+    .rating-bar-track { flex: 1; height: 6px; background: var(--lgray); border-radius: 99px; overflow: hidden; }
+    .rating-bar-fill  { height: 100%; background: #f59e0b; border-radius: 99px; }
+
+    /* ── PRODUITS VENDEUR ── */
+    .seller-products-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1.2rem;
+    }
+    .seller-prod-card {
+      background: var(--white); border-radius: 8px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: transform .25s, box-shadow .25s; cursor: pointer;
+    }
+    .seller-prod-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,0.1); }
+    .seller-prod-img {
+      height: 160px; background: var(--lgray); overflow: hidden;
+      position: relative;
+    }
+    .seller-prod-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .seller-prod-card:hover .seller-prod-img img { transform: scale(1.05); }
+    .seller-prod-badge {
+      position: absolute; top: 8px; left: 8px;
+      background: var(--red); color: #fff; border-radius: 3px;
+      padding: 2px 8px; font-size: 0.62rem; font-weight: 900;
+    }
+    .seller-prod-body { padding: 0.9rem; }
+    .seller-prod-cat   { font-size: 0.62rem; font-weight: 800; color: var(--blue); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 3px; }
+    .seller-prod-name  { font-size: 0.82rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; line-height: 1.3; }
+    .seller-prod-foot  { display: flex; align-items: center; justify-content: space-between; }
+    .seller-prod-price { font-size: 0.9rem; font-weight: 900; color: var(--navy); }
+    .seller-prod-old   { font-size: 0.72rem; color: var(--gray); text-decoration: line-through; display: block; }
+    .btn-add-seller {
+      background: var(--navy); color: #fff; border: none; border-radius: 3px;
+      padding: 6px 12px; font-family: 'Montserrat',sans-serif;
+      font-size: 0.65rem; font-weight: 800; cursor: pointer;
+      transition: background .2s; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .btn-add-seller:hover { background: var(--red); }
+
+    /* Avis */
+    .review-card {
+      background: var(--white); border-radius: 8px; padding: 1.2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 0.8rem;
+    }
+    .review-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; }
+    .review-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 900; color: #fff; flex-shrink: 0; }
+    .review-meta-name { font-size: 0.82rem; font-weight: 800; color: var(--navy); }
+    .review-meta-date { font-size: 0.68rem; color: var(--gray); }
+    .review-meta-prod { font-size: 0.68rem; color: var(--blue); font-weight: 600; }
+    .review-stars { margin-left: auto; color: #f59e0b; font-size: 0.82rem; }
+    .review-text { font-size: 0.82rem; color: var(--gray); line-height: 1.7; }
+
+    /* Section tabs */
+    .seller-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--lgray); margin-bottom: 2rem; }
+    .seller-tab {
+      padding: 0.8rem 1.5rem; font-size: 0.72rem; font-weight: 800;
+      letter-spacing: 0.8px; text-transform: uppercase; cursor: pointer;
+      color: var(--gray); background: none; border: none;
+      border-bottom: 2px solid transparent; margin-bottom: -2px;
+      font-family: 'Montserrat',sans-serif; transition: all .2s;
+    }
+    .seller-tab.active { color: var(--navy); border-bottom-color: var(--red); }
+
+    .seller-tab-content { display: none; }
+    .seller-tab-content.active { display: block; animation: fadeIn .3s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Responsive */
+    @media(max-width:900px) {
+      .seller-layout { grid-template-columns: 1fr; }
+      .seller-stats-strip { grid-template-columns: 1fr 1fr; }
+      .seller-hero-top { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+  <link rel="stylesheet" href="components.css"/>
+  <link rel="stylesheet" href="mobile.css"/>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div id="progress"></div>
+
+<div id="header-slot" data-page=""></div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <a href="index.html#vendeurs">Vendeurs</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>TechCI Pro</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="seller-hero">
+  <div class="seller-hero-inner">
+    <div class="seller-hero-top">
+      <div class="seller-avatar-xl">TC</div>
+      <div class="seller-hero-info">
+        <div class="seller-verified">
+          <svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          Vendeur vérifié
+        </div>
+        <h1 class="seller-name">TechCI Pro</h1>
+        <div class="seller-cat">électronique &amp; High-Tech &mdash; Abidjan, Cocody</div>
+      </div>
+      <div class="seller-hero-actions">
+        <button class="btn-contact-seller" onclick="window.location.href='contact.html'">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="white"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 14 19.79 19.79 0 0 1 1.61 5.47 2 2 0 0 1 3.57 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.8a16 16 0 0 0 6.29 6.29l.9-.9a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Contacter
+        </button>
+        <button class="btn-follow-seller" id="follow-btn" onclick="toggleFollow(this)">
+          <svg id="follow-icon" width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="white"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/><circle cx="12" cy="7" r="4"/></svg>
+          <span id="follow-label">Suivre la boutique</span>
+          <span id="follow-count" style="background:rgba(255,255,255,.15);border-radius:99px;padding:1px 8px;font-size:.6rem;font-weight:900">1 240</span>
+        </button>
+      
+        <div class="follow-perks" id="follow-perks">
+          <div class="follow-perk"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Notifications des nouveaux produits</div>
+          <div class="follow-perk"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Alertes de ventes flash en avant-premiere</div>
+          <div class="follow-perk"><svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Notification quand le vendeur lance un Live</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="seller-stats-strip">
+      <div class="seller-stat-item">
+        <span class="seller-stat-val">34</span>
+        <div class="seller-stat-lbl">Produits</div>
+      </div>
+      <div class="seller-stat-item">
+        <span class="seller-stat-val" id="stat-abonnes">1 240<em>+</em></span>
+        <div class="seller-stat-lbl">Ventes</div>
+      </div>
+      <div class="seller-stat-item">
+        <span class="seller-stat-val">4.8<em>/5</em></span>
+        <div class="seller-stat-lbl">Note moyenne</div>
+      </div>
+      <div class="seller-stat-item">
+        <span class="seller-stat-val">98<em>%</em></span>
+        <div class="seller-stat-lbl">Livraisons a temps</div>
+      </div>
+      <div class="seller-stat-item">
+        <span class="seller-stat-val">2<em> ans</em></span>
+        <div class="seller-stat-lbl">Sur la plateforme</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="seller-layout">
+
+  <!-- CONTENU PRINCIPAL -->
+  <div>
+    <!-- TABS -->
+    <div class="seller-tabs">
+      <button class="seller-tab active" onclick="switchTab('produits', this)">Produits (34)</button>
+      <button class="seller-tab" onclick="switchTab('avis', this)">Avis clients (287)</button>
+      <button class="seller-tab" onclick="switchTab('apropos', this)">À propos</button>
+    </div>
+
+    <!-- TAB PRODUITS -->
+    <div class="seller-tab-content active" id="tab-produits">
+      <div class="seller-products-grid">
+
+        <div class="seller-prod-card reveal" onclick="window.location.href='produit.html'">
+          <div class="seller-prod-img">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&q=80" alt="Smartphone"/>
+            <span class="seller-prod-badge">-25%</span>
+          </div>
+          <div class="seller-prod-body">
+            <div class="seller-prod-cat">électronique</div>
+            <div class="seller-prod-name">Smartphone Android 128 Go</div>
+            <div class="seller-prod-foot">
+              <div>
+                <span class="seller-prod-price">89 000 FCFA</span>
+                <span class="seller-prod-old">119 000 FCFA</span>
+              </div>
+              <button class="btn-add-seller" onclick="event.stopPropagation()">Ajouter</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="seller-prod-card reveal" style="transition-delay:.1s" onclick="window.location.href='produit.html'">
+          <div class="seller-prod-img">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80" alt="Ecouteurs"/>
+          </div>
+          <div class="seller-prod-body">
+            <div class="seller-prod-cat">Audio</div>
+            <div class="seller-prod-name">Ecouteurs Bluetooth 5.3 Pro</div>
+            <div class="seller-prod-foot">
+              <div><span class="seller-prod-price">24 000 FCFA</span></div>
+              <button class="btn-add-seller" onclick="event.stopPropagation()">Ajouter</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="seller-prod-card reveal" style="transition-delay:.2s" onclick="window.location.href='produit.html'">
+          <div class="seller-prod-img">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&q=80" alt="Ordinateur"/>
+          </div>
+          <div class="seller-prod-body">
+            <div class="seller-prod-cat">Informatique</div>
+            <div class="seller-prod-name">Ordinateur portable 15" 8Go</div>
+            <div class="seller-prod-foot">
+              <div><span class="seller-prod-price">275 000 FCFA</span></div>
+              <button class="btn-add-seller" onclick="event.stopPropagation()">Ajouter</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="seller-prod-card reveal" style="transition-delay:.3s" onclick="window.location.href='produit.html'">
+          <div class="seller-prod-img">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80" alt="Montre"/>
+            <span class="seller-prod-badge">Nouveau</span>
+          </div>
+          <div class="seller-prod-body">
+            <div class="seller-prod-cat">Montre connectee</div>
+            <div class="seller-prod-name">Smartwatch Sport GPS</div>
+            <div class="seller-prod-foot">
+              <div><span class="seller-prod-price">45 000 FCFA</span></div>
+              <button class="btn-add-seller" onclick="event.stopPropagation()">Ajouter</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="seller-prod-card reveal" style="transition-delay:.4s" onclick="window.location.href='produit.html'">
+          <div class="seller-prod-img">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80" alt="Camera"/>
+          </div>
+          <div class="seller-prod-body">
+            <div class="seller-prod-cat">Photo</div>
+            <div class="seller-prod-name">Appareil photo numerique HD</div>
+            <div class="seller-prod-foot">
+              <div>
+                <span class="seller-prod-price">85 000 FCFA</span>
+                <span class="seller-prod-old">110 000 FCFA</span>
+              </div>
+              <button class="btn-add-seller" onclick="event.stopPropagation()">Ajouter</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="seller-prod-card reveal" style="transition-delay:.5s" onclick="window.location.href='produit.html'">
+          <div class="seller-prod-img">
+            <img loading="lazy" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Chargeur"/>
+          </div>
+          <div class="seller-prod-body">
+            <div class="seller-prod-cat">Accessoires</div>
+            <div class="seller-prod-name">Chargeur rapide USB-C 65W</div>
+            <div class="seller-prod-foot">
+              <div><span class="seller-prod-price">12 000 FCFA</span></div>
+              <button class="btn-add-seller" onclick="event.stopPropagation()">Ajouter</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB AVIS -->
+    <div class="seller-tab-content" id="tab-avis">
+      <div class="review-card reveal">
+        <div class="review-header">
+          <div class="review-avatar">AK</div>
+          <div>
+            <div class="review-meta-name">Adjoua Kouassi</div>
+            <div class="review-meta-prod">Smartphone Android 128 Go</div>
+            <div class="review-meta-date">12 novembre 2024</div>
+          </div>
+          <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+        <div class="review-text">Excellent téléphone, livraison rapide en 24h. Vendeur tres serieux et reactif. Je recommande vivement cette boutique !</div>
+      </div>
+      <div class="review-card reveal" style="transition-delay:.1s">
+        <div class="review-header">
+          <div class="review-avatar">KB</div>
+          <div>
+            <div class="review-meta-name">Koffi Bamba</div>
+            <div class="review-meta-prod">Ecouteurs Bluetooth 5.3</div>
+            <div class="review-meta-date">5 novembre 2024</div>
+          </div>
+          <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+        </div>
+        <div class="review-text">Tres bonne qualité sonore. L'autonomie de la batterie est impressionnante. Emballage soigne, produit conforme a la description.</div>
+      </div>
+      <div class="review-card reveal" style="transition-delay:.2s">
+        <div class="review-header">
+          <div class="review-avatar">MY</div>
+          <div>
+            <div class="review-meta-name">Mariame Yao</div>
+            <div class="review-meta-prod">Ordinateur portable 15"</div>
+            <div class="review-meta-date">28 octobre 2024</div>
+          </div>
+          <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+        <div class="review-text">Parfait pour mon travail de graphiste. Rapide, silencieux, bel ecran. TechCI Pro m'a accompagnee tout au long du processus d'achat.</div>
+      </div>
+      <div class="review-card reveal" style="transition-delay:.3s">
+        <div class="review-header">
+          <div class="review-avatar">SC</div>
+          <div>
+            <div class="review-meta-name">Seydou Coulibaly</div>
+            <div class="review-meta-prod">Chargeur rapide USB-C 65W</div>
+            <div class="review-meta-date">20 octobre 2024</div>
+          </div>
+          <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        </div>
+        <div class="review-text">Charge mon téléphone en moins d'une heure. Produit original, pas de contrefacon. Prix imbattable pour la qualité.</div>
+      </div>
+    </div>
+
+    <!-- TAB A PROPOS -->
+    <div class="seller-tab-content" id="tab-apropos">
+      <div class="section-card" style="background:var(--white);border-radius:8px;padding:2rem;box-shadow:0 2px 8px rgba(0,0,0,0.05)">
+        <h3 style="font-size:1.1rem;font-weight:900;color:var(--navy);margin-bottom:1rem">À propos de TechCI Pro</h3>
+        <p style="font-size:0.88rem;color:var(--gray);line-height:1.9;margin-bottom:1rem">Fondee en 2022 a Abidjan, TechCI Pro est specialisee dans la vente de produits électroniques et high-tech de qualité. Nous travaillons directement avec des fournisseurs certifiés pour garantir l'authenticite de chaque produit.</p>
+        <p style="font-size:0.88rem;color:var(--gray);line-height:1.9;margin-bottom:1.5rem">Notre mission : rendre la technologie accessible a tous les Ivoiriens avec des prix competitifs, un service apres-vente reactif et une livraison rapide partout a Abidjan.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div style="background:var(--off);border-radius:6px;padding:1rem">
+            <div style="font-size:0.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:5px">Localisation</div>
+            <div style="font-size:0.85rem;font-weight:700;color:var(--navy)">Cocody Riviera 3, Abidjan</div>
+          </div>
+          <div style="background:var(--off);border-radius:6px;padding:1rem">
+            <div style="font-size:0.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:5px">Membre depuis</div>
+            <div style="font-size:0.85rem;font-weight:700;color:var(--navy)">Mars 2023</div>
+          </div>
+          <div style="background:var(--off);border-radius:6px;padding:1rem">
+            <div style="font-size:0.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:5px">Paiements acceptes</div>
+            <div style="font-size:0.85rem;font-weight:700;color:var(--navy)">Orange, MTN, Wave, Moov, Visa</div>
+          </div>
+          <div style="background:var(--off);border-radius:6px;padding:1rem">
+            <div style="font-size:0.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--gray);margin-bottom:5px">Delai de reponse</div>
+            <div style="font-size:0.85rem;font-weight:700;color:var(--navy)">Moins de 2 heures</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="seller-sidebar">
+    <div class="seller-info-card">
+      <div class="seller-info-title">Note globale</div>
+      <div class="seller-rating-big">
+        <div class="seller-rating-num">4.8</div>
+        <div class="seller-rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="seller-rating-count">287 avis vérifiés</div>
+      </div>
+      <div class="rating-bars">
+        <div class="rating-bar-row">5 &#9733; <div class="rating-bar-track"><div class="rating-bar-fill" style="width:78%"></div></div> 78%</div>
+        <div class="rating-bar-row">4 &#9733; <div class="rating-bar-track"><div class="rating-bar-fill" style="width:14%"></div></div> 14%</div>
+        <div class="rating-bar-row">3 &#9733; <div class="rating-bar-track"><div class="rating-bar-fill" style="width:5%"></div></div> 5%</div>
+        <div class="rating-bar-row">2 &#9733; <div class="rating-bar-track"><div class="rating-bar-fill" style="width:2%"></div></div> 2%</div>
+        <div class="rating-bar-row">1 &#9733; <div class="rating-bar-track"><div class="rating-bar-fill" style="width:1%"></div></div> 1%</div>
+      </div>
+    </div>
+
+    <div class="seller-info-card">
+      <div class="seller-info-title">Informations</div>
+      <div class="seller-info-row">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div><div class="seller-info-label">Localisation</div><div class="seller-info-val">Cocody, Abidjan</div></div>
+      </div>
+      <div class="seller-info-row">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/></svg>
+        <div><div class="seller-info-label">Livraison</div><div class="seller-info-val">24-48h Abidjan</div></div>
+      </div>
+      <div class="seller-info-row">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <div><div class="seller-info-label">Reponse</div><div class="seller-info-val">Moins de 2h</div></div>
+      </div>
+      <div class="seller-info-row">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div><div class="seller-info-label">Garantie</div><div class="seller-info-val">Produits authentiques</div></div>
+      </div>
+    </div>
+
+    <div class="seller-info-card">
+      <div class="seller-info-title">Contacter le vendeur</div>
+      <p style="font-size:0.78rem;color:var(--gray);margin-bottom:1rem;line-height:1.6">Posez vos questions directement a TechCI Pro avant d'acheter.</p>
+      <textarea placeholder="Votre question sur un produit..." style="width:100%;height:90px;border:1.5px solid var(--lgray);border-radius:4px;padding:10px;font-family:'Montserrat',sans-serif;font-size:0.82rem;resize:none;outline:none;margin-bottom:0.8rem" onfocus="this.style.borderColor='var(--blue)'"></textarea>
+      <button onclick="alert('Message envoye ! Le vendeur vous repondra sous 2h.')" style="width:100%;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:4px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.8px;cursor:pointer;transition:background .2s" onmouseover="this.style.background='var(--red)'" onmouseout="this.style.background='var(--navy)'">Envoyer le message</button>
+    </div>
+  </div>
+
+</div>
+
+<div id="footer-slot"></div>
+<script src="api.js"></script>
+<script src="components.js"></script>
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.seller-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.seller-tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+
+  function toggleFollow(btn) {
+    if (!btn) btn = document.getElementById('follow-btn');
+    const isFollowing = btn.classList.contains('is-following');
+    const label       = document.getElementById('follow-label');
+    const icon        = document.getElementById('follow-icon');
+    const perks       = document.getElementById('follow-perks');
+    const countEl     = document.getElementById('follow-count');
+    const statEl      = document.getElementById('stat-abonnes');
+
+    let count = parseInt((countEl?.textContent || '1240').replace(/\D/g,'')) || 1240;
+
+    if (!isFollowing) {
+      // Abonner
+      btn.classList.add('is-following');
+      if (label)  label.textContent = 'Boutique suivie';
+      if (icon)   icon.innerHTML = '<polyline points="20 6 9 17 4 12"/>';
+      if (perks)  perks.classList.add('show');
+      count++;
+      if (countEl) countEl.textContent = count.toLocaleString('fr-FR');
+      if (statEl)  statEl.textContent  = count.toLocaleString('fr-FR');
+      showFollowToast('Vous suivez maintenant TechCI Pro !', 'follow-on');
+      // En prod : POST /api/vendeurs/:id/follow
+    } else {
+      // Désabonner
+      btn.classList.remove('is-following');
+      if (label)  label.textContent = 'Suivre la boutique';
+      if (icon)   icon.innerHTML = '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/><circle cx="12" cy="7" r="4"/>';
+      if (perks)  perks.classList.remove('show');
+      count = Math.max(0, count - 1);
+      if (countEl) countEl.textContent = count.toLocaleString('fr-FR');
+      if (statEl)  statEl.textContent  = count.toLocaleString('fr-FR');
+      showFollowToast('Vous ne suivez plus cette boutique', 'follow-off');
+      // En prod : DELETE /api/vendeurs/:id/follow
+    }
+  }
+
+  function showFollowToast(msg, type) {
+    const t = document.getElementById('follow-toast');
+    if (!t) return;
+    t.className = 'follow-toast ' + type;
+    t.innerHTML = (type === 'follow-on'
+      ? '<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
+      : '<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
+    ) + msg;
+    setTimeout(() => t.classList.add('show'), 10);
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+</script>
+<script src="script.js"></script>
+<script src="chatbot.js"></script>
+<script src="ux-improvements.js"></script>
+</body>
+</html>

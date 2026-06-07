@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="description" content="Studio Live — Lancez vos directs et créez vos vidéos courtes pour présenter vos produits sur Market Center Place."/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#0b1f4b"/>
+  <title>Studio Live &amp; Vidéos — Market Center Place</title>
+  <link rel="manifest" href="../manifest.json"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230b1f4b' rx='4'/><polyline points='6,26 6,10 16,18 26,10 26,26' stroke='%23e8282f' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/><circle cx='28' cy='6' r='3.5' fill='%23c8a84b'/></svg>" type="image/svg+xml"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../style.css"/>
+  <link rel="stylesheet" href="../nav.css"/>
+  <style>
+
+    /* ════════════════════════════════════
+       VARIABLES
+       ════════════════════════════════════ */
+    :root {
+      --navy:  #0b1f4b;
+      --navy2: #0d2558;
+      --red:   #c0202a;
+      --red2:  #e8282f;
+      --gold:  #c8a84b;
+      --green: #16a34a;
+      --white: #ffffff;
+      --off:   #f4f6fb;
+      --lgray: #e8edf5;
+      --gray:  #64748b;
+      --dark:  #080e20;
+      --live-red: #ff3b30;
+    }
+
+    /* ════════════════════════════════════
+       HERO VENDEUR
+       ════════════════════════════════════ */
+    .vendor-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #0d2558 100%);
+      padding: 2rem 2.5rem;
+      border-bottom: 3px solid var(--red);
+      position: relative;
+      overflow: hidden;
+    }
+    .vendor-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 500px 300px at 90% 50%, rgba(192,32,42,0.15), transparent 70%);
+    }
+    .vendor-hero-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .vendor-avatar {
+      width: 58px; height: 58px;
+      border-radius: 10px;
+      background: var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; font-weight: 900; color: white;
+      flex-shrink: 0;
+    }
+    .vendor-hero h1 { font-size: 1.4rem; font-weight: 900; color: white; letter-spacing: -0.3px; margin-bottom: 2px; }
+    .vendor-hero p  { color: rgba(255,255,255,.5); font-size: .78rem; }
+    .vendor-hero-badges { margin-left: auto; display: flex; gap: .6rem; align-items: center; }
+    .vendor-status-badge {
+      background: rgba(22,163,74,.2); border: 1px solid rgba(22,163,74,.4);
+      color: #4ade80; border-radius: 50px; padding: 5px 14px;
+      font-size: .65rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .vendor-certified-badge {
+      background: rgba(200,168,75,.2); border: 1px solid rgba(200,168,75,.5);
+      color: var(--gold); border-radius: 50px; padding: 5px 14px;
+      font-size: .65rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .vendor-certified-badge svg { stroke: var(--gold); }
+
+    /* ════════════════════════════════════
+       LAYOUT DASHBOARD
+       ════════════════════════════════════ */
+    .dashboard-layout {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem 2.5rem;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    /* ── SIDEBAR ── */
+    .vendor-nav {
+      background: white; border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+      position: sticky; top: 80px;
+      height: fit-content;
+    }
+    .vendor-nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: .85rem 1.2rem;
+      font-size: .76rem; font-weight: 700; color: var(--gray);
+      letter-spacing: .3px;
+      border-left: 3px solid transparent;
+      transition: all .2s;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .vendor-nav-item svg { stroke: currentColor; flex-shrink: 0; }
+    .vendor-nav-item:hover  { background: var(--off); color: var(--navy); }
+    .vendor-nav-item.active { background: var(--off); color: var(--navy); border-left-color: var(--red); font-weight: 800; }
+    .vendor-nav-badge {
+      margin-left: auto; background: var(--red); color: white;
+      border-radius: 99px; padding: 1px 7px; font-size: .6rem; font-weight: 900;
+    }
+    .vendor-nav-badge.live-badge {
+      background: var(--live-red);
+      animation: livePulse 1.5s ease infinite;
+    }
+    @keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+    .vendor-nav-sep { height: 1px; background: var(--lgray); }
+
+    /* ════════════════════════════════════
+       BLOC CERTIFICATION
+       ════════════════════════════════════ */
+    .certif-banner {
+      background: linear-gradient(135deg, #0b1f4b 0%, #1a3166 100%);
+      border-radius: 12px;
+      padding: 1.8rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .certif-banner::before {
+      content: '';
+      position: absolute;
+      right: -40px; top: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(200,168,75,.08);
+    }
+    .certif-icon {
+      width: 56px; height: 56px;
+      border-radius: 12px;
+      background: rgba(200,168,75,.15);
+      border: 1.5px solid rgba(200,168,75,.3);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .certif-icon svg { stroke: var(--gold); }
+    .certif-text { flex: 1; position: relative; z-index: 1; }
+    .certif-text h3 { font-size: .9rem; font-weight: 900; color: white; margin-bottom: .3rem; }
+    .certif-text p  { font-size: .75rem; color: rgba(255,255,255,.6); line-height: 1.6; }
+    .certif-progress-wrap { margin-top: .8rem; }
+    .certif-progress-bar {
+      height: 6px; background: rgba(255,255,255,.1);
+      border-radius: 99px; overflow: hidden;
+    }
+    .certif-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold), #e8c55a);
+      border-radius: 99px;
+      width: 75%;
+      transition: width 1s ease;
+    }
+    .certif-progress-label {
+      display: flex; justify-content: space-between;
+      font-size: .65rem; color: rgba(255,255,255,.4);
+      margin-top: .4rem;
+    }
+    .certif-progress-label strong { color: var(--gold); }
+    .certif-conditions {
+      margin-top: .8rem;
+      display: flex; gap: .5rem; flex-wrap: wrap;
+    }
+    .certif-cond {
+      display: flex; align-items: center; gap: 5px;
+      font-size: .65rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+    }
+    .certif-cond.done    { background: rgba(74,222,128,.15); color: #4ade80; border: 1px solid rgba(74,222,128,.3); }
+    .certif-cond.pending { background: rgba(255,255,255,.06); color: rgba(255,255,255,.4); border: 1px solid rgba(255,255,255,.12); }
+    .certif-cond svg { stroke: currentColor; }
+
+    /* Bannière vendeur certifié */
+    .certif-unlocked {
+      background: linear-gradient(135deg, #0f2a0a 0%, #1a3d12 100%);
+      border: 1.5px solid rgba(74,222,128,.3);
+    }
+    .certif-unlocked .certif-text h3 { color: #4ade80; }
+
+    /* ════════════════════════════════════
+       ONGLETS STUDIO
+       ════════════════════════════════════ */
+    .studio-tabs {
+      display: flex; gap: .4rem;
+      margin-bottom: 1.5rem;
+      background: white;
+      border-radius: 8px;
+      padding: .4rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+    .studio-tab {
+      flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px;
+      padding: .7rem 1rem;
+      border: none; border-radius: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .76rem; font-weight: 700;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all .2s;
+      background: none;
+    }
+    .studio-tab svg { stroke: currentColor; }
+    .studio-tab:hover { background: var(--off); color: var(--navy); }
+    .studio-tab.active {
+      background: var(--navy);
+      color: white;
+      box-shadow: 0 4px 12px rgba(11,31,75,.25);
+    }
+    .studio-tab.active.live { background: var(--live-red); box-shadow: 0 4px 12px rgba(255,59,48,.3); }
+
+    /* ════════════════════════════════════
+       PANNEAU DIRECT LIVE
+       ════════════════════════════════════ */
+    .studio-panel { display: none; }
+    .studio-panel.active { display: block; }
+
+    /* Zone principale live */
+    .live-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 1.2rem;
+    }
+
+    /* Prévisualisation caméra */
+    .camera-preview {
+      background: #000;
+      border-radius: 12px;
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .camera-placeholder {
+      text-align: center; color: rgba(255,255,255,.3);
+    }
+    .camera-placeholder svg { stroke: rgba(255,255,255,.2); margin-bottom: .8rem; }
+    .camera-placeholder p { font-size: .8rem; font-weight: 600; }
+    .camera-placeholder small { font-size: .68rem; opacity: .6; display: block; margin-top: .3rem; }
+
+    /* Overlay vidéo actif */
+    .camera-live-overlay {
+      position: absolute; inset: 0;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .camera-live-overlay video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    /* Badges overlay live */
+    .live-overlays {
+      position: absolute; inset: 0;
+      pointer-events: none;
+      padding: 1rem;
+    }
+    .live-badge-dot {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--live-red);
+      color: white; border-radius: 4px;
+      padding: 4px 10px;
+      font-size: .65rem; font-weight: 900;
+      letter-spacing: 1px; text-transform: uppercase;
+    }
+    .live-badge-dot::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: white;
+      animation: livePulse 1s ease infinite;
+    }
+    .live-viewers {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: rgba(0,0,0,.6); color: white;
+      border-radius: 4px; padding: 4px 10px;
+      font-size: .68rem; font-weight: 700;
+      margin-left: .5rem;
+    }
+    .live-duration {
+      position: absolute; bottom: 1rem; left: 1rem;
+      background: rgba(0,0,0,.7); color: white;
+      border-radius: 4px; padding: 4px 10px;
+      font-size: .72rem; font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      pointer-events: none;
+    }
+
+    /* Contrôles live */
+    .live-controls {
+      display: flex; align-items: center; gap: .6rem;
+      margin-top: .8rem; flex-wrap: wrap;
+    }
+    .ctrl-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 9px 16px;
+      border-radius: 6px; border: 1.5px solid var(--lgray);
+      background: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .72rem; font-weight: 800;
+      color: var(--gray);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .ctrl-btn svg { stroke: currentColor; flex-shrink: 0; }
+    .ctrl-btn:hover { border-color: var(--navy); color: var(--navy); }
+    .ctrl-btn.active { background: var(--navy); border-color: var(--navy); color: white; }
+    .ctrl-btn.muted  { background: #fef2f2; border-color: #fecaca; color: var(--red); }
+
+    .btn-start-live {
+      flex: 1; max-width: 180px;
+      padding: 11px;
+      border-radius: 6px; border: none;
+      background: var(--live-red);
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .78rem; font-weight: 900;
+      letter-spacing: .5px;
+      cursor: pointer;
+      transition: all .2s;
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+    }
+    .btn-start-live:hover { background: #e0332a; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,59,48,.35); }
+    .btn-start-live.is-live {
+      background: #374151;
+      animation: none;
+    }
+    .btn-start-live.is-live:hover { background: #1f2937; }
+
+    /* Paramètres du direct */
+    .live-settings {
+      background: white; border-radius: 8px;
+      padding: 1.2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      margin-top: .8rem;
+    }
+    .live-settings-title {
+      font-size: .65rem; font-weight: 900;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--navy); margin-bottom: 1rem;
+    }
+    .setting-row {
+      display: flex; align-items: center; gap: .8rem;
+      padding: .6rem 0;
+      border-bottom: 1px solid var(--lgray);
+    }
+    .setting-row:last-child { border-bottom: none; }
+    .setting-row label {
+      flex: 1; font-size: .76rem; font-weight: 700; color: var(--dark);
+    }
+    .setting-row small { display: block; font-size: .65rem; color: var(--gray); font-weight: 500; margin-top: 1px; }
+    .toggle-switch {
+      position: relative; width: 40px; height: 22px;
+      flex-shrink: 0;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0;
+      border-radius: 22px;
+      background: var(--lgray);
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .toggle-slider::after {
+      content: '';
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: white;
+      transition: transform .2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    }
+    .toggle-switch input:checked + .toggle-slider { background: var(--navy); }
+    .toggle-switch input:checked + .toggle-slider::after { transform: translateX(18px); }
+
+    /* ── CHAT EN DIRECT ── */
+    .live-chat {
+      background: white; border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      display: flex; flex-direction: column;
+      height: 100%;
+      min-height: 460px;
+    }
+    .live-chat-header {
+      padding: .9rem 1rem;
+      border-bottom: 1px solid var(--lgray);
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .live-chat-title { font-size: .78rem; font-weight: 900; color: var(--navy); flex: 1; }
+    .live-chat-count {
+      font-size: .65rem; font-weight: 700;
+      background: var(--off); border-radius: 99px;
+      padding: 2px 8px; color: var(--gray);
+    }
+    .live-chat-msgs {
+      flex: 1; overflow-y: auto;
+      padding: .8rem;
+      display: flex; flex-direction: column; gap: .5rem;
+    }
+    .live-chat-msgs::-webkit-scrollbar { width: 3px; }
+    .live-chat-msgs::-webkit-scrollbar-thumb { background: var(--lgray); border-radius: 99px; }
+    .chat-msg {
+      display: flex; gap: .5rem; align-items: flex-start;
+      animation: chatSlide .25s ease;
+    }
+    @keyframes chatSlide { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+    .chat-avatar {
+      width: 26px; height: 26px; border-radius: 50%;
+      font-size: .65rem; font-weight: 900; color: white;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .chat-body {}
+    .chat-name { font-size: .65rem; font-weight: 800; color: var(--navy); margin-bottom: 1px; }
+    .chat-name.vendor-name { color: var(--gold); }
+    .chat-text { font-size: .75rem; color: var(--dark); line-height: 1.5; }
+    .chat-text .emoji { font-size: .85rem; }
+    .chat-msg.pinned-msg .chat-text {
+      background: rgba(200,168,75,.1); border-left: 2px solid var(--gold);
+      padding: 3px 8px; border-radius: 0 4px 4px 0;
+    }
+    .live-chat-input {
+      padding: .8rem;
+      border-top: 1px solid var(--lgray);
+      display: flex; gap: .5rem;
+    }
+    .chat-inp {
+      flex: 1; border: 1.5px solid var(--lgray); border-radius: 20px;
+      padding: 7px 14px;
+      font-family: 'Montserrat', sans-serif; font-size: .75rem;
+      outline: none; color: var(--dark);
+      transition: border .2s;
+    }
+    .chat-inp:focus { border-color: var(--navy); }
+    .chat-send {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--navy); border: none;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+    .chat-send:hover { background: var(--red); }
+    .chat-send svg { stroke: white; }
+
+    /* Produits épinglés dans le live */
+    .pinned-products {
+      padding: .8rem 1rem;
+      border-top: 1px solid var(--lgray);
+    }
+    .pinned-label { font-size: .62rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--gray); margin-bottom: .5rem; }
+    .pinned-product-card {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .5rem;
+      border-radius: 6px;
+      border: 1.5px solid var(--lgray);
+      margin-bottom: .4rem;
+      cursor: pointer;
+      transition: border-color .2s;
+      position: relative;
+    }
+    .pinned-product-card:hover { border-color: var(--navy); }
+    .pinned-product-card img {
+      width: 42px; height: 42px;
+      border-radius: 4px; object-fit: cover;
+    }
+    .pinned-product-name { font-size: .73rem; font-weight: 700; color: var(--dark); line-height: 1.3; }
+    .pinned-product-price { font-size: .72rem; font-weight: 900; color: var(--red); }
+    .pinned-badge-live {
+      position: absolute; top: -5px; right: -5px;
+      background: var(--live-red); color: white;
+      border-radius: 3px; padding: 1px 5px;
+      font-size: .52rem; font-weight: 900;
+      letter-spacing: .5px; text-transform: uppercase;
+    }
+    .btn-pin-product {
+      width: 100%; padding: 8px;
+      border: 1.5px dashed var(--lgray);
+      border-radius: 6px; background: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .7rem; font-weight: 700;
+      color: var(--gray); cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-pin-product:hover { border-color: var(--navy); color: var(--navy); background: var(--off); }
+
+    /* Stats live temps réel */
+    .live-stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: .8rem; margin-top: .8rem;
+    }
+    .live-stat {
+      background: white; border-radius: 8px;
+      padding: .9rem 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      text-align: center;
+    }
+    .live-stat-val { font-size: 1.4rem; font-weight: 900; color: var(--navy); letter-spacing: -1px; }
+    .live-stat-val.red { color: var(--live-red); }
+    .live-stat-val.green { color: var(--green); }
+    .live-stat-lbl { font-size: .6rem; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: .8px; margin-top: 2px; }
+
+    /* ════════════════════════════════════
+       PANNEAU VIDÉOS COURTES
+       ════════════════════════════════════ */
+    .videos-grid-top {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .video-card {
+      position: relative;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #111;
+      aspect-ratio: 9/16;
+      cursor: pointer;
+      transition: transform .25s, box-shadow .25s;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    }
+    .video-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,.25); }
+    .video-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: opacity .3s;
+    }
+    .video-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.85) 0%, transparent 50%);
+    }
+    .video-info {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: .8rem;
+    }
+    .video-title { font-size: .7rem; font-weight: 800; color: white; line-height: 1.3; margin-bottom: .3rem; }
+    .video-stats { display: flex; gap: .7rem; }
+    .video-stat { font-size: .6rem; color: rgba(255,255,255,.7); font-weight: 600; display: flex; align-items: center; gap: 3px; }
+    .video-stat svg { stroke: rgba(255,255,255,.7); }
+    .video-badge {
+      position: absolute; top: .6rem; left: .6rem;
+      border-radius: 3px; padding: 2px 7px;
+      font-size: .58rem; font-weight: 900;
+      letter-spacing: .5px; text-transform: uppercase;
+    }
+    .video-badge.draft    { background: rgba(0,0,0,.6); color: rgba(255,255,255,.7); }
+    .video-badge.published{ background: var(--green); color: white; }
+    .video-badge.live-rec { background: var(--live-red); color: white; }
+
+    .video-play-btn {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,.15);
+      backdrop-filter: blur(6px);
+      border: 1.5px solid rgba(255,255,255,.3);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: opacity .2s;
+    }
+    .video-card:hover .video-play-btn { opacity: 1; }
+    .video-play-btn svg { stroke: white; margin-left: 2px; }
+
+    /* Carte upload */
+    .video-card-upload {
+      border: 2px dashed var(--lgray);
+      border-radius: 10px;
+      aspect-ratio: 9/16;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .6rem;
+      cursor: pointer;
+      transition: all .2s;
+      background: white;
+      text-decoration: none;
+    }
+    .video-card-upload:hover { border-color: var(--navy); background: var(--off); }
+    .video-card-upload svg { stroke: var(--lgray); transition: stroke .2s; }
+    .video-card-upload:hover svg { stroke: var(--navy); }
+    .video-card-upload span { font-size: .7rem; font-weight: 700; color: var(--gray); text-align: center; line-height: 1.4; }
+
+    /* ── ÉDITEUR VIDÉO ── */
+    .video-editor {
+      background: white; border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      margin-bottom: 1.5rem;
+    }
+    .video-editor-title {
+      font-size: .78rem; font-weight: 900; color: var(--navy);
+      margin-bottom: 1.2rem;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .video-editor-title svg { stroke: var(--navy); }
+    .editor-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .form-group-vid label {
+      font-size: .65rem; font-weight: 800;
+      color: var(--navy); letter-spacing: .5px;
+      text-transform: uppercase; display: block; margin-bottom: .4rem;
+    }
+    .form-group-vid input,
+    .form-group-vid textarea,
+    .form-group-vid select {
+      width: 100%; padding: 9px 12px;
+      border: 1.5px solid var(--lgray);
+      border-radius: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .8rem; color: var(--dark);
+      outline: none; transition: border .2s;
+      background: var(--off);
+    }
+    .form-group-vid input:focus,
+    .form-group-vid textarea:focus,
+    .form-group-vid select:focus { border-color: var(--navy); background: white; }
+    .form-group-vid textarea { resize: vertical; min-height: 80px; }
+    .products-tag-list { display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .5rem; }
+    .product-tag {
+      display: flex; align-items: center; gap: 5px;
+      background: var(--off); border: 1.5px solid var(--lgray);
+      border-radius: 20px; padding: 4px 10px;
+      font-size: .68rem; font-weight: 700; color: var(--navy);
+    }
+    .product-tag button {
+      background: none; border: none; cursor: pointer;
+      color: var(--gray); padding: 0; line-height: 1; font-size: .75rem;
+    }
+    .product-tag button:hover { color: var(--red); }
+    .editor-actions { display: flex; gap: .6rem; margin-top: 1.2rem; }
+    .btn-editor {
+      padding: 10px 20px; border-radius: 6px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .74rem; font-weight: 800;
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-editor.primary { background: var(--navy); color: white; border: none; }
+    .btn-editor.primary:hover { background: var(--red); }
+    .btn-editor.secondary { background: white; color: var(--gray); border: 1.5px solid var(--lgray); }
+    .btn-editor.secondary:hover { border-color: var(--navy); color: var(--navy); }
+    .btn-editor.publish { background: var(--green); color: white; border: none; }
+    .btn-editor.publish:hover { background: #15803d; }
+
+    /* ════════════════════════════════════
+       PANNEAU REPLAYS
+       ════════════════════════════════════ */
+    .replays-table { width: 100%; border-collapse: collapse; }
+    .replays-table th {
+      font-size: .6rem; font-weight: 800;
+      letter-spacing: 1.2px; text-transform: uppercase;
+      color: var(--gray); padding: .7rem 1rem;
+      background: var(--off); border-bottom: 2px solid var(--lgray);
+      text-align: left;
+    }
+    .replays-table td {
+      padding: .85rem 1rem;
+      border-bottom: 1px solid var(--lgray);
+      font-size: .78rem; vertical-align: middle;
+    }
+    .replays-table tr:last-child td { border-bottom: none; }
+    .replays-table tr:hover td { background: #fafbff; }
+    .replay-thumb {
+      width: 60px; height: 36px; border-radius: 4px;
+      object-fit: cover; background: #111;
+    }
+    .replay-duration {
+      display: inline-block;
+      background: rgba(0,0,0,.7); color: white;
+      border-radius: 3px; padding: 1px 5px;
+      font-size: .6rem; font-weight: 700;
+      position: absolute; bottom: 3px; right: 3px;
+    }
+    .replay-thumb-wrap { position: relative; display: inline-block; }
+    .status-pill {
+      border-radius: 99px; padding: 3px 10px;
+      font-size: .6rem; font-weight: 800;
+      letter-spacing: .5px; text-transform: uppercase;
+    }
+    .status-pill.published { background: #dcfce7; color: var(--green); }
+    .status-pill.draft     { background: var(--off); color: var(--gray); }
+    .status-pill.scheduled { background: #dbeafe; color: #1d4ed8; }
+    .table-action-btn {
+      background: none; border: 1.5px solid var(--lgray);
+      border-radius: 4px; padding: 4px 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: .65rem; font-weight: 700;
+      color: var(--gray); cursor: pointer;
+      transition: all .2s; margin-right: .3rem;
+    }
+    .table-action-btn:hover { border-color: var(--navy); color: var(--navy); }
+    .table-action-btn.danger:hover { border-color: var(--red); color: var(--red); }
+
+    /* ════════════════════════════════════
+       MODAL PIN PRODUIT
+       ════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(8,14,32,.6);
+      z-index: 9000;
+      display: flex; align-items: center; justify-content: center;
+      animation: fadeIn .2s ease;
+      backdrop-filter: blur(3px);
+    }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .modal-overlay.hidden { display: none; }
+    .modal-box {
+      background: white; border-radius: 12px;
+      padding: 1.8rem; width: 100%; max-width: 480px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.3);
+      animation: modalPop .3s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes modalPop { from{opacity:0;transform:scale(.93)} to{opacity:1;transform:scale(1)} }
+    .modal-title { font-size: .9rem; font-weight: 900; color: var(--navy); margin-bottom: .3rem; }
+    .modal-sub   { font-size: .75rem; color: var(--gray); margin-bottom: 1.2rem; }
+    .modal-product-list { display: flex; flex-direction: column; gap: .5rem; max-height: 300px; overflow-y: auto; }
+    .modal-product-item {
+      display: flex; align-items: center; gap: .8rem;
+      padding: .7rem; border-radius: 6px;
+      border: 1.5px solid var(--lgray);
+      cursor: pointer; transition: all .2s;
+    }
+    .modal-product-item:hover { border-color: var(--navy); background: var(--off); }
+    .modal-product-item.selected { border-color: var(--navy); background: rgba(11,31,75,.05); }
+    .modal-product-item img {
+      width: 44px; height: 44px;
+      border-radius: 4px; object-fit: cover;
+    }
+    .modal-product-item-name  { font-size: .78rem; font-weight: 700; color: var(--dark); }
+    .modal-product-item-price { font-size: .75rem; font-weight: 900; color: var(--red); }
+    .modal-actions { display: flex; gap: .6rem; margin-top: 1.2rem; justify-content: flex-end; }
+    .btn-modal { padding: 9px 20px; border-radius: 5px; font-family: 'Montserrat', sans-serif; font-size: .74rem; font-weight: 800; cursor: pointer; transition: all .2s; }
+    .btn-modal.cancel { background: white; color: var(--gray); border: 1.5px solid var(--lgray); }
+    .btn-modal.cancel:hover { border-color: var(--gray); }
+    .btn-modal.confirm { background: var(--navy); color: white; border: none; }
+    .btn-modal.confirm:hover { background: var(--red); }
+
+    /* ════════════════════════════════════
+       TOAST
+       ════════════════════════════════════ */
+    .toast-notif {
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      background: var(--navy); color: white;
+      border-radius: 8px; padding: .9rem 1.3rem;
+      font-size: .78rem; font-weight: 700;
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      z-index: 9999;
+      transform: translateY(100px) scale(.95);
+      transition: transform .35s cubic-bezier(.34,1.2,.64,1), opacity .25s;
+      opacity: 0;
+      display: flex; align-items: center; gap: .6rem;
+    }
+    .toast-notif.show { transform: translateY(0) scale(1); opacity: 1; }
+    .toast-notif.success { background: var(--green); }
+    .toast-notif.error   { background: var(--live-red); }
+
+    /* ════════════════════════════════════
+       RESPONSIVE
+       ════════════════════════════════════ */
+    @media(max-width: 1100px) {
+      .live-grid { grid-template-columns: 1fr; }
+      .live-stats-row { grid-template-columns: repeat(2,1fr); }
+    }
+    @media(max-width: 900px) {
+      .dashboard-layout { grid-template-columns: 1fr; padding: 1rem; }
+      .vendor-nav { position: static; display: flex; overflow-x: auto; }
+      .vendor-nav-sep { display: none; }
+      .videos-grid-top { grid-template-columns: repeat(3,1fr); }
+      .editor-row { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <style id="gsap-extra">
+    /* Gloss sur les cartes */
+    .prod-card, .mode-card { transform-style: preserve-3d; }
+    .card-gloss {
+      position: absolute; inset: 0; border-radius: inherit;
+      pointer-events: none; z-index: 2;
+      transition: background .1s;
+    }
+    /* Barre progression */
+    #progress { transform-origin: left; }
+    /* Overflow hidden pour split text */
+    .hero h1 .line { display: block; overflow: hidden; }
+    /* Curseur */
+    #cursor     { position: fixed; pointer-events: none; z-index: 99999; width: 8px; height: 8px; border-radius: 50%; background: #c0202a; transform: translate(-50%, -50%); }
+    #cursorRing { position: fixed; pointer-events: none; z-index: 99998; width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid rgba(192,32,42,.5); transform: translate(-50%, -50%); }
+    /* Page overlay GSAP */
+    #gsap-page-overlay { border-radius: 0 !important; }
+    /* Sections */
+    .word { overflow: hidden; display: inline-block; }
+  </style>
+  <link rel="stylesheet" href="../components.css"/>
+  <link rel="stylesheet" href="../mobile.css"/>
+  <meta property="og:type"        content="website"/>
+  <meta property="og:site_name"   content="Market Center Place"/>
+  <meta property="og:locale"      content="fr_CI"/>
+  <meta property="og:description" content="Studio Live — Vendez en direct sur Market Center Place et touchez vos acheteurs en temps réel."/>
+  <meta name="twitter:card"       content="summary_large_image"/>
+</head>
+<body>
+
+<div id="progress"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<div id="header-slot" data-page=""></div>
+
+<!-- HERO VENDEUR -->
+<div class="vendor-hero">
+  <div class="vendor-hero-inner">
+    <div class="vendor-avatar">TC</div>
+    <div>
+      <h1>TechCI Pro &mdash; Studio Live</h1>
+      <p>Presentez vos produits en direct &bull; Créez des videos courtes &bull; Touchez vos clients en temps réel</p>
+    </div>
+    <div class="vendor-hero-badges">
+      <span class="vendor-certified-badge">
+        <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Vendeur certifié
+      </span>
+      <span class="vendor-status-badge">Vendeur actif</span>
+    </div>
+  </div>
+</div>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <div class="breadcrumb-inner">
+    <a href="../index.html">Accueil</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <a href="dashboard.html">Espace Vendeur</a>
+    <span class="breadcrumb-sep">&#8250;</span>
+    <span>Studio Live &amp; Videos</span>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="dashboard-layout">
+
+  <!-- SIDEBAR -->
+  <nav class="vendor-nav">
+    <a class="vendor-nav-item" href="dashboard.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Tableau de bord
+    </a>
+    <a class="vendor-nav-item" href="produits.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/></svg>
+      Mes produits
+    </a>
+    <a class="vendor-nav-item" href="commandes.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+      Commandes
+      <span class="vendor-nav-badge">5</span>
+    </a>
+    <a class="vendor-nav-item" href="dashboard.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Revenus
+    </a>
+    <div class="vendor-nav-sep"></div>
+    <a class="vendor-nav-item active" href="live.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+      Studio Live
+      <span class="vendor-nav-badge live-badge">LIVE</span>
+    </a>
+    <a class="vendor-nav-item" href="../profil-vendeur.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Mon profil
+    </a>
+    <a class="vendor-nav-item" href="dashboard.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+      Parametres
+    </a>
+    <div class="vendor-nav-sep"></div>
+    <a class="vendor-nav-item" href="../index.html">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      retour boutique
+    </a>
+  </nav>
+
+  <!-- CONTENU PRINCIPAL -->
+  <div>
+
+    <!-- BANNIÈRE CERTIFICATION -->
+    <div class="certif-banner certif-unlocked" id="certif-banner">
+      <div class="certif-icon">
+        <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+      </div>
+      <div class="certif-text">
+        <h3>Vendeur certifié — Studio Live déverrouillé</h3>
+        <p>Toutes les conditions sont remplies. Vous pouvez lancer des directs et publier des vidéos courtes pour présenter vos produits à vos clients en temps réel.</p>
+        <div class="certif-conditions">
+          <span class="certif-cond done"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 50+ commandes</span>
+          <span class="certif-cond done"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Note 4.5/5 minimum</span>
+          <span class="certif-cond done"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Compte verifié</span>
+          <span class="certif-cond done"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 3 mois d'ancienneté</span>
+          <span class="certif-cond done"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Aucun litige en cours</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bannière non certifié (cachée par défaut) -->
+    <div class="certif-banner" id="certif-pending" style="display:none">
+      <div class="certif-icon">
+        <svg width="26" height="26" fill="none" viewBox="0 0 24 24" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="certif-text">
+        <h3>Debloquez le Studio Live</h3>
+        <p>Remplissez toutes les conditions pour accéder aux directs et aux videos courtes. <strong id="certif-pct" style="color:var(--gold)">75% complétés.</strong></p>
+        <div class="certif-progress-wrap">
+          <div class="certif-progress-bar"><div class="certif-progress-fill" id="certif-fill"></div></div>
+          <div class="certif-progress-label"><span>Progression</span><strong id="certif-done">3/4 conditions</strong></div>
+        </div>
+        <div class="certif-conditions" id="certif-cond-list"></div>
+      </div>
+    </div>
+
+    <!-- ONGLETS STUDIO -->
+    <div class="studio-tabs">
+      <button class="studio-tab live active" id="tab-live" onclick="switchTab('live')">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+        Direct Live
+      </button>
+      <button class="studio-tab" id="tab-videos" onclick="switchTab('videos')">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+        Videos courtes
+      </button>
+      <button class="studio-tab" id="tab-replays" onclick="switchTab('replays')">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg>
+        Replays &amp; archives
+      </button>
+      <button class="studio-tab" id="tab-stats" onclick="switchTab('stats')">
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Statistiques
+      </button>
+    </div>
+
+    <!-- ════ PANNEAU DIRECT LIVE ════ -->
+    <div class="studio-panel active" id="panel-live">
+
+      <div class="live-grid">
+
+        <!-- Colonne gauche : caméra + contrôles -->
+        <div>
+          <!-- Prévisualisation -->
+          <div class="camera-preview" id="camera-preview">
+            <div class="camera-placeholder" id="camera-placeholder">
+              <svg width="52" height="52" fill="none" viewBox="0 0 24 24" stroke-width="1.2"><path d="M23 7L16 12 23 17V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              <p>Caméra non démarrée</p>
+              <small>Cliquez sur "Activer caméra" pour commencer</small>
+            </div>
+
+            <!-- Overlay live (caché par défaut) -->
+            <div class="camera-live-overlay" id="live-overlay" style="display:none">
+              <video id="live-video" autoplay muted playsinline></video>
+            </div>
+
+            <!-- Badges live (cachés par défaut) -->
+            <div class="live-overlays" id="live-overlays" style="display:none">
+              <div style="display:flex;align-items:center;gap:.4rem">
+                <span class="live-badge-dot">LIVE</span>
+                <span class="live-viewers">
+                  <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  <span id="viewers-count">0</span>
+                </span>
+              </div>
+              <div class="live-duration" id="live-duration">00:00</div>
+            </div>
+          </div>
+
+          <!-- Contrôles -->
+          <div class="live-controls">
+            <button class="ctrl-btn" id="btn-camera" onclick="toggleCamera()">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M23 7L16 12 23 17V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              Activer caméra
+            </button>
+            <button class="ctrl-btn" id="btn-mic" onclick="toggleMic()">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+              Micro actif
+            </button>
+            <button class="ctrl-btn" id="btn-screen" onclick="toggleScreenShare()">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              Partager ecran
+            </button>
+            <button class="btn-start-live" id="btn-go-live" onclick="toggleLive()">
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4" fill="currentColor"/></svg>
+              <span id="live-btn-text">Lancer le direct</span>
+            </button>
+          </div>
+
+          <!-- Paramètres du direct -->
+          <div class="live-settings">
+            <div class="live-settings-title">Paramètres du direct</div>
+            <div class="setting-row">
+              <label>Titre du direct <small>Visible par vos clients</small></label>
+              <input type="text" id="live-title" value="Nouvelles arrivées TechCI Pro !" style="border:1.5px solid var(--lgray);border-radius:5px;padding:6px 10px;font-family:Montserrat,sans-serif;font-size:.75rem;outline:none;width:220px" onchange="updateLiveTitle(this.value)"/>
+            </div>
+            <div class="setting-row">
+              <label>Autoriser les commentaires <small>Les clients peuvent ecrire en direct</small></label>
+              <label class="toggle-switch"><input type="checkbox" id="toggle-comments" checked/><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <label>Afficher les prix des produits <small>Prix visible sur l'image</small></label>
+              <label class="toggle-switch"><input type="checkbox" id="toggle-prices" checked/><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <label>Enregistrer le replay <small>Disponible apres le direct</small></label>
+              <label class="toggle-switch"><input type="checkbox" id="toggle-replay" checked/><span class="toggle-slider"></span></label>
+            </div>
+            <div class="setting-row">
+              <label>qualité video <small>HD recommande</small></label>
+              <select id="select-quality" style="border:1.5px solid var(--lgray);border-radius:5px;padding:5px 10px;font-family:Montserrat,sans-serif;font-size:.75rem;outline:none">
+                <option value="720p">720p HD</option>
+                <option value="1080p">1080p Full HD</option>
+                <option value="480p">480p Standard</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Colonne droite : chat + produits épinglés -->
+        <div style="display:flex;flex-direction:column;gap:1rem">
+
+          <!-- Chat en direct -->
+          <div class="live-chat">
+            <div class="live-chat-header">
+              <div class="live-chat-title">Chat en direct</div>
+              <span class="live-chat-count" id="chat-count">0 spectateurs</span>
+            </div>
+            <div class="live-chat-msgs" id="chat-msgs">
+              <div style="text-align:center;padding:2rem;color:var(--gray);font-size:.75rem">
+                Le chat apparaitra ici une fois le direct lancé.
+              </div>
+            </div>
+            <div class="live-chat-input">
+              <input type="text" class="chat-inp" id="chat-input" placeholder="Repondre au chat..." onkeydown="if(event.key==='Enter') sendChatMsg()"/>
+              <button class="chat-send" onclick="sendChatMsg()">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2.2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Produits épinglés -->
+          <div class="live-chat" style="height:auto">
+            <div class="live-chat-header">
+              <div class="live-chat-title">Produits a la une</div>
+              <span class="live-chat-count">Epingles dans le direct</span>
+            </div>
+            <div class="pinned-products" id="pinned-products-list">
+              <div class="pinned-product-card">
+                <img loading="lazy" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=80&q=80" alt="Smartphone"/>
+                <div style="flex:1">
+                  <div class="pinned-product-name">Smartphone Android 128 Go</div>
+                  <div class="pinned-product-price">89 000 FCFA</div>
+                </div>
+                <span class="pinned-badge-live">A la une</span>
+              </div>
+              <div class="pinned-product-card">
+                <img loading="lazy" src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=80&q=80" alt="Ecouteurs"/>
+                <div style="flex:1">
+                  <div class="pinned-product-name">Ecouteurs Bluetooth 5.3</div>
+                  <div class="pinned-product-price">24 000 FCFA</div>
+                </div>
+              </div>
+              <button class="btn-pin-product" onclick="openPinModal()">
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" style="vertical-align:middle;margin-right:5px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Epingler un produit
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Stats en temps réel -->
+      <div class="live-stats-row">
+        <div class="live-stat">
+          <div class="live-stat-val red" id="stat-viewers">0</div>
+          <div class="live-stat-lbl">Spectateurs</div>
+        </div>
+        <div class="live-stat">
+          <div class="live-stat-val" id="stat-peak">0</div>
+          <div class="live-stat-lbl">Pic de connexions</div>
+        </div>
+        <div class="live-stat">
+          <div class="live-stat-val green" id="stat-orders">0</div>
+          <div class="live-stat-lbl">Commandes live</div>
+        </div>
+        <div class="live-stat">
+          <div class="live-stat-val" id="stat-revenue">0</div>
+          <div class="live-stat-lbl">CA en direct (FCFA)</div>
+        </div>
+      </div>
+
+    </div><!-- /panel-live -->
+
+    <!-- ════ PANNEAU VIDÉOS COURTES ════ -->
+    <div class="studio-panel" id="panel-videos">
+
+      <!-- Éditeur de publication -->
+      <div class="video-editor">
+        <div class="video-editor-title">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          Publier une nouvelle video
+        </div>
+        <div class="editor-row">
+          <div class="form-group-vid">
+            <label>Titre de la video *</label>
+            <input type="text" id="vid-title" placeholder="Ex: Découvrez nos nouvelles robes Wax !"/>
+          </div>
+          <div class="form-group-vid">
+            <label>catégorie</label>
+            <select id="vid-cat">
+              <option>Presentation produit</option>
+              <option>Tutoriel utilisation</option>
+              <option>Unboxing</option>
+              <option>Promotion speciale</option>
+              <option>Derriere la boutique</option>
+            </select>
+          </div>
+        </div>
+        <div class="editor-row">
+          <div class="form-group-vid">
+            <label>Description</label>
+            <textarea id="vid-desc" placeholder="Decrivez votre video, ajoutez les details cles..."></textarea>
+          </div>
+          <div class="form-group-vid">
+            <label>Fichier video</label>
+            <div style="border:2px dashed var(--lgray);border-radius:6px;padding:1.5rem;text-align:center;cursor:pointer;transition:all .2s" id="upload-zone" onclick="document.getElementById('vid-file').click()" ondragover="event.preventDefault();this.style.borderColor='var(--navy)'" ondragleave="this.style.borderColor='var(--lgray)'" ondrop="handleDrop(event)">
+              <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="var(--lgray)"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+              <p style="font-size:.74rem;color:var(--gray);margin-top:.5rem;font-weight:600" id="upload-label">Glissez votre video ici ou cliquez</p>
+              <small style="font-size:.62rem;color:var(--lgray)">MP4, MOV — Max 500 Mo — Format vertical 9:16 recommande</small>
+              <input type="file" id="vid-file" accept="video/*" style="display:none" onchange="handleFileSelect(this)"/>
+            </div>
+          </div>
+        </div>
+        <div class="form-group-vid" style="margin-bottom:.8rem">
+          <label>Produits associes (max 5)</label>
+          <div class="products-tag-list" id="vid-products-list">
+            <span class="product-tag">Smartphone Android <button onclick="removeProductTag(this)">&#10005;</button></span>
+            <span class="product-tag">Ecouteurs BT <button onclick="removeProductTag(this)">&#10005;</button></span>
+          </div>
+          <button style="margin-top:.5rem;background:none;border:1.5px dashed var(--lgray);border-radius:20px;padding:4px 14px;font-family:Montserrat,sans-serif;font-size:.68rem;font-weight:700;color:var(--gray);cursor:pointer" onclick="openPinModal('video')">+ Associer un produit</button>
+        </div>
+        <div class="editor-actions">
+          <button class="btn-editor secondary" onclick="saveDraft()">Enregistrer brouillon</button>
+          <button class="btn-editor primary"   onclick="previewVideo()">Apercu</button>
+          <button class="btn-editor publish"   onclick="publishVideo()">Publier maintenant</button>
+        </div>
+      </div>
+
+      <!-- Grille vidéos -->
+      <div style="margin-bottom:.8rem;font-size:.8rem;font-weight:900;color:var(--navy)">
+        Mes videos publiees <span style="font-size:.7rem;font-weight:600;color:var(--gray)">(6 videos)</span>
+      </div>
+      <div class="videos-grid-top" id="videos-grid">
+
+        <button class="video-card-upload">
+          <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+          <span>Nouvelle video</span>
+        </button>
+
+        <!-- Vidéos existantes -->
+        <div class="video-card" onclick="previewVideoCard(this)">
+          <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&q=80" alt="Smartphone" loading="lazy"/>
+          <div class="video-overlay"></div>
+          <span class="video-badge published">Publiee</span>
+          <div class="video-play-btn"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white"/></svg></div>
+          <div class="video-info">
+            <div class="video-title">Test de l'iPhone de qualité a prix accessible</div>
+            <div class="video-stats">
+              <span class="video-stat"><svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg> 2 450</span>
+              <span class="video-stat"><svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l7.78-7.78a5.5 5.5 0 0 0 0-7.78z"/></svg> 189</span>
+              <span class="video-stat"><svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> 67</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-card" onclick="previewVideoCard(this)">
+          <img src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=300&q=80" alt="Ecouteurs" loading="lazy"/>
+          <div class="video-overlay"></div>
+          <span class="video-badge live-rec">Replay live</span>
+          <div class="video-play-btn"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white"/></svg></div>
+          <div class="video-info">
+            <div class="video-title">Direct — Nouveaux ecouteurs BT 5.3</div>
+            <div class="video-stats">
+              <span class="video-stat"><svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg> 1 820</span>
+              <span class="video-stat"><svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l7.78-7.78a5.5 5.5 0 0 0 0-7.78z"/></svg> 134</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-card" onclick="previewVideoCard(this)">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&q=80" alt="Montre" loading="lazy"/>
+          <div class="video-overlay"></div>
+          <span class="video-badge published">Publiee</span>
+          <div class="video-play-btn"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white"/></svg></div>
+          <div class="video-info">
+            <div class="video-title">Unboxing montre connectee sport</div>
+            <div class="video-stats">
+              <span class="video-stat"><svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg> 3 210</span>
+              <span class="video-stat"><svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l7.78-7.78a5.5 5.5 0 0 0 0-7.78z"/></svg> 276</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-card" onclick="previewVideoCard(this)">
+          <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&q=80" alt="Ordinateur" loading="lazy"/>
+          <div class="video-overlay"></div>
+          <span class="video-badge draft">Brouillon</span>
+          <div class="video-play-btn"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white"/></svg></div>
+          <div class="video-info">
+            <div class="video-title">Guide achat ordinateur portable 2025</div>
+            <div class="video-stats">
+              <span class="video-stat" style="opacity:.5">Non publiee</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-card" onclick="previewVideoCard(this)">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80" alt="Chargeur" loading="lazy"/>
+          <div class="video-overlay"></div>
+          <span class="video-badge published">Publiee</span>
+          <div class="video-play-btn"><svg width="14" height="14" fill="none" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white"/></svg></div>
+          <div class="video-info">
+            <div class="video-title">Chargeur USB-C 65W — test rapide</div>
+            <div class="video-stats">
+              <span class="video-stat"><svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/></svg> 890</span>
+              <span class="video-stat"><svg width="10" height="10" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l7.78-7.78a5.5 5.5 0 0 0 0-7.78z"/></svg> 72</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /panel-videos -->
+
+    <!-- ════ PANNEAU REPLAYS ════ -->
+    <div class="studio-panel" id="panel-replays">
+      <div style="background:white;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.05);overflow:hidden">
+        <div style="padding:1rem 1.2rem;border-bottom:1px solid var(--lgray);display:flex;align-items:center;gap:1rem">
+          <span style="font-size:.78rem;font-weight:900;color:var(--navy);flex:1">Replays de directs &amp; videos archivees</span>
+          <input type="text" placeholder="Rechercher..." style="border:1.5px solid var(--lgray);border-radius:5px;padding:6px 12px;font-family:Montserrat,sans-serif;font-size:.75rem;outline:none;width:200px"/>
+        </div>
+        <table class="replays-table">
+          <thead>
+            <tr>
+              <th>Apercu</th>
+              <th>Titre</th>
+              <th>Type</th>
+              <th>Vues</th>
+              <th>Duree</th>
+              <th>Date</th>
+              <th>Statut</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="replays-tbody">
+            <tr>
+              <td>
+                <div class="replay-thumb-wrap">
+                  <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=120&q=70" class="replay-thumb" alt="Direct 1" loading="lazy"/>
+                  <span class="replay-duration">47:32</span>
+                </div>
+              </td>
+              <td style="font-weight:700;max-width:180px">Direct — Nouveaux smartphones disponibles</td>
+              <td><span style="font-size:.65rem;font-weight:700;background:#fef2f2;color:var(--red);padding:3px 8px;border-radius:3px">Direct</span></td>
+              <td style="font-weight:800">2 450</td>
+              <td style="color:var(--gray)">47 min</td>
+              <td style="color:var(--gray);font-size:.72rem">13 nov. 2025</td>
+              <td><span class="status-pill published">Publie</span></td>
+              <td>
+                <button class="table-action-btn">Voir</button>
+                <button class="table-action-btn">Editer</button>
+                <button class="table-action-btn danger">Supprimer</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="replay-thumb-wrap">
+                  <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=120&q=70" class="replay-thumb" alt="Video 2" loading="lazy"/>
+                  <span class="replay-duration">03:14</span>
+                </div>
+              </td>
+              <td style="font-weight:700;max-width:180px">Unboxing montre connectee sport</td>
+              <td><span style="font-size:.65rem;font-weight:700;background:#dbeafe;color:#1d4ed8;padding:3px 8px;border-radius:3px">Video</span></td>
+              <td style="font-weight:800">3 210</td>
+              <td style="color:var(--gray)">3 min</td>
+              <td style="color:var(--gray);font-size:.72rem">8 nov. 2025</td>
+              <td><span class="status-pill published">Publiee</span></td>
+              <td>
+                <button class="table-action-btn">Voir</button>
+                <button class="table-action-btn">Editer</button>
+                <button class="table-action-btn danger">Supprimer</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="replay-thumb-wrap">
+                  <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=120&q=70" class="replay-thumb" alt="Video 3" loading="lazy"/>
+                  <span class="replay-duration">05:48</span>
+                </div>
+              </td>
+              <td style="font-weight:700;max-width:180px">Guide achat ordinateur portable 2025</td>
+              <td><span style="font-size:.65rem;font-weight:700;background:#dbeafe;color:#1d4ed8;padding:3px 8px;border-radius:3px">Video</span></td>
+              <td style="font-weight:800">—</td>
+              <td style="color:var(--gray)">5 min</td>
+              <td style="color:var(--gray);font-size:.72rem">5 nov. 2025</td>
+              <td><span class="status-pill draft">Brouillon</span></td>
+              <td>
+                <button class="table-action-btn">Editer</button>
+                <button class="table-action-btn">Publier</button>
+                <button class="table-action-btn danger">Supprimer</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /panel-replays -->
+
+    <!-- ════ PANNEAU STATISTIQUES ════ -->
+    <div class="studio-panel" id="panel-stats">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem">
+        <div class="live-stat" style="text-align:center;background:white;border-radius:8px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+          <div class="live-stat-val" style="font-size:1.8rem;font-weight:900;color:var(--navy)">8 370</div>
+          <div class="live-stat-lbl">Vues totales</div>
+        </div>
+        <div class="live-stat" style="text-align:center;background:white;border-radius:8px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+          <div class="live-stat-val" style="font-size:1.8rem;font-weight:900;color:var(--green)">738</div>
+          <div class="live-stat-lbl">Likes totaux</div>
+        </div>
+        <div class="live-stat" style="text-align:center;background:white;border-radius:8px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+          <div class="live-stat-val" style="font-size:1.8rem;font-weight:900;color:var(--red)">47</div>
+          <div class="live-stat-lbl">Commandes via videos</div>
+        </div>
+        <div class="live-stat" style="text-align:center;background:white;border-radius:8px;padding:1.2rem;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+          <div class="live-stat-val" style="font-size:1.8rem;font-weight:900;color:var(--gold)">4 230<span style="font-size:.9rem">K</span></div>
+          <div class="live-stat-lbl">CA genere (FCFA)</div>
+        </div>
+      </div>
+      <div style="background:white;border-radius:8px;padding:1.5rem;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+        <div style="font-size:.72rem;font-weight:900;color:var(--navy);letter-spacing:-.2px;margin-bottom:1.2rem">Performance par video</div>
+        <div style="display:grid;grid-template-columns:1fr;gap:.6rem" id="stats-list">
+          <!-- Rendu par JS -->
+        </div>
+      </div>
+    </div><!-- /panel-stats -->
+
+  </div><!-- /contenu principal -->
+</div><!-- /dashboard-layout -->
+
+<!-- MODAL ÉPINGLER PRODUIT -->
+<div class="modal-overlay hidden" id="pin-modal" onclick="if(event.target===this)closePinModal()">
+  <div class="modal-box">
+    <div class="modal-title">Epingler un produit</div>
+    <div class="modal-sub">Choisissez un produit de votre boutique a mettre en avant pendant le direct.</div>
+    <div class="modal-product-list" id="modal-product-list">
+      <div class="modal-product-item" onclick="selectModalProduct(this,'Smartphone Android 128 Go','89 000 FCFA','https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=80&q=80')">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=80&q=80" alt="Smartphone"/>
+        <div><div class="modal-product-item-name">Smartphone Android 128 Go</div><div class="modal-product-item-price">89 000 FCFA</div></div>
+      </div>
+      <div class="modal-product-item" onclick="selectModalProduct(this,'Ecouteurs Bluetooth 5.3','24 000 FCFA','https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=80&q=80')">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=80&q=80" alt="Ecouteurs"/>
+        <div><div class="modal-product-item-name">Ecouteurs Bluetooth 5.3</div><div class="modal-product-item-price">24 000 FCFA</div></div>
+      </div>
+      <div class="modal-product-item" onclick="selectModalProduct(this,'Chargeur USB-C 65W','12 000 FCFA','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&q=80')">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=80&q=80" alt="Chargeur"/>
+        <div><div class="modal-product-item-name">Chargeur USB-C 65W</div><div class="modal-product-item-price">12 000 FCFA</div></div>
+      </div>
+      <div class="modal-product-item" onclick="selectModalProduct(this,'Montre connectee sport','45 000 FCFA','https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=80&q=80')">
+        <img loading="lazy" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=80&q=80" alt="Montre"/>
+        <div><div class="modal-product-item-name">Montre connectee sport</div><div class="modal-product-item-price">45 000 FCFA</div></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal cancel" onclick="closePinModal()">Annuler</button>
+      <button class="btn-modal confirm" onclick="confirmPin()">Epingler ce produit</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-notif" id="toast"></div>
+
+<div id="footer-slot"></div>
+<script src="../api.js"></script>
+<script src="../components.js"></script>
+<script>
+/* ════════════════════════════════════
+   ÉTAT GLOBAL
+   ════════════════════════════════════ */
+let isLive          = false;
+let isCameraOn      = false;
+let isMicOn         = true;
+let isScreenSharing = false;
+let liveStream      = null;
+let liveDurationSec = 0;
+let liveTimer       = null;
+let viewersInterval = null;
+let currentViewers  = 0;
+let peakViewers     = 0;
+let liveOrders      = 0;
+let liveRevenue     = 0;
+let pinModalMode    = 'live'; // 'live' ou 'video'
+let selectedProduct = null;
+let isCertified     = true; // Vendeur certifié par défaut dans la démo
+
+/* ════════════════════════════════════
+   INITIALISATION
+   ════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function() {
+  checkCertification();
+  renderStatsPanel();
+
+  if (typeof mcpBuildHeader === 'function') mcpBuildHeader();
+  if (typeof buildFooter    === 'function') buildFooter();
+  if (typeof mcpInitDropdowns === 'function') mcpInitDropdowns();
+});
+
+function checkCertification() {
+  // En production : récupérer le statut certifié depuis l'API
+  // const res = await MCP_API.request('GET', '/vendor/certification-status');
+  // isCertified = res?.certified === true;
+
+  if (isCertified) {
+    document.getElementById('certif-banner').style.display  = 'flex';
+    document.getElementById('certif-pending').style.display = 'none';
+  } else {
+    document.getElementById('certif-banner').style.display  = 'none';
+    document.getElementById('certif-pending').style.display = 'flex';
+    // Désactiver les onglets live/vidéos
+    document.querySelectorAll('.studio-tab').forEach(t => {
+      t.disabled = true;
+      t.style.opacity = '.4';
+      t.style.cursor  = 'not-allowed';
+    });
+    showToast('Remplissez les conditions de certification pour accéder au Studio Live.', 'error');
+  }
+}
+
+/* ════════════════════════════════════
+   NAVIGATION ONGLETS
+   ════════════════════════════════════ */
+function switchTab(tab) {
+  if (!isCertified) return;
+  document.querySelectorAll('.studio-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.studio-panel').forEach(p => p.classList.remove('active'));
+
+  const tabEl   = document.getElementById('tab-'   + tab);
+  const panelEl = document.getElementById('panel-' + tab);
+  if (tabEl)   tabEl.classList.add('active');
+  if (panelEl) panelEl.classList.add('active');
+
+  // Activer la couleur rouge pour l'onglet live
+  if (tabEl) tabEl.classList.toggle('live', tab === 'live');
+}
+
+/* ════════════════════════════════════
+   CAMÉRA
+   ════════════════════════════════════ */
+async function toggleCamera() {
+  const btn    = document.getElementById('btn-camera');
+  const video  = document.getElementById('live-video');
+  const overlay= document.getElementById('live-overlay');
+  const placeholder = document.getElementById('camera-placeholder');
+
+  if (!isCameraOn) {
+    try {
+      liveStream = await navigator.mediaDevices.getUserMedia({
+        video: { width: 1280, height: 720, facingMode: 'user' },
+        audio: true
+      });
+      video.srcObject = liveStream;
+      overlay.style.display      = 'flex';
+      placeholder.style.display  = 'none';
+      isCameraOn = true;
+      btn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M23 7L16 12 23 17V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg> Arreter caméra`;
+      btn.classList.add('active');
+      showToast('Caméra activée.', 'success');
+    } catch (err) {
+      showToast('Autorisation caméra refusée. Activez-la dans les paramètres du navigateur.', 'error');
+    }
+  } else {
+    stopCamera();
+    btn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M23 7L16 12 23 17V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg> Activer caméra`;
+    btn.classList.remove('active');
+  }
+}
+
+function stopCamera() {
+  if (liveStream) {
+    liveStream.getTracks().forEach(t => t.stop());
+    liveStream = null;
+  }
+  const video       = document.getElementById('live-video');
+  const overlay     = document.getElementById('live-overlay');
+  const placeholder = document.getElementById('camera-placeholder');
+  video.srcObject           = null;
+  overlay.style.display     = 'none';
+  placeholder.style.display = 'flex';
+  isCameraOn = false;
+}
+
+/* ════════════════════════════════════
+   MICRO
+   ════════════════════════════════════ */
+function toggleMic() {
+  const btn = document.getElementById('btn-mic');
+  if (liveStream) {
+    liveStream.getAudioTracks().forEach(t => { t.enabled = !t.enabled; });
+  }
+  isMicOn = !isMicOn;
+  if (isMicOn) {
+    btn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Micro actif`;
+    btn.classList.remove('muted');
+  } else {
+    btn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"/><path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Micro coupe`;
+    btn.classList.add('muted');
+  }
+}
+
+/* ════════════════════════════════════
+   PARTAGE D'ÉCRAN
+   ════════════════════════════════════ */
+async function toggleScreenShare() {
+  const btn = document.getElementById('btn-screen');
+  if (!isScreenSharing) {
+    try {
+      const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+      const video = document.getElementById('live-video');
+      video.srcObject = screenStream;
+      document.getElementById('live-overlay').style.display     = 'flex';
+      document.getElementById('camera-placeholder').style.display = 'none';
+      isScreenSharing = true;
+      btn.classList.add('active');
+      btn.textContent = 'Arreter partage';
+      screenStream.getVideoTracks()[0].onended = () => {
+        isScreenSharing = false;
+        btn.classList.remove('active');
+        btn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Partager ecran`;
+        if (liveStream && isCameraOn) video.srcObject = liveStream;
+      };
+    } catch {}
+  } else {
+    isScreenSharing = false;
+    btn.classList.remove('active');
+    btn.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Partager ecran`;
+    if (liveStream && isCameraOn) document.getElementById('live-video').srcObject = liveStream;
+  }
+}
+
+/* ════════════════════════════════════
+   LANCER / ARRÊTER LE DIRECT
+   ════════════════════════════════════ */
+function toggleLive() {
+  if (!isLive) {
+    startLive();
+  } else {
+    stopLive();
+  }
+}
+
+function startLive() {
+  const title = document.getElementById('live-title')?.value?.trim();
+  if (!title) { showToast('Donnez un titre à votre direct avant de commencer.', 'error'); return; }
+
+  isLive = true;
+  liveDurationSec = 0;
+  currentViewers  = 0;
+  peakViewers     = 0;
+  liveOrders      = 0;
+  liveRevenue     = 0;
+
+  // Afficher les overlays
+  document.getElementById('live-overlays').style.display = 'block';
+
+  // Changer le bouton
+  const btn  = document.getElementById('btn-go-live');
+  const text = document.getElementById('live-btn-text');
+  btn.classList.add('is-live');
+  text.textContent = 'Arreter le direct';
+
+  // Timer de durée
+  liveTimer = setInterval(() => {
+    liveDurationSec++;
+    const m = Math.floor(liveDurationSec / 60);
+    const s = liveDurationSec % 60;
+    const el = document.getElementById('live-duration');
+    if (el) el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  }, 1000);
+
+  // Simuler l'arrivée de spectateurs
+  simulateLive();
+
+  // Vider le chat et ajouter le message d'accueil
+  const chat = document.getElementById('chat-msgs');
+  if (chat) chat.innerHTML = '';
+  setTimeout(() => addChatMsg('Systeme', 'Le direct a commence ! Bienvenue à tous.', '#374151', true), 500);
+  setTimeout(() => addChatMsg('Konan K.', 'Je suis la ! Super produits', COLORS[0]), 2000);
+  setTimeout(() => addChatMsg('Adjoua B.', 'C\'est quoi le prix du smartphone ?', COLORS[1]), 4000);
+
+  showToast('Direct lancé avec succès ! Vos clients peuvent vous regarder.', 'success');
+
+  // Appel API en production
+  // MCP_API.request('POST', '/vendor/live/start', { title, quality: document.getElementById('select-quality').value });
+}
+
+function stopLive() {
+  isLive = false;
+  clearInterval(liveTimer);
+  clearInterval(viewersInterval);
+
+  document.getElementById('live-overlays').style.display = 'none';
+  const btn  = document.getElementById('btn-go-live');
+  const text = document.getElementById('live-btn-text');
+  btn.classList.remove('is-live');
+  text.textContent = 'Lancer le direct';
+
+  addChatMsg('Systeme', 'Le direct est terminé. Merci à tous les spectateurs !', '#374151', true);
+
+  showToast(`Direct terminé — ${liveDurationSec} sec · ${peakViewers} spectateurs au pic · ${liveOrders} commandes`, 'success');
+
+  // Appel API en production
+  // MCP_API.request('POST', '/vendor/live/stop');
+}
+
+/* ════════════════════════════════════
+   SIMULATION LIVE (démo)
+   ════════════════════════════════════ */
+const COLORS = ['#3b82f6','#8b5cf6','#ec4899','#14b8a6','#f97316','#06b6d4'];
+const NAMES  = ['Konan K.','Adjoua B.','Seydou C.','Mariame Y.','Ibrahim S.','Fatou D.','Marie K.','Luc A.'];
+const MSGS   = [
+  'Super produits !','C\'est combien ?','Disponible en combien de couleurs ?',
+  'Livraison a Bouake ?','Je vais commander maintenant','Tres bon vendeur','Orange Money accepte ?',
+  'On peut avoir une remise ?','Magnifique !','Je prends deux','qualité top','Merci pour le direct'
+];
+
+function simulateLive() {
+  let tickCount = 0;
+  viewersInterval = setInterval(() => {
+    tickCount++;
+
+    // Faire varier les spectateurs de façon réaliste
+    const delta = Math.floor(Math.random() * 7) - 2;
+    currentViewers = Math.max(1, currentViewers + delta + (tickCount < 10 ? 3 : 0));
+    if (currentViewers > peakViewers) peakViewers = currentViewers;
+
+    // Mettre à jour l'affichage
+    const vc = document.getElementById('viewers-count');
+    const sv = document.getElementById('stat-viewers');
+    const sp = document.getElementById('stat-peak');
+    if (vc) vc.textContent = currentViewers;
+    if (sv) sv.textContent = currentViewers;
+    if (sp) sp.textContent = peakViewers;
+    const cc = document.getElementById('chat-count');
+    if (cc) cc.textContent = currentViewers + ' spectateurs';
+
+    // Message de chat aléatoire
+    if (tickCount % 3 === 0) {
+      const name  = NAMES[Math.floor(Math.random() * NAMES.length)];
+      const msg   = MSGS[Math.floor(Math.random() * MSGS.length)];
+      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      addChatMsg(name, msg, color);
+    }
+
+    // Simuler une commande de temps en temps
+    if (tickCount % 12 === 0) {
+      liveOrders++;
+      liveRevenue += [12000, 24000, 45000, 89000][Math.floor(Math.random() * 4)];
+      const so = document.getElementById('stat-orders');
+      const sr = document.getElementById('stat-revenue');
+      if (so) so.textContent = liveOrders;
+      if (sr) sr.textContent = (liveRevenue / 1000).toFixed(0) + 'K';
+      addChatMsg('Systeme', '&#127873; Nouvelle commande passée pendant le direct !', '#16a34a', true);
+    }
+
+    if (!isLive) clearInterval(viewersInterval);
+  }, 2000);
+}
+
+/* ════════════════════════════════════
+   CHAT
+   ════════════════════════════════════ */
+function addChatMsg(name, text, color, isSystem) {
+  const container = document.getElementById('chat-msgs');
+  if (!container) return;
+
+  const el = document.createElement('div');
+  el.className = 'chat-msg' + (isSystem ? ' pinned-msg' : '');
+  el.innerHTML = `
+    <div class="chat-avatar" style="background:${color}">${name[0]}</div>
+    <div class="chat-body">
+      <div class="chat-name ${isSystem ? '' : ''}">${name}</div>
+      <div class="chat-text">${text}</div>
+    </div>`;
+  container.appendChild(el);
+
+  // Limiter à 50 messages
+  while (container.children.length > 50) {
+    container.removeChild(container.firstChild);
+  }
+  container.scrollTop = container.scrollHeight;
+}
+
+function sendChatMsg() {
+  const input = document.getElementById('chat-input');
+  if (!input) return;
+  const text = input.value.trim();
+  if (!text) return;
+
+  addChatMsg('TechCI Pro', text, '#0b1f4b');
+  input.value = '';
+
+  // En production : POST /vendor/live/chat { message: text }
+}
+
+/* ════════════════════════════════════
+   TITRE LIVE
+   ════════════════════════════════════ */
+function updateLiveTitle(val) {
+  // En production : mettre à jour le titre côté API en temps réel
+  // MCP_API.request('PUT', '/vendor/live/title', { title: val });
+}
+
+/* ════════════════════════════════════
+   MODAL PIN PRODUIT
+   ════════════════════════════════════ */
+function openPinModal(mode) {
+  pinModalMode = mode || 'live';
+  selectedProduct = null;
+  document.querySelectorAll('.modal-product-item').forEach(el => el.classList.remove('selected'));
+  document.getElementById('pin-modal').classList.remove('hidden');
+}
+
+function closePinModal() {
+  document.getElementById('pin-modal').classList.add('hidden');
+  selectedProduct = null;
+}
+
+function selectModalProduct(el, name, price, img) {
+  document.querySelectorAll('.modal-product-item').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedProduct = { name, price, img };
+}
+
+function confirmPin() {
+  if (!selectedProduct) { showToast('Sélectionnez un produit.', 'error'); return; }
+
+  if (pinModalMode === 'live') {
+    // Ajouter à la liste des produits épinglés
+    const list = document.getElementById('pinned-products-list');
+    const card = document.createElement('div');
+    card.className = 'pinned-product-card';
+    card.innerHTML = `
+      <img src="${selectedProduct.img}" alt="${selectedProduct.name}" loading="lazy"/>
+      <div style="flex:1">
+        <div class="pinned-product-name">${selectedProduct.name}</div>
+        <div class="pinned-product-price">${selectedProduct.price}</div>
+      </div>`;
+    // Insérer avant le bouton "+"
+    const addBtn = list.querySelector('.btn-pin-product');
+    if (addBtn) list.insertBefore(card, addBtn);
+    else list.appendChild(card);
+
+    showToast(selectedProduct.name + ' épinglé dans le direct.', 'success');
+  } else {
+    // Ajouter tag dans l'éditeur vidéo
+    const tagList = document.getElementById('vid-products-list');
+    const tag = document.createElement('span');
+    tag.className = 'product-tag';
+    tag.innerHTML = selectedProduct.name + ' <button onclick="removeProductTag(this)">&#10005;</button>';
+    tagList.appendChild(tag);
+    showToast(selectedProduct.name + ' associé à la vidéo.', 'success');
+  }
+
+  closePinModal();
+}
+
+/* ════════════════════════════════════
+   VIDÉOS COURTES
+   ════════════════════════════════════ */
+function handleFileSelect(input) {
+  if (!input.files || !input.files[0]) return;
+  const file  = input.files[0];
+  const label = document.getElementById('upload-label');
+  if (label) label.textContent = file.name + ' (' + (file.size / 1024 / 1024).toFixed(1) + ' Mo)';
+  showToast('Vidéo sélectionnée : ' + file.name, 'success');
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  const file = event.dataTransfer?.files?.[0];
+  if (file && file.type.startsWith('video/')) {
+    const label = document.getElementById('upload-label');
+    if (label) label.textContent = file.name + ' (' + (file.size / 1024 / 1024).toFixed(1) + ' Mo)';
+    document.getElementById('upload-zone').style.borderColor = 'var(--green)';
+    showToast('Vidéo chargée : ' + file.name, 'success');
+  }
+}
+
+function removeProductTag(btn) {
+  btn.closest('.product-tag').remove();
+}
+
+function saveDraft() {
+  const title = document.getElementById('vid-title')?.value?.trim();
+  if (!title) { showToast('Donnez un titre à votre vidéo.', 'error'); return; }
+  showToast('Brouillon enregistré : ' + title, 'success');
+}
+
+function previewVideo() {
+  showToast('Aperçu disponible après le téléchargement de la vidéo.', '');
+}
+
+function publishVideo() {
+  const title = document.getElementById('vid-title')?.value?.trim();
+  if (!title) { showToast('Donnez un titre à votre vidéo avant de publier.', 'error'); return; }
+  showToast('Vidéo envoyée pour publication — elle sera visible après validation.', 'success');
+  // En production : POST /vendor/videos avec FormData
+}
+
+function previewVideoCard(card) {
+  const title = card.querySelector('.video-title')?.textContent;
+  showToast('Lecture : ' + title, '');
+}
+
+/* ════════════════════════════════════
+   STATISTIQUES
+   ════════════════════════════════════ */
+function renderStatsPanel() {
+  const videos = [
+    { title:'Unboxing montre connectee sport',          views:3210, likes:276, orders:18, ca:'810K' },
+    { title:'Test smartphone Android 128 Go',           views:2450, likes:189, orders:14, ca:'1 246K' },
+    { title:'Direct — Ecouteurs BT 5.3',                views:1820, likes:134, orders: 9, ca:'216K' },
+    { title:'Chargeur USB-C 65W — test rapide',         views: 890, likes: 72, orders: 6, ca:'72K'  },
+  ];
+
+  const list = document.getElementById('stats-list');
+  if (!list) return;
+
+  list.innerHTML = videos.map(v => {
+    const pct = Math.round(v.views / 3210 * 100);
+    return `
+      <div style="display:grid;grid-template-columns:1fr 80px 80px 80px 80px;align-items:center;gap:1rem;padding:.8rem 0;border-bottom:1px solid var(--lgray)">
+        <div>
+          <div style="font-size:.78rem;font-weight:700;color:var(--dark);margin-bottom:.4rem">${v.title}</div>
+          <div style="height:5px;background:var(--lgray);border-radius:99px;overflow:hidden">
+            <div style="height:100%;width:${pct}%;background:var(--navy);border-radius:99px"></div>
+          </div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:.82rem;font-weight:800;color:var(--navy)">${v.views.toLocaleString('fr-FR')}</div>
+          <div style="font-size:.6rem;color:var(--gray);font-weight:600">vues</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:.82rem;font-weight:800;color:var(--green)">${v.likes}</div>
+          <div style="font-size:.6rem;color:var(--gray);font-weight:600">likes</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:.82rem;font-weight:800;color:var(--red)">${v.orders}</div>
+          <div style="font-size:.6rem;color:var(--gray);font-weight:600">commandes</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:.82rem;font-weight:800;color:var(--gold)">${v.ca}</div>
+          <div style="font-size:.6rem;color:var(--gray);font-weight:600">FCFA</div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+/* ════════════════════════════════════
+   TOAST
+   ════════════════════════════════════ */
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.className   = 'toast-notif ' + (type || '');
+  void t.offsetWidth; // forcer le reflow
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+<script src="../script.js"></script>
+<script src="../chatbot.js"></script>
+  <!-- GSAP Premium -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <script src="../gsap-animations.js"></script>
+<script src="../ux-improvements.js"></script>
+</body>
+</html>
